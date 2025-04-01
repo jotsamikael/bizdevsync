@@ -1,0 +1,846 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "superadmin@mail.com",
+      "password":"password",
+      "role": "super_admin",
+      "full_name": "Super Admin",
+      "enterprise_id": null
+    },
+    {
+      "id": 2,
+      "email": "admin@mail.com",
+      "password":"password",
+      "role": "admin",
+      "full_name": "Admin",
+      "enterprise_id": null
+    },
+    {
+      "id": 3,
+      "email": "operator@mail.com",
+      "password":"password",
+      "role": "operator",
+      "full_name": "Operator",
+      "enterprise_id": null
+    },
+    {
+      "id": 4,
+      "email": "admin1@techplus.com",
+      "password":"password",
+      "role": "enterprise_admin",
+      "full_name": "Admin One",
+      "enterprise_id": 1
+    },
+    {
+      "id": 5,
+      "email": "admin2@innovacorp.com",
+      "password":"password",
+      "role": "enterprise_admin",
+      "full_name": "Admin Two",
+      "enterprise_id": 2
+    },
+    {
+      "id": 6,
+      "email": "dev1@techplus.com",
+      "password":"password",
+      "role": "business_developer",
+      "full_name": "Dev One",
+      "enterprise_id": 1
+    },
+    {
+      "id": 7,
+      "email": "dev2@techplus.com",
+      "password":"password",
+      "role": "business_developer",
+      "full_name": "Dev Two",
+      "enterprise_id": 1
+    },
+    {
+      "id": 8,
+      "email": "dev3@innovacorp.com",
+      "password":"password",
+      "role": "business_developer",
+      "full_name": "Dev Three",
+      "enterprise_id": 2
+    },
+    {
+      "id": 9,
+      "email": "dev4@innovacorp.com",
+      "password":"password",
+      "role": "business_developer",
+      "full_name": "Dev Four",
+      "enterprise_id": 2
+    },
+    {
+      "id": 10,
+      "email": "solodev1@gmail.com",
+      "password":"password",
+      "role": "solo_business_developer",
+      "full_name": "Solo Dev 1"
+    },
+    {
+      "id": 11,
+      "email": "solodev2@gmail.com",
+      "password":"password",
+      "role": "solo_business_developer",
+      "full_name": "Solo Dev 2"
+    }
+  ],
+  "enterprises": [
+    {
+      "id": 1,
+      "name": "TechPlus",
+      "country": "Cameroon",
+      "sector": "SSII"
+
+    },
+    {
+      "id": 2,
+      "name": "InnovaCorp",
+      "country": "France",
+      "sector": "E-banking"
+
+    }
+  ],
+  "country": [
+    {
+      "idcountry": 1,
+      "name": "Cameroon",
+      "language": "French",
+      "countrycode": "CM",
+      "region": " Central Africa"
+    },
+    {
+      "idcountry": 2,
+      "name": "France",
+      "language": "French",
+      "countrycode": "FR",
+      "region": "Western Europe"
+    },
+    {
+      "idcountry": 3,
+      "name": "Gabon",
+      "language": "French",
+      "countrycode": "GB",
+      "region": " Central Africa"
+    },
+    {
+      "idcountry": 4,
+      "name": "Tchad",
+      "language": "French",
+      "countrycode": "TH",
+      "region": " Central Africa"
+    },
+    {
+      "idcountry": 5,
+      "name": "Equatorial guinea",
+      "language": "Spanish",
+      "countrycode": "EG",
+      "region": " Central Africa"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "user_id": 6,
+      "name": "MX Payment",
+      "type": "Payment",
+      "description": "Payment solution"
+    },
+    {
+      "id": 2,
+      "user_id": 7,
+      "name": "MX ERP",
+      "type": "ERP",
+      "description": "Enterprise resource planning"
+    },
+    {
+      "id": 3,
+      "user_id": 7,
+      "name": "eGov Suite",
+      "type": "Government",
+      "description": "E-Government platform"
+    },
+    {
+      "id": 4,
+      "user_id": 7,
+      "name": "Nautic",
+      "type": "Payment Gateway",
+      "description": "Payment Gateway"
+    },
+    {
+      "id": 5,
+      "user_id": 8,
+      "name": "AML Suite",
+      "type": "Government",
+      "description": "Anti-money laundering platform"
+    },
+    {
+      "id": 6,
+      "user_id": 10,
+      "name": "eGov Suite",
+      "type": "Government",
+      "description": "E-Government platform"
+    },
+    {
+      "id": 7,
+      "user_id": 9,
+      "name": "blue seed Suite",
+      "type": "Payment Gateway",
+      "description": "Payment Gateway"
+    },
+    {
+      "id": 8,
+      "user_id": 11,
+      "name": "eGov Suite",
+      "type": "Government",
+      "description": "E-Government platform"
+    }
+  ],
+  "leads": [
+    {
+      "id": 1,
+      "user_id": 7,
+      "name": "ABC Finance",
+      "country": "Cameroon",
+      "actor_type": "Microfinance",
+      "contacts":[
+        {
+          "name":"Kaname Peter",
+          "role":"COO"
+
+        }
+      ]
+     
+    },
+    {
+      "id": 2,
+      "user_id": 6,
+      "name": "BankCam",
+      "country": "Cameroon",
+      "actor_type": "Bank",
+      "contacts":[
+        {
+          "name":"Charles Kameni",
+          "role":"Business Developper"
+
+        }
+      ]
+   
+    },
+    {
+      "id": 3,
+      "user_id": 6,
+      "name": "EuroFin",
+      "country": "France",
+      "actor_type": "Fintech",
+      "contacts":[
+        {
+          "name":"Ngweti Sandra",
+          "role":"DSI"
+
+        }
+      ]
+   
+    },
+    {
+      "id": 4,
+      "user_id": 7,
+      "name": "BNF Bank",
+      "country": "France",
+      "actor_type": "Bank",
+      "contacts":[
+        {
+          "name":"Saa Boris",
+          "role":"COO"
+
+        }
+     
+      ]
+ 
+    },
+    {
+      "id": 5,
+      "user_id": 8,
+      "name": "Aptos",
+      "country": "Gabon",
+      "actor_type": "Fintech",
+      "contacts":[
+        {
+          "name":"Saa Boris",
+          "role":"COO"
+
+        }
+      ]
+   
+    },
+    {
+      "id": 6,
+      "user_id": 9,
+      "name": "GCG Bank",
+      "country": "Nigeria",
+      "actor_type": "Bank",
+      "contacts":[
+        {
+          "name":"Hurberg Ngwane",
+          "role":"CTO"
+
+        },
+        {
+          "name":"Kegne Evrald",
+          "role":"Salesman"
+
+        }
+     
+      ]
+ 
+    },
+    {
+      "id": 7,
+      "user_id": 10,
+      "name": "Aptos",
+      "country": "Cameroon",
+      "actor_type": "Microfinance",
+      "contacts":[
+        {
+          "name":"Ntchot Cedric",
+          "role":"CTO"
+
+        }
+     
+      ]
+   
+    },
+    {
+      "id": 8,
+      "user_id": 11,
+      "name": "GCG Bank",
+      "country": "Nigeria",
+      "actor_type": "Bank",
+      "contacts":[
+        {
+          "name":"Njoko Ursule",
+          "role":"DSI"
+
+        }
+      ]
+ 
+    }
+  ],
+
+"follow-up":[
+  {
+  "id":1,
+   "user_id":7,
+   "lead_id":1,
+   "start_date":"20-03-2025",
+   "source":"Prospecting",
+   "activities":[
+    {
+      "action_detail":"Envoyer le brochure de presentation de eGov pour...",
+      "last_action":"presentation de eGov",
+      "last_action_date":"21-03-2025",
+      "next_action":"Relancer le propect la semaine prochaine"
+
+    }
+   ],
+   "meeting":[
+    {
+      "date":"26-03-2025",
+      "summary":"Nous avons propose plusieur solution de....",
+      "paticipants":[
+        {
+          "name":"Kaname Peter",
+          "role":"COO"
+
+        },
+        {
+          "name":"Ali Geli",
+          "role":"Lead Architect"
+
+        }
+      ],
+      "next_action":"Relancer le propect la semaine prochaine"
+
+    },
+    {
+      "date":"30-03-2025",
+      "summary":"Nous avons fait une demo de la platforme....",
+      "paticipants":[
+        {
+          "name":"Kaname Peter",
+          "role":"COO"
+
+        },
+        {
+          "name":"Ayuk Stacey",
+          "role":"DSI"
+
+        },
+        {
+          "name":"Ali Geli",
+          "role":"Lead Architect"
+
+        }
+      ],
+      "next_action":"Preparer une offre..."
+
+    }
+
+   ]
+
+  },
+
+  {
+    "id":1,
+   "user_id":6,
+   "lead_id":2,
+   "start_date":"16-08-2024",
+   "source":"Prospecting",
+   "activities":[
+    {
+      "action_detail":"Envoyer le brochure de presentation de Aptos pour...",
+      "last_action":"presentation de eGov",
+      "last_action_date":"21-03-2025",
+      "next_action":"Relancer le propect la semaine prochaine"
+
+    }
+   ],
+   "meeting":[
+    {
+      "date":"26-09-2024",
+      "summary":"Nous avons propose plusieur solution de....",
+      "paticipants":[
+        {
+          "name":"James Master",
+          "role":"CEO"
+
+        },
+        {
+          "name":"Nancy Ato'ole",
+          "role":"DSI"
+
+        }
+      ],
+      "next_action":"Preparer une demo..."
+
+    },
+    {
+      "date":"30-01-2025",
+      "summary":"Nous avons fait une demo de la platforme....",
+      "paticipants":[
+        {
+          "name":"James Master",
+          "role":"CEO"
+
+        },
+        {
+          "name":"Nancy Ato'ole",
+          "role":"DSI"
+
+        },
+        {
+          "name":"Sofiane Mehdi",
+          "role":"Lead Architect"
+
+        }
+      ],
+      "next_action":"Preparer une offre..."
+
+    }
+
+   ]
+
+  },
+  {
+    "id":1,
+   "user_id":8,
+   "lead_id":5,
+   "start_date":"06-04-2023",
+   "source":"Prospecting",
+   "activities":[
+    {
+      "action_detail":"Envoyer le brochure de presentation de Aptos pour...",
+      "last_action":"presentation de eGov",
+      "last_action_date":"21-03-2025",
+      "next_action":"Relancer le propect la semaine prochaine"
+
+    }
+   ],
+   "meeting":[
+    {
+      "date":"26-09-2024",
+      "summary":"Nous avons propose plusieur solution de....",
+      "paticipants":[
+        {
+          "name":"Tom Ngallo",
+          "role":"Lead Sofware Architect"
+
+        },
+        {
+          "name":"Ngweti Sandra",
+          "role":"DSI"
+
+        }
+      ],
+      "next_action":"Preparer une demo..."
+
+    },
+    {
+      "date":"30-01-2025",
+      "summary":"Nous avons fait une demo de la platforme....",
+      "paticipants":[
+        {
+          "name":"Tom Ngallo",
+          "role":"Lead Sofware Architect"
+
+        },
+        {
+          "name":"Ngweti Sandra",
+          "role":"DSI"
+
+        }
+      ],
+      "next_action":"Preparer une offre..."
+
+    }
+
+   ]
+
+  },
+  {
+    "id":1,
+   "user_id":9,
+   "lead_id":6,
+   "start_date":"16-10-2024",
+   "source":"Prospecting",
+   "activities":[
+    {
+      "action_detail":"Envoyer le brochure de presentation de Blue seed pour...",
+      "last_action":"presentation de eGov",
+      "last_action_date":"21-11-2024",
+      "next_action":"Relancer le propect la semaine prochaine"
+
+    }
+   ],
+   "meeting":[
+    {
+      "date":"21-11-2024",
+      "summary":"Nous avons propose plusieur solution de....",
+      "paticipants":[
+        {
+          "name":"Katleen Mouna",
+          "role":"CEO"
+
+        },
+        {
+          "name":"Robert Monole",
+          "role":"DSI"
+
+        }
+      ],
+      "next_action":"Preparer une demo..."
+
+    },
+    {
+      "date":"30-01-2025",
+      "summary":"Nous avons fait une demo de la platforme....",
+      "paticipants":[
+        {
+          "name":"Robert Monole",
+          "role":"DSI"
+
+        }
+      ],
+      "next_action":"Preparer une offre..."
+
+    }
+
+   ]
+
+  },
+  {
+    "id":1,
+   "user_id":10,
+   "lead_id":7,
+   "start_date":"20-12-2023",
+   "source":"Prospecting",
+   "activities":[
+    {
+      "action_detail":"Envoyer le brochure de presentation de eGov pour...",
+      "last_action":"presentation de eGov",
+      "last_action_date":"21-06-2024",
+      "next_action":"Relancer le propect la semaine prochaine"
+
+    }
+   ],
+   "meeting":[
+    {
+      "date":"13-07-2024",
+      "summary":"Nous avons propose plusieur solution de....",
+      "paticipants":[
+        {
+          "name":"Saa Boris",
+          "role":"COO"
+
+        },
+        {
+          "name":"Estelle Maimouna",
+          "role":"Lead Architect"
+
+        }
+      ],
+      "next_action":"Relancer le propect la semaine prochaine"
+
+    },
+    {
+      "date":"30-03-2025",
+      "summary":"Nous avons fait une demo de la platforme....",
+      "paticipants":[
+        {
+          "name":"Saa Boris",
+          "role":"COO"
+
+        },
+        {
+          "name":"Estelle Maimouna",
+          "role":"Lead Architect"
+
+        }
+      ],
+      "next_action":"Preparer une offre..."
+
+    }
+
+   ]
+
+  },
+  
+  {
+    "id":1,
+   "user_id":11,
+   "lead_id":8,
+   "start_date":"03-02-2025",
+   "source":"Prospecting",
+   "activities":[
+    {
+      "action_detail":"Envoyer le brochure de presentation de Aptos pour...",
+      "last_action":"presentation de eGov",
+      "last_action_date":"21-03-2025",
+      "next_action":"Relancer le propect la semaine prochaine"
+
+    }
+   ],
+   "meeting":[
+    {
+      "date":"26-09-2024",
+      "summary":"Nous avons propose plusieur solution de....",
+      "paticipants":[
+        {
+          "name":"Quetin Leroy",
+          "role":"C0O"
+
+        },
+        {
+          "name":"Njoko Ursule",
+          "role":"DSI"
+
+        }
+      ],
+      "next_action":"Preparer une demo..."
+
+    },
+    {
+      "date":"30-01-2025",
+      "summary":"Nous avons fait une demo de la platforme....",
+      "paticipants":[
+        {
+          "name":"Quetin Leroy",
+          "role":"C0O"
+
+        },
+        {
+          "name":"Njoko Ursule",
+          "role":"DSI"
+
+        },
+        {
+          "name":"Atila Oruk",
+          "role":"Lead Architect"
+
+        }
+      ],
+      "next_action":"Preparer une offre..."
+
+    }
+
+   ]
+
+  }
+
+],
+
+  "case": [
+    {
+      "id": 1,
+      "client_id": 1,
+      "user_id": 5,
+      "need": "Digital transformation",
+      "product": "MX Payment",
+      "approach": "New launch",
+      "like_type": "Upselling",
+      "case_level": "Hot",
+      "total_turnover": 3883091,
+      "ca_signable": 3441904,
+      "last_action": "Follow-up",
+      "last_action_date": "2025-03-18",
+      "next_action": "Plan next meeting",
+      "escalation_date": "2025-04-16",
+      "source": "Referral",
+      "ic": 0.72,
+      "previous_ic": 0.19,
+      "notes": "Meeting scheduled with procurement."
+    },
+    {
+      "id": 2,
+      "lead_id": 1,
+      "user_id": 4,
+      "need": "Digital transformation",
+      "product": "MX Payment",
+      "approach": "New launch",
+      "like_type": "New Business",
+      "case_level": "Hot",
+      "total_turnover": 2248539,
+      "ca_signable": 2023596,
+      "last_action": "Prospecting",
+      "last_action_date": "2025-03-10",
+      "next_action": "Plan next meeting",
+      "escalation_date": "2025-04-23",
+      "source": "Prospecting",
+      "ic": 0.9,
+      "previous_ic": 0.94,
+      "notes": "Meeting scheduled with procurement."
+    },
+    {
+      "id": 3,
+      "client_id": 2,
+      "user_id": 5,
+      "need": "Digital transformation",
+      "product": "eGov Suite",
+      "approach": "New launch",
+      "like_type": "Upselling",
+      "case_level": "Hot",
+      "total_turnover": 1033952,
+      "ca_signable": 3696018,
+      "last_action": "Demo",
+      "last_action_date": "2025-03-10",
+      "next_action": "Plan next meeting",
+      "escalation_date": "2025-04-12",
+      "source": "Prospecting",
+      "ic": 0.79,
+      "previous_ic": 0.17,
+      "notes": "Meeting scheduled with procurement."
+    },
+    {
+      "id": 4,
+      "client_id": 2,
+      "user_id": 5,
+      "need": "Digital transformation",
+      "product": "eGov Suite",
+      "approach": "New launch",
+      "like_type": "New Business",
+      "case_level": "Loose",
+      "total_turnover": 4474383,
+      "ca_signable": 2490651,
+      "last_action": "Proposal Sent",
+      "last_action_date": "2025-03-21",
+      "next_action": "Plan next meeting",
+      "escalation_date": "2025-04-16",
+      "source": "TP",
+      "ic": 0.39,
+      "previous_ic": 0.87,
+      "notes": "Meeting scheduled with procurement."
+    },
+    {
+      "id": 5,
+      "client_id": 3,
+      "user_id": 7,
+      "need": "Digital transformation",
+      "product": "MX Enterprise",
+      "approach": "New launch",
+      "like_type": "Upselling",
+      "case_level": "Won",
+      "total_turnover": 2456682,
+      "ca_signable": 2999443,
+      "last_action": "Demo",
+      "last_action_date": "2025-03-22",
+      "next_action": "Plan next meeting",
+      "escalation_date": "2025-03-27",
+      "source": "Prospecting",
+      "ic": 0.29,
+      "previous_ic": 0.77,
+      "notes": "Meeting scheduled with procurement."
+    },
+    {
+      "id": 6,
+      "client_id": 3,
+      "user_id": 6,
+      "need": "Digital transformation",
+      "product": "MX Enterprise",
+      "approach": "New launch",
+      "like_type": "New Business",
+      "case_level": "Loose",
+      "total_turnover": 1501155,
+      "ca_signable": 1253633,
+      "last_action": "Prospecting",
+      "last_action_date": "2025-03-17",
+      "next_action": "Plan next meeting",
+      "escalation_date": "2025-04-13",
+      "source": "Referral",
+      "ic": 0.87,
+      "previous_ic": 0.61,
+      "notes": "Meeting scheduled with procurement."
+    },
+    {
+      "id": 7,
+      "client_id": 4,
+      "user_id": 6,
+      "need": "Digital transformation",
+      "product": "MX Enterprise",
+      "approach": "New launch",
+      "like_type": "New Business",
+      "case_level": "Won",
+      "total_turnover": 4115039,
+      "ca_signable": 2512546,
+      "last_action": "Demo",
+      "last_action_date": "2025-03-09",
+      "next_action": "Plan next meeting",
+      "escalation_date": "2025-04-11",
+      "source": "Prospecting",
+      "ic": 0.4,
+      "previous_ic": 0.46,
+      "notes": "Meeting scheduled with procurement."
+    },
+    {
+      "id": 8,
+      "client_id": 4,
+      "user_id": 7,
+      "need": "Digital transformation",
+      "product": "eGov Suite",
+      "approach": "New launch",
+      "like_type": "Upselling",
+      "case_level": "Won",
+      "total_turnover": 4108960,
+      "ca_signable": 3593223,
+      "last_action": "Prospecting",
+      "last_action_date": "2025-02-25",
+      "next_action": "Plan next meeting",
+      "escalation_date": "2025-04-09",
+      "source": "Referral",
+      "ic": 0.13,
+      "previous_ic": 0.44,
+      "notes": "Meeting scheduled with procurement."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+}
+
+input.form-control {
+    text-align: center;
+    font-size: 24px;
+}
+input.form-control::placeholder {
+text-align: center; 
+font-size: 24px;
+}
+
+.activate-message, .activate-error{
+    text-align: center;
+} 
+
+
+.activate-error{
+    color: red;
+} 

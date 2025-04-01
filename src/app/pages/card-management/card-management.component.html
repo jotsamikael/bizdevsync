@@ -1,0 +1,200 @@
+<div class="container-fluid">
+    <app-page-title title="Chat" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  
+    <div class="d-lg-flex">
+      <div class="chat-leftsidebar me-lg-4">
+        <div class="">
+          <div class="py-4 border-bottom">
+            <div class="media">
+              <div class="align-self-center me-3">
+                <!--Start Digital Card Template -->
+                <div class="card overflow-hidden">
+                    <div class="bg-primary bg-soft">
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="text-primary p-3">
+                                    <h5 class="text-primary">[Fullname]</h5>
+                                    <p>[Job]</p>
+                                </div>
+                            </div>
+                            <div class="col-5 align-self-end">
+                                <img src="assets/images/profile-img.png" alt="" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="avatar-md profile-user-wid mb-4">
+                                    <img src="assets/images/users/avatar-1.jpg" alt="" class="img-thumbnail rounded-circle">
+                                </div>
+                                <h5 class="font-size-15 text-truncate">[Country]|[Town]</h5>
+                                <p class="text-muted mb-0 text-truncate">[Phone num]</p>
+                                <p class="text-muted mb-0 text-truncate">[Email]</p>
+
+                            </div>
+    
+                            <div class="col-sm-8">
+                                <div class="pt-4">
+                                    <h4>About</h4>
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Quo inventore nisi placeat vel, quisquam esse? Ex molestias
+                                     quidem voluptatem eos, beatae amet dignissimos animi cumque maiores exercitationem. 
+                                     Unde, quibusdam ab?
+                                </div>
+                                <div class="pt-4">
+                                    <!-- services -->
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="card">
+                                                <i class="bx bx-book" style="font-size: 40px;"></i>
+                                                <p class="text-muted mb-0">Service 1</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="card">
+                                                <i class="bx bx-book" style="font-size: 40px;"></i>
+                                                <p class="text-muted mb-0">Service 2</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="card">
+                                                <i class="bx bx-book" style="font-size: 40px;"></i>
+                                                <p class="text-muted mb-0">Service 2</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- services -->
+                                    
+                                    <div class="mt-4">
+                                        <a href="" class="btn btn-primary btn-sm">View Complete <i
+                                                class="mdi mdi-arrow-right ms-1"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Digital Card Template -->
+              </div>         
+            </div>
+          </div>
+  
+         
+        </div>
+      </div>
+      <div class="w-100 user-chat">
+        <div class="card">
+          <div class="p-4 border-bottom">
+            <div class="chat-leftsidebar-nav">
+              <tabset [justified]="true" class="nav-pills nav-justified">
+                <tab heading="Share">
+                  <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+                </tab>
+                <tab heading="Actions">
+                  <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
+                </tab>
+              </tabset>
+             </div>
+          </div>
+  
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+  
+  </div>
+
+   <!-- Tab Content -->
+   <ng-template #TabContent>
+    
+      <div class="row p-3 mb-0"> 
+        <div class="col-md-6">
+          <div class="card shadow pt-1" data-bs-toggle="tooltip" data-bs-placement="top" title="The total number of views by the current card">
+            <h5 class="text-center">Total views</h5>
+            <h1 class="fw-bolder text-center">0</h1>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow pt-1" data-bs-toggle="tooltip" data-bs-placement="top" title="The total number of saves of the current card">
+            <h5 class="text-center">Total saves</h5>
+            <h1 class="fw-bolder text-center">0</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card shadow-lg pt-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Go to analytics page">
+            <h5 class="text-center">View all analytics</h5>
+              <button mat-button class="mt-2 text-primary"><i class="bx bx-chart"></i>&nbsp; Go to analytics</button>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-10 shadow p-2">
+            <div class="card">
+              <img src="../../../assets/images/qrimqge.png" alt="qr-image" class="img-fluid">
+              <em class="fs-sm pt-1 text-center">scan or click to preview</em>
+            </div>
+        </div>
+      </div>
+   
+  </ng-template>
+
+  <!-- Tab Content -->
+  <ng-template #TabContent1>
+    <div class="row shadow pt-4">
+      <div class="col-md-6">
+        <h4 class="mb-2">Edit card</h4>
+        <em class="fs-6 fw-light">Change card details</em>
+      </div>
+      <div class="col-md-6">
+        <button mat-raised-button><i class="bx bx-edit"></i>&nbsp; Modify</button>
+      </div>
+       
+    </div>
+    <hr>
+    <div class="row shadow pt-4">
+      <div class="col-md-6">
+        <h4 class="mb-2">Pause card</h4>
+        <em class="fs-6 fw-light">Disable card for now</em>
+      </div>
+      <div class="col-md-6">
+        <div class="form-check form-switch form-switch-lg mb-3">
+          <input class="form-check-input" type="checkbox" id="SwitchCheckSizelg" checked>
+      </div>
+      </div>
+       
+    </div>
+    <hr>
+    <div class="row shadow pt-4">
+      <div class="col-md-6">
+        <h4 class="mb-2">Delete card</h4>
+        <em class="fs-6 fw-light">Erase card and all data</em>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-outline-danger"><i class="bx bx-trash"></i>&nbsp;Delete</button>
+
+      </div>
+       
+    </div>
+    <hr>
+  </ng-template>
+
+  <!-- Edit Modal -->
+<ng-template #edit role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Modal Heading b</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam aperiam porro dicta error harum ab,
+             officia esse libero ipsum maiores facere, placeat neque hic aut adipisci ex! At, velit delectus!</p>
+           
+        </div>
+    </div>
+   
+</ng-template>

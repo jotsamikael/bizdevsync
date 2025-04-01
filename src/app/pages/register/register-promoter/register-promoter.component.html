@@ -1,0 +1,67 @@
+<!-- Register Promoter -->
+<div class="container-fluid">
+    <div class="container pt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="../../assets/images/laptop-img.png" class="img-fluid"  alt="" srcset="">
+            </div>
+            <div class="col-md-6">
+                <h5 class="text-center">Register</h5>
+                <div type="danger" class="alert alert-danger" *ngIf="this.errorMsg.length">
+                    
+                    <p *ngFor="let msg of this.errorMsg">{{msg}}</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="example-text-input" class="col-md-2 col-form-label">Firstname</label>
+                            <div class="col-md-10">
+                                <input  class="form-control" type="text" placeholder=""
+                                    id="example-text-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="example-text-input" class="col-md-2 col-form-label">Lastname</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" placeholder=""
+                                    id="example-text-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Email</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="email" value="mikaelchimera@gmail.com"
+                            id="example-text-input">
+                    </div>
+                </div>
+                     
+                <div class="mb-3">
+                    <label for="example-password-input" class="col-md-2 col-form-label">phoneNumber</label>
+                    <div class="col-md-10">
+                        <input  class="form-control" type="text"  id="example-password-input">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="example-password-input" class="col-md-2 col-form-label">Password</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="password"  id="example-password-input">
+                    </div>
+                </div>
+
+               
+
+                <button (click)="registerFun()" type="button" class="btn btn-primary btn-lg mb-3">Register</button>
+
+
+                <p>You already have an account <span class="text-primary" (click)="geTolLogin()">Login</span></p>
+            </div>
+        </div>
+    </div>
+</div>

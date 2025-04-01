@@ -1,0 +1,34 @@
+
+<div class="container" *ngIf="submitted else codeForm">
+   <div class="activate-message" *ngIf="isOkay else activationError">
+    <h2>Activation succesfull</h2>
+    <p class="text-sucess">Your account has been successfully activated.</p>
+    <button class="btn btn-primary" (click)="redirectToLogin()">Go to login</button>
+   </div>
+   <ng-template #activationError>
+    <div class="activate-error">
+        <h2>Activation failed</h2>
+        <p>{{message}}.</p>
+        <button class="btn btn-primary" (click)="submitted = false">Try again</button>
+       </div>
+   </ng-template>
+</div>
+
+<ng-template #codeForm>
+  <div class="container">
+     <div class="text-center" style="width: 400px;">
+            <h2 class="mb-2">Enter your activation code below</h2>
+            <h6 class="text-center">An email has been send to the adress you entered in registration form <br>
+             Fill the form below with activation code you received
+            </h6>
+         <!-- use a reactive form which takes 6 values and automatically submit -->   
+            <form [formGroup]="activationCodeForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <!-- <label for="formrow-firstname-input">Activation </label> -->
+                    <input type="text" class="form-control form-control-lg" formControlName="activationCode" placeholder="* * * * * *">
+                </div>
+                <div  class="alert alert-danger" *ngIf="activationCodeForm.get('activationCode').touched && activationCodeForm.get('activationCode').invalid">Wrong code</div>
+            </form>
+     </div>
+  </div>
+</ng-template>

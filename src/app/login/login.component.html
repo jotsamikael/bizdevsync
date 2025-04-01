@@ -1,0 +1,50 @@
+<!-- Login -->
+<div class="container-fluid">
+    <div class="container pt-4">           
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="../../assets/images/laptop-img.png" class="img-fluid" alt="" srcset="">
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-center">Login</h5>
+                       
+        
+                        <div type="danger" class="alert alert-danger" *ngIf="this.errorMsg.length">
+                            
+                            <p *ngFor="let msg of this.errorMsg">{{msg}}</p>
+                        </div>
+        
+                        <div class="mb-3">
+                            <label for="example-text-input" class="col-md-2 col-form-label">Email</label>
+                            <div class="col-md-10">
+                                <input [(ngModel)]="authRequest.email" class="form-control" type="email" value="mikaelchimera@gmail.com"
+                                    id="example-text-input">
+                            </div>
+                        </div>
+        
+                        <div class="mb-3">
+                            <label for="example-password-input" class="col-md-2 col-form-label">Password</label>
+                            <div class="col-md-10">
+                                <input [(ngModel)]="authRequest.password" class="form-control" type="password"  id="example-password-input">
+                            </div>
+                        </div>
+        
+                        <!-- <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="formCheck1">
+                            <label class="form-check-label" for="formCheck1">
+                                Form Checkboxm
+                            </label>
+                        </div> -->
+        
+                        <button (click)="loginFun()" type="button" class="btn btn-primary btn-lg mb-3">Login</button>
+                        <div class="spinner-grow text-info m-1" role="status" *ngIf="isProcessing">
+                            <span class="sr-only">Loading...</span>
+                        </div> &nbsp;
+                        <p>Don't have an account <span class="text-primary pointable" (click)="goToRegisterCandidate()">Create one</span></p>
+                    </div>
+                </div>
+            </div>
+           
+    </div> 
+</div>      

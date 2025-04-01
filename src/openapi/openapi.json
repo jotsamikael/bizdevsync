@@ -1,0 +1,1309 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenApi specifiction - APPLYCAM",
+    "description": "OpenApi documentation for applycam project",
+    "termsOfService": "Terms of service",
+    "contact": {
+      "name": "jotsamikael",
+      "url": "https://dodibo.com/",
+      "email": "jotsamikael@gmail.com"
+    },
+    "license": { "name": "Licence name", "url": "https://someurl.com" },
+    "version": "1.0"
+  },
+  "servers": [
+    { "url": "http://localhost:8088/api/v1", "description": "Local ENV." },
+    { "url": "https://something:8088/api/v1", "description": "Prod ENV." }
+  ],
+  "security": [{ "bearerAuth": [] }],
+  "paths": {
+    "/trainingcenter/create-training-center": {
+      "post": {
+        "tags": ["trainingcenter"],
+        "operationId": "createTrainingCenter",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTainingCenterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/trainingcenter/agreement/{agreement-number}": {
+      "post": {
+        "tags": ["trainingcenter"],
+        "operationId": "uploadAgreementFile",
+        "parameters": [
+          {
+            "name": "agreement-number",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": ["file"],
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "object" } }
+            }
+          }
+        }
+      }
+    },
+    "/staff/create-staff": {
+      "post": {
+        "tags": ["staff"],
+        "operationId": "createStaff",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateStaffRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/campus": {
+      "post": {
+        "tags": ["campus"],
+        "operationId": "createCampus",
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/CreateCampusRequest" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/auth/promoter-register": {
+      "post": {
+        "tags": ["Authentication"],
+        "operationId": "createStaff_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreatePromoterRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/auth/candidate-register": {
+      "post": {
+        "tags": ["Authentication"],
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidateRegistrationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": { "schema": { "type": "object" } }
+            }
+          }
+        }
+      }
+    },
+    "/auth/authenticate": {
+      "post": {
+        "tags": ["Authentication"],
+        "operationId": "authenticate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AuthenticationRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/staff/update-staff/{email}": {
+      "patch": {
+        "tags": ["staff"],
+        "operationId": "updateStaff",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateStaffRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/promoter/update-promoter": {
+      "patch": {
+        "tags": ["promoter"],
+        "operationId": "updatePromoter",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreatePromoterRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/promoter/reset-password": {
+      "patch": {
+        "tags": ["promoter"],
+        "operationId": "resetPassword",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/candidate": {
+      "patch": {
+        "tags": ["candidate"],
+        "operationId": "updateCandidate",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CandidateRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/trainingcenter/get-training-centers-of-connected-promoter": {
+      "get": {
+        "tags": ["trainingcenter"],
+        "operationId": "getTrainingCenterOfConnectedPromoter",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrainingCenterResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trainingcenter/get-training-by-agreement-number": {
+      "get": {
+        "tags": ["trainingcenter"],
+        "operationId": "getTrainingCenterByAgreementNumber",
+        "parameters": [
+          {
+            "name": "agreementNumber",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainingCenterResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trainingcenter/get-all": {
+      "get": {
+        "tags": ["trainingcenter"],
+        "operationId": "getTrainingCenterByAgreementNumber_1",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "name" }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "boolean", "default": true }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseTrainingCenterResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/staff": {
+      "get": {
+        "tags": ["staff"],
+        "operationId": "getAllStaffs",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "name" }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "boolean", "default": true }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseStaffResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/staff/find-by-email": {
+      "get": {
+        "tags": ["staff"],
+        "operationId": "findStaffByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/StaffResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/promoter/get-all": {
+      "get": {
+        "tags": ["promoter"],
+        "operationId": "getAllStaffs_1",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "firstname" }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "boolean", "default": true }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePromoterResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/promoter/find-by-email": {
+      "get": {
+        "tags": ["promoter"],
+        "operationId": "findStaffByEmail_1",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PromoterResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/division/get-by-region/{region}": {
+      "get": {
+        "tags": ["division"],
+        "operationId": "getDivisionByRegion",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Division" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/candidate/get-all": {
+      "get": {
+        "tags": ["candidate"],
+        "operationId": "getAllCandidates",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "name" }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "boolean", "default": true }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseCandidateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/candidate/find-by-email": {
+      "get": {
+        "tags": ["candidate"],
+        "operationId": "findCandidateByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CandidateResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campus/get-campus-by-training-town/{town}": {
+      "get": {
+        "tags": ["campus"],
+        "operationId": "findCampusByTown",
+        "parameters": [
+          {
+            "name": "town",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "name" }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "boolean", "default": true }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseCampusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campus/get-campus-by-training-center/{agreementNumber}": {
+      "get": {
+        "tags": ["campus"],
+        "operationId": "findCampusByTrainingCenter",
+        "parameters": [
+          {
+            "name": "agreementNumber",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CampusResponse" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/activate-account": {
+      "get": {
+        "tags": ["Authentication"],
+        "operationId": "confirm",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateTainingCenterRequest": {
+        "required": [
+          "agreementNumber",
+          "division",
+          "endDateOfAgreement",
+          "fullName",
+          "startDateOfAgreement"
+        ],
+        "type": "object",
+        "properties": {
+          "fullName": { "type": "string" },
+          "acronym": { "type": "string" },
+          "agreementNumber": { "type": "string" },
+          "startDateOfAgreement": { "type": "string", "format": "date" },
+          "endDateOfAgreement": { "type": "string", "format": "date" },
+          "division": { "type": "string" },
+          "centerPresentCandidateForDqp": { "type": "boolean" },
+          "centerPresentCandidateForCqp": { "type": "boolean" }
+        }
+      },
+      "CreateStaffRequest": {
+        "required": [
+          "dateOfBirth",
+          "email",
+          "firstname",
+          "lastname",
+          "nationalIdNumber",
+          "phoneNumber",
+          "positionName"
+        ],
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "email": { "type": "string" },
+          "phoneNumber": {
+            "maxLength": 2147483647,
+            "minLength": 9,
+            "type": "string"
+          },
+          "nationalIdNumber": {
+            "maxLength": 2147483647,
+            "minLength": 9,
+            "type": "string"
+          },
+          "positionName": { "type": "string" },
+          "dateOfBirth": { "type": "string" }
+        }
+      },
+      "Application": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "startAcademicYear": { "type": "string", "format": "date" },
+          "endAcademicYear": { "type": "string", "format": "date" },
+          "candidate": { "$ref": "#/components/schemas/Candidate" },
+          "speciality": { "$ref": "#/components/schemas/Speciality" },
+          "archived": { "type": "boolean" },
+          "actived": { "type": "boolean" }
+        }
+      },
+      "Campus": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "capacity": { "type": "integer", "format": "int32" },
+          "quarter": { "type": "string" },
+          "town": { "type": "string" },
+          "trainingCenter": { "$ref": "#/components/schemas/TrainingCenter" },
+          "ycoor": { "type": "number", "format": "double" },
+          "xcoor": { "type": "number", "format": "double" },
+          "archived": { "type": "boolean" },
+          "actived": { "type": "boolean" }
+        }
+      },
+      "Candidate": {
+        "type": "object",
+        "properties": {
+          "idUser": { "type": "integer", "format": "int64" },
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "dateOfBirth": { "type": "string", "format": "date" },
+          "email": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "nationalIdNumber": { "type": "string" },
+          "password": { "type": "string" },
+          "accountLocked": { "type": "boolean" },
+          "enabled": { "type": "boolean" },
+          "roles": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Role" }
+          },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "sex": { "type": "string" },
+          "placeOfBirth": { "type": "string" },
+          "motherFullName": { "type": "string" },
+          "fatherFullName": { "type": "string" },
+          "motherProfession": { "type": "string" },
+          "fatherProfession": { "type": "string" },
+          "highestSchoolLevel": { "type": "string" },
+          "nationality": { "type": "string" },
+          "townOfResidence": { "type": "string" },
+          "profilePictureUrl": { "type": "string" },
+          "birthCertificateUrl": { "type": "string" },
+          "nationalIdCardUrl": { "type": "string" },
+          "highestDiplomatUrl": { "type": "string" },
+          "contentStatus": {
+            "type": "string",
+            "enum": ["SUBMITTED", "DRAFT", "PENDING_REVIEW", "APPROVED"]
+          },
+          "hasSchooledList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/HasSchooled" }
+          },
+          "applicationList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Application" }
+          },
+          "name": { "type": "string" },
+          "authorities": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/GrantedAuthority" }
+          },
+          "accountNonExpired": { "type": "boolean" },
+          "credentialsNonExpired": { "type": "boolean" },
+          "username": { "type": "string" },
+          "accountNonLocked": { "type": "boolean" }
+        }
+      },
+      "Course": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "code": { "type": "string" },
+          "description": { "type": "string" },
+          "specialityList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Speciality" }
+          },
+          "archived": { "type": "boolean" },
+          "actived": { "type": "boolean" }
+        }
+      },
+      "CreateCampusRequest": {
+        "required": ["capacity", "name", "quarter", "town"],
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "capacity": { "type": "integer", "format": "int32" },
+          "quarter": { "type": "string" },
+          "town": { "type": "string" },
+          "trainingCenter": { "$ref": "#/components/schemas/TrainingCenter" },
+          "ycoor": { "type": "number", "format": "double" },
+          "xcoor": { "type": "number", "format": "double" }
+        }
+      },
+      "GrantedAuthority": {
+        "type": "object",
+        "properties": { "authority": { "type": "string" } }
+      },
+      "HasSchooled": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "startYear": { "type": "string", "format": "date" },
+          "endYear": { "type": "string", "format": "date" },
+          "candidate": { "$ref": "#/components/schemas/Candidate" },
+          "trainingCenter": { "$ref": "#/components/schemas/TrainingCenter" },
+          "archived": { "type": "boolean" },
+          "actived": { "type": "boolean" }
+        }
+      },
+      "OffersSpeciality": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "agreement": { "type": "string" },
+          "speciality": { "$ref": "#/components/schemas/Speciality" },
+          "trainingCenter": { "$ref": "#/components/schemas/TrainingCenter" },
+          "archived": { "type": "boolean" },
+          "actived": { "type": "boolean" }
+        }
+      },
+      "Promoter": {
+        "type": "object",
+        "properties": {
+          "idUser": { "type": "integer", "format": "int64" },
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "dateOfBirth": { "type": "string", "format": "date" },
+          "email": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "nationalIdNumber": { "type": "string" },
+          "password": { "type": "string" },
+          "accountLocked": { "type": "boolean" },
+          "enabled": { "type": "boolean" },
+          "roles": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Role" }
+          },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "address": { "type": "string" },
+          "trainingCenterList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TrainingCenter" }
+          },
+          "schoolLevel": { "type": "string" },
+          "name": { "type": "string" },
+          "authorities": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/GrantedAuthority" }
+          },
+          "accountNonExpired": { "type": "boolean" },
+          "credentialsNonExpired": { "type": "boolean" },
+          "username": { "type": "string" },
+          "accountNonLocked": { "type": "boolean" }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "idRole": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Speciality": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "code": { "type": "string" },
+          "description": { "type": "string" },
+          "course": { "$ref": "#/components/schemas/Course" },
+          "offersSpecialityList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/OffersSpeciality" }
+          },
+          "applicationList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Application" }
+          },
+          "archived": { "type": "boolean" },
+          "actived": { "type": "boolean" }
+        }
+      },
+      "TrainingCenter": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "createdBy": { "type": "integer", "format": "int64" },
+          "lastModifiedBy": { "type": "integer", "format": "int64" },
+          "fullName": { "type": "string" },
+          "acronym": { "type": "string" },
+          "agreementNumber": { "type": "string" },
+          "agreementFileUrl": { "type": "string" },
+          "startDateOfAgreement": { "type": "string", "format": "date" },
+          "endDateOfAgreement": { "type": "string", "format": "date" },
+          "division": { "type": "string" },
+          "promoter": { "$ref": "#/components/schemas/Promoter" },
+          "offersSpecialityList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/OffersSpeciality" }
+          },
+          "campusList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Campus" }
+          },
+          "centerPresentCandidateForDqp": { "type": "boolean" },
+          "centerPresentCandidateForCqp": { "type": "boolean" },
+          "archived": { "type": "boolean" },
+          "actived": { "type": "boolean" }
+        }
+      },
+      "CreatePromoterRequest": {
+        "required": [
+          "address",
+          "dateOfBirth",
+          "email",
+          "firstname",
+          "lastname",
+          "nationalIdNumber",
+          "phoneNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "email": { "type": "string" },
+          "phoneNumber": {
+            "maxLength": 2147483647,
+            "minLength": 9,
+            "type": "string"
+          },
+          "nationalIdNumber": {
+            "maxLength": 256,
+            "minLength": 9,
+            "type": "string"
+          },
+          "dateOfBirth": { "type": "string" },
+          "address": { "type": "string" },
+          "password": {
+            "maxLength": 256,
+            "minLength": 8,
+            "type": "string"
+          },
+          "schoolLevel": { "type": "string" }
+        }
+      },
+      "CandidateRegistrationRequest": {
+        "required": [
+          "email",
+          "firstname",
+          "lastname",
+          "nationalIdNumber",
+          "phoneNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "email": { "type": "string" },
+          "phoneNumber": {
+            "maxLength": 2147483647,
+            "minLength": 9,
+            "type": "string"
+          },
+          "nationalIdNumber": {
+            "maxLength": 2147483647,
+            "minLength": 9,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 2147483647,
+            "minLength": 8,
+            "type": "string"
+          }
+        }
+      },
+      "AuthenticationRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": {
+            "maxLength": 2147483647,
+            "minLength": 8,
+            "type": "string"
+          }
+        }
+      },
+      "AuthenticationResponse": {
+        "type": "object",
+        "properties": { "token": { "type": "string" } }
+      },
+      "CandidateRequest": {
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "dateOfBirth": { "type": "string", "format": "date" },
+          "email": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "nationalIdNumber": { "type": "string" },
+          "sex": { "type": "string" },
+          "placeOfBirth": { "type": "string" },
+          "motherFullName": { "type": "string" },
+          "fatherFullName": { "type": "string" },
+          "motherProfession": { "type": "string" },
+          "fatherProfession": { "type": "string" },
+          "highestSchoolLevel": { "type": "string" },
+          "nationality": { "type": "string" },
+          "townOfResidence": { "type": "string" },
+          "profilePictureUrl": { "type": "string" },
+          "birthCertificateUrl": { "type": "string" },
+          "nationalIdCardUrl": { "type": "string" },
+          "highestDiplomatUrl": { "type": "string" },
+          "contentStatus": {
+            "type": "string",
+            "enum": ["SUBMITTED", "DRAFT", "PENDING_REVIEW", "APPROVED"]
+          }
+        }
+      },
+      "TrainingCenterResponse": {
+        "type": "object",
+        "properties": {
+          "fullName": { "type": "string" },
+          "acronym": { "type": "string" },
+          "agreementNumber": { "type": "string" },
+          "agreementFile": {
+            "type": "array",
+            "items": { "type": "string", "format": "byte" }
+          },
+          "startDateOfAgreement": { "type": "string", "format": "date" },
+          "endDateOfAgreement": { "type": "string", "format": "date" },
+          "division": { "type": "string" },
+          "promoter": { "$ref": "#/components/schemas/Promoter" },
+          "offersSpecialityList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/OffersSpeciality" }
+          },
+          "campusList": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Campus" }
+          },
+          "centerPresentCandidateForDqp": { "type": "boolean" },
+          "centerPresentCandidateForCqp": { "type": "boolean" }
+        }
+      },
+      "PageResponseTrainingCenterResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TrainingCenterResponse" }
+          },
+          "number": { "type": "integer", "format": "int32" },
+          "size": { "type": "integer", "format": "int32" },
+          "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
+          "first": { "type": "boolean" },
+          "last": { "type": "boolean" }
+        }
+      },
+      "PageResponseStaffResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/StaffResponse" }
+          },
+          "number": { "type": "integer", "format": "int32" },
+          "size": { "type": "integer", "format": "int32" },
+          "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
+          "first": { "type": "boolean" },
+          "last": { "type": "boolean" }
+        }
+      },
+      "StaffResponse": {
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "dateOfBirth": { "type": "string", "format": "date" },
+          "email": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "nationalIdNumber": { "type": "string" },
+          "accountLocked": { "type": "boolean" },
+          "enabled": { "type": "boolean" }
+        }
+      },
+      "PageResponsePromoterResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/PromoterResponse" }
+          },
+          "number": { "type": "integer", "format": "int32" },
+          "size": { "type": "integer", "format": "int32" },
+          "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
+          "first": { "type": "boolean" },
+          "last": { "type": "boolean" }
+        }
+      },
+      "PromoterResponse": {
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "dateOfBirth": { "type": "string", "format": "date" },
+          "email": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "nationalIdNumber": { "type": "string" },
+          "accountLocked": { "type": "boolean" },
+          "enabled": { "type": "boolean" }
+        }
+      },
+      "Division": {
+        "type": "object",
+        "properties": {
+          "department": { "type": "string" },
+          "region": { "type": "string" }
+        }
+      },
+      "CandidateResponse": {
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "dateOfBirth": { "type": "string", "format": "date" },
+          "email": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "nationalIdNumber": { "type": "string" },
+          "sex": { "type": "string" },
+          "placeOfBirth": { "type": "string" },
+          "motherFullName": { "type": "string" },
+          "fatherFullName": { "type": "string" },
+          "motherProfession": { "type": "string" },
+          "fatherProfession": { "type": "string" },
+          "highestSchoolLevel": { "type": "string" },
+          "nationality": { "type": "string" },
+          "townOfResidence": { "type": "string" },
+          "profilePictureUrl": { "type": "string" },
+          "birthCertificateUrl": { "type": "string" },
+          "nationalIdCardUrl": { "type": "string" },
+          "highestDiplomatUrl": { "type": "string" },
+          "contentStatus": {
+            "type": "string",
+            "enum": ["SUBMITTED", "DRAFT", "PENDING_REVIEW", "APPROVED"]
+          }
+        }
+      },
+      "PageResponseCandidateResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CandidateResponse" }
+          },
+          "number": { "type": "integer", "format": "int32" },
+          "size": { "type": "integer", "format": "int32" },
+          "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
+          "first": { "type": "boolean" },
+          "last": { "type": "boolean" }
+        }
+      },
+      "CampusResponse": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "capacity": { "type": "integer", "format": "int32" },
+          "quarter": { "type": "string" },
+          "town": { "type": "string" },
+          "trainingCenterCampus": {
+            "$ref": "#/components/schemas/TrainingCenter"
+          },
+          "ycoor": { "type": "number", "format": "double" },
+          "xcoor": { "type": "number", "format": "double" }
+        }
+      },
+      "PageResponseCampusResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CampusResponse" }
+          },
+          "number": { "type": "integer", "format": "int32" },
+          "size": { "type": "integer", "format": "int32" },
+          "totalElements": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" },
+          "first": { "type": "boolean" },
+          "last": { "type": "boolean" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "description": "JWT auth description",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

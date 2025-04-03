@@ -7,6 +7,7 @@ import { Lead } from "../../models/model";
   providedIn: 'root'
 })
 export class LeadService extends Dexie  {
+ 
   
      leads!: Table<Lead, number>;
 
@@ -229,5 +230,9 @@ export class LeadService extends Dexie  {
        return await this.leads.where('user_id').equals(user_id).toArray();
       }
 
+      async  getLeadById(lead_id: number): Promise<Lead> {
+        return await this.leads.where('id').equals(lead_id).first();
+
+      }
     
 }

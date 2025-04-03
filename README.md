@@ -1,5 +1,34 @@
-# Skote -  Angular 13 Responsive Admin Dashboard Template 
+# BizDevSync -  A plateform for business deveopers for business developpers
 
+## Presentation
+BizDevSync is an all-in-one SaaS platform designed for business developers, sales teams, and growth strategists to streamline their client acquisition and relationship management processes. The platform leverages IndexedDB for efficient offline data storage, ensuring seamless access to client interactions, deal progress, and market insights.
+
+## Demo
+Below are the demo credentials for testing purposes
+superadmin: 
+    login:superadmin@mail.com
+    password:password
+
+admin: 
+    login:admin@mail.com
+    password:password
+
+operator: 
+    login:operator@mail.com
+    password:password 
+
+enterprise admin: 
+    login:admin1@techplus.com
+    password:password 
+
+biz developper: 
+    login:dev2@techplus.com
+    password:password 
+
+solo biz developper: 
+    login:solodev1@gmail.com
+    password:password
+    
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

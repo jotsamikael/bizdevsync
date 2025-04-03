@@ -1,7 +1,6 @@
 <div class="container-fluid">
     <app-page-title title="client Portfolio" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
-
     <div class="row justify-content-end mb-3">
         <div class="col-md-4 text-end">
             <button class="btn btn-soft-primary  waves-effect waves-light mx-2"
@@ -11,13 +10,11 @@
 
     </div>
 
-
     <div class="row">
         <div *ngFor="let stat of followUpStat" class="col-md-4">
             <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"></app-stat>
         </div>
     </div>
-
 
     <div class="row justify-content-end">
         <div class="col-md-3">
@@ -48,7 +45,7 @@
                     <td mat-cell *matCellDef="let row"> {{row.start_date}} </td>
                 </ng-container>
 
-                <!-- region Column -->
+                <!-- source Column -->
                 <ng-container matColumnDef="source">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> source </th>
                     <td mat-cell *matCellDef="let row"> {{row.source}} </td>
@@ -57,7 +54,8 @@
                 <!-- lastactiondate Column -->
                 <ng-container matColumnDef="last_action_date">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Last action date </th>
-                    <td mat-cell *matCellDef="let row"> {{row.activities[row.activities.length - 1].last_action_date}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.activities[row.activities.length - 1].last_action_date}}
+                    </td>
                 </ng-container>
 
                 <!-- region Column -->
@@ -72,19 +70,26 @@
                     <td mat-cell *matCellDef="let row"> {{row.meetings[row.meetings.length - 1].next_action}} </td>
                 </ng-container>
 
-                
                 <!-- actions Column -->
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> actions </th>
                     <td mat-cell *matCellDef="let row">
-                        <button mat-button [matMenuTriggerFor]="menu" #menuTrigger><i
-                                class="bx bx-dots-vertical-rounded"></i></button>
+                       
+                        <button mat-button [matMenuTriggerFor]="menu" #menuTrigger>
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item><i class="bx bx-book-open"></i> details</button>
-                            <button mat-menu-item><i class="bx bx-edit"></i>edit</button>
-                            <button mat-menu-item><i class="bx bx-trash"></i>delete</button>
+                            <button mat-menu-item (click)="goToFollowUpDetails(row)">
+                                <i class="bx bx-book-open"></i> details
+                            </button>
+                           
+                            <button mat-menu-item (click)="edit(row)">
+                                <i class="bx bx-edit"></i> edit
+                            </button>
+                            <button mat-menu-item (click)="delete(row)">
+                                <i class="bx bx-trash"></i> delete
+                            </button>
                         </mat-menu>
-
                     </td>
                 </ng-container>
 
@@ -155,7 +160,7 @@
                             <option value="Cameroon ">Cameroon</option>
                             <option value="Gabon">Gabon</option>
                             <option value="Congo Brazzavile">Congo Brazzavile</option>
-        
+
                         </select>
                     </div>
                 </div>
@@ -167,14 +172,14 @@
                             <option value="Cameroon ">Central Africa</option>
                             <option value="Gabon">West Africa</option>
                             <option value="Congo Brazzavile">East Africa</option>
-        
+
                         </select>
                     </div>
                        
                 </div>
             </div>
-          
-         
+
+
              
         </div>
           <div class="modal-footer">
@@ -182,8 +187,8 @@
 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                 (click)="modalRef?.hide()">Close</button>
-                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button [disabled]="!form.valid  || (processing)"      
-                class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button
+                [disabled]="!form.valid  || (processing)"       class="btn btn-primary">Submit</button>
               </div>
     </form>
 </ng-template><!-- /.modal -->

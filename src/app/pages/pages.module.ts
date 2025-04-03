@@ -84,11 +84,14 @@ import { EnterpriseManagementComponent } from './enterprise-management/enterpris
 import { ActivityComponent } from './bizdev/activity/activity.component';
 import { LeadComponent } from './bizdev/lead/lead.component';
 import { FollowupComponent } from './bizdev/followup/followup.component';
+import { FollowupDetailsComponent } from './bizdev/followup/single-follow-up-details/followup-details/followup-details.component';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 
 @NgModule({
-  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent],
+  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent],
   imports: [
+    AccordionModule,
     MatAutocompleteModule,
     MatBadgeModule,
     MatBottomSheetModule,

@@ -13,6 +13,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { LeadComponent } from './bizdev/lead/lead.component';
 import { ActivityComponent } from './bizdev/activity/activity.component';
 import { FollowupComponent } from './bizdev/followup/followup.component';
+import { FollowupDetailsComponent } from './bizdev/followup/single-follow-up-details/followup-details/followup-details.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'dashboard' },
@@ -30,6 +31,8 @@ const routes: Routes = [
  { path: 'activity-management', component: ActivityComponent },
  { path: 'bizdev-client', component: LeadComponent },
  { path: 'follow-ups', component: FollowupComponent },
+ { path: 'follow-up-details', component: FollowupDetailsComponent },
+
 
 
  //common

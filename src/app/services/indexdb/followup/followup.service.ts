@@ -15,7 +15,7 @@ export class FollowUpService extends Dexie  {
         "id":1,
          "user_id":7,
          "lead_id":1,
-         "start_date":"20-03-2025",
+         "start_date":"2025-02-03",
          "source":"Prospecting",
          "activities":[
           {
@@ -433,6 +433,11 @@ export class FollowUpService extends Dexie  {
       async getFollowUpByUser(user_id: number): Promise<FollowUp[]>{
         console.log(user_id)
        return await this.followup.where('user_id').equals(user_id).toArray();
+      }
+
+      async getFollowupById(idFollowup: number): Promise<FollowUp> {
+        return await this.followup.where('id').equals(idFollowup).first();
+
       }
 
     

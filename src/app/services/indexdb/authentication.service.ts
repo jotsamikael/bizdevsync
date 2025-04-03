@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as data from 'src/app/bizdevsync_sample_data.json';
+import { TokenService } from '../token/token.service';
 
 
 @Injectable({
@@ -7,6 +8,8 @@ import * as data from 'src/app/bizdevsync_sample_data.json';
 })
 export class AuthenticationService {
   private database: any = data;
+  constructor(private tokenService: TokenService) { }
+
 
   getUserByCredential(email: string, password: string) {
 
@@ -14,6 +17,9 @@ export class AuthenticationService {
 
   }
 
+  logout(){
+   this.tokenService.logout()
+  }
 
-  constructor() { }
+
 }

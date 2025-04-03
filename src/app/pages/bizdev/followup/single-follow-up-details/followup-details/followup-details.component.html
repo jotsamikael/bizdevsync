@@ -1,0 +1,228 @@
+<div class="container-fluid">
+    <!-- breadcrumb item 
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">{{ this.lead.name }}</h4>
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <ng-container>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{{ this.lead.name}}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{ this.lead.name }}
+                            </li>
+                        </ng-container>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+
+    <div class="row mx-2">
+        <div class="col-md-7 text-end">
+
+            <input class="form-control form-control-lg mb-2" type="text" value={{this.lead.name}}
+                id="example-text-input">
+            <div class="row">
+
+                <div *ngFor="let stat of singlefollowupStat" class="col-md-4">
+                    <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"></app-stat>
+                </div>
+            </div>
+            <table mat-table [dataSource]="dataSourceActivity" multiTemplateDataRows class="mat-elevation-z8">
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayActivity">
+                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                </ng-container>
+                <ng-container matColumnDef="expand">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button aria-label="expand row"
+                            (click)="toggleExpandActivity(element); $event.stopPropagation()">
+                            <mat-icon *ngIf="expandedElementActivity !== element">keyboard_arrow_down</mat-icon>
+                            <mat-icon *ngIf="expandedElementActivity === element">keyboard_arrow_up</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpandActivity.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="element == expandedElementActivity ? 'expanded' : 'collapsed'">
+
+                            <div class="example-element-description">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div><b>Summary</b></div>
+                                        {{element.action_detail}}
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis alias dolores
+                                        dolorum nostrum a pariatur explicabo exercitationem voluptatibus, distinctio
+                                        eius corrupti sequi inventore in culpa porro placeat assumenda, consectetur
+                                        illum?
+                                        <!-- <span class="example-element-description-attribution"> -- Next Action </span> -->
+
+
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="btn btn-soft-info mx-2">
+                                            <i class="bx bxs-edit"></i>
+                                        </button>
+                                        <button class="btn btn-soft-info mx-2">
+                                            <i class="bx bx-share-alt"></i>
+                                        </button>
+                                        <button class="btn btn-soft-danger mx-2">
+                                            <i class="bx bx-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandActivity"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpandActivity;"
+                    class="example-element-row" [class.example-expanded-row]="expandedElementActivity === element"
+                    (click)="expandedElementActivity = expandedElementActivity === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+
+        </div>
+
+        <div class="col-md-5">
+            <accordion [isAnimated]="true" class="accordion custom-accordion" [closeOthers]="true">
+                <accordion-group [isOpen]="isFirstOpen" heading="Basic Infos" class="accordion-item" #flush1>
+                    <span accordion-heading class="float-end fs-5">
+                        <i class="mdi"
+                            [ngClass]="!flush1?.isOpen ? 'mdi mdi-chevron-down accor-plus-icon': 'mdi mdi-chevron-up accor-plus-icon'"></i>
+                    </span>
+                    <div class="text-muted">
+                        <!-- START BASIC FOLLOWUP INFOS FORM -->
+                        <form class="row mb-4">
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Source</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" value={{this.followup.source}}>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-datetime-local-input"
+                                    class="col-md-2 col-form-label">Started</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="date" value={{this.followup.start_date}}>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Contact</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" value="Simon Koe">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Tel.</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="tel" value="237698502147">
+                                </div>
+                            </div>
+                            <div class="mb-3 px-4 row">
+                                <button class=" text-center btn btn-block btn-lg btn-soft-primary"><i
+                                        class="bx bx-save"></i> Save</button>
+                            </div>
+                        </form>
+
+                        <!-- END BASIC FOLLOWUP INFOS FORM -->
+                    </div>
+                </accordion-group>
+                <accordion-group heading="Meeting history" class="accordion-item" #flush2>
+                    <span accordion-heading class="float-end fs-5">
+                        <i class="mdi"
+                            [ngClass]="!flush2?.isOpen ? 'mdi mdi-chevron-down accor-plus-icon': 'mdi mdi-chevron-up accor-plus-icon'"></i>
+                    </span>
+                    
+            <!-- START MEETINGS HISTORY -->
+            <table mat-table [dataSource]="dataSourceMeeting" multiTemplateDataRows class="mat-elevation-z8">
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayMeeting">
+                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                </ng-container>
+                <ng-container matColumnDef="expand">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button aria-label="expand row"
+                            (click)="toggleExpandMeeting(element); $event.stopPropagation()">
+                            <mat-icon *ngIf="expandedElementMeeting !== element">keyboard_arrow_down</mat-icon>
+                            <mat-icon *ngIf="expandedElementMeeting === element">keyboard_arrow_up</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpandMeeting.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="element == expandedElementMeeting ? 'expanded' : 'collapsed'">
+
+                            <div class="example-element-description">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div><b>Summary</b></div>
+                                        {{element.Summary}}
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis alias dolores
+                                        dolorum nostrum a pariatur explicabo exercitationem voluptatibus, distinctio
+                                        eius corrupti sequi inventore in culpa porro placeat assumenda, consectetur
+                                        illum?
+                                        <!-- <span class="example-element-description-attribution"> -- Next Action </span> -->
+
+
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-soft-info mx-1">
+                                            <i class="bx bxs-edit"></i>
+                                        </button>
+                                        <button class="btn btn-soft-info mx-1">
+                                            <i class="bx bx-share-alt"></i>
+                                        </button>
+                                        <button class="btn btn-soft-danger mx-1">
+                                            <i class="bx bx-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandMeeting"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpandMeeting;"
+                    class="example-element-row" [class.example-expanded-row]="expandedElementMeeting === element"
+                    (click)="expandedElementMeeting = expandedElementMeeting === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+            <!-- END MEETINGS HISTORY -->
+                  
+                </accordion-group>
+                <accordion-group heading="Accordion Item #3" class="accordion-item" #flush3>
+                    <span accordion-heading class="float-end fs-5">
+                        <i class="mdi"
+                            [ngClass]="!flush3?.isOpen ? 'mdi mdi-chevron-down accor-plus-icon': 'mdi mdi-chevron-up accor-plus-icon'"></i>
+                    </span>
+                    <div class="text-muted">
+                        <strong class="text-dark">This is the third item's accordion body.</strong> It is hidden by
+                       
+                    </div>
+                </accordion-group>
+            </accordion>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<!--  Modals  example -->

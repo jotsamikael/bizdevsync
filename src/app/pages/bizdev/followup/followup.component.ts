@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { User } from 'src/app/core/models/auth.models';
 import { FollowUpService } from 'src/app/services/indexdb/followup/followup.service';
@@ -56,7 +57,8 @@ export class FollowupComponent {
   constructor(
     private tokenService: TokenService,
     private followUpService: FollowUpService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private router: Router
   ) {
     this.getCurrentUser();
     this.getClientsOfLoggedInUser();
@@ -134,6 +136,13 @@ get f() {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  goToFollowUpDetails(followupItem:FollowUp){
+    console.log(followupItem)
+    localStorage.setItem('followup',JSON.stringify(followupItem))
+    this.router.navigate(['backend/follow-up-details']);
+
   }
 
   openCreateNewModal(addNew: any) {

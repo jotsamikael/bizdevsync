@@ -17,18 +17,54 @@ export class FollowUpService extends Dexie  {
          "lead_id":1,
          "start_date":"2025-02-03",
          "source":"Prospecting",
+         "contacts":[
+          {
+            "id":1,
+            "name":"John Koe",
+            "email":"johnkoe@yuxpay.com",
+            "phone":"237698253120",
+            "role":"DTO",
+            "user_id":7,
+            "weight":"4.0"
+
+          },
+          {
+            "id":2,
+            "name":"Sarah Tah",
+            "email":"s.tah@yuxpay.com",
+            "phone":"237699253230",
+            "role":"Secretary General",
+            "user_id":7,
+            "weight":"3.5"
+
+          }
+         ],
          "activities":[
           {
             "action_detail":"Envoyer le brochure de presentation de eGov pour...",
             "last_action":"presentation de eGov",
-            "last_action_date":"21-03-2025",
+            "last_action_date":"2025-03-21",
             "next_action":"Relancer le propect la semaine prochaine"
+      
+          },
+          {
+            "action_detail":"Appeler X pour confirmer y...",
+            "last_action":"Intoduire eGov",
+            "last_action_date":"2025-03-11",
+            "next_action":"Envoyer le brochure de presentation de eGov"
+      
+          },
+          {
+            "action_detail":"Rencontrer M. V pour lui parler de X...",
+            "last_action":"presentation de eGov",
+            "last_action_date":"2025-02-27",
+            "next_action":"Appeler X pour confirmer y..."
       
           }
          ],
          "meetings":[
           {
-            "date":"26-03-2025",
+            "date":"2025-03-26",
             "summary":"Nous avons propose plusieur solution de....",
             "paticipants":[
               {
@@ -50,7 +86,7 @@ export class FollowUpService extends Dexie  {
       
           },
           {
-            "date":"30-03-2025",
+            "date":"2025-03-30",
             "summary":"Nous avons fait une demo de la platforme....",
             "paticipants":[
               {
@@ -89,6 +125,28 @@ export class FollowUpService extends Dexie  {
          "lead_id":2,
          "start_date":"16-08-2024",
          "source":"Prospecting",
+         "contacts":[
+          {
+            "id":3,
+            "name":"Leslie Kegne",
+            "email":"k.leslie@yuxpay.com",
+            "phone":"237698253120",
+            "role":"DTO",
+            "user_id":7,
+            "weight":"4.0"
+
+          },
+          {
+            "id":4,
+            "name":"Anton chia",
+            "email":"s.anto@yuxpay.com",
+            "phone":"237699253230",
+            "role":"Secretary General",
+            "user_id":7,
+            "weight":"3.5"
+
+          }
+         ],
          "activities":[
           {
             "action_detail":"Envoyer le brochure de presentation de Aptos pour...",
@@ -159,6 +217,28 @@ export class FollowUpService extends Dexie  {
          "lead_id":5,
          "start_date":"06-04-2023",
          "source":"Prospecting",
+         "contacts":[
+          {
+            "id":5,
+            "name":"Dan lok",
+            "email":"d.lok@yuxpay.com",
+            "phone":"237698253120",
+            "role":"DTO",
+            "user_id":7,
+            "weight":"4.0"
+
+          },
+          {
+            "id":6,
+            "name":"Suzanne Teh",
+            "email":"s.teh@yuxpay.com",
+            "phone":"237699253230",
+            "role":"Secretary General",
+            "user_id":7,
+            "weight":"3.5"
+
+          }
+         ],
          "activities":[
           {
             "action_detail":"Envoyer le brochure de presentation de Aptos pour...",
@@ -223,6 +303,28 @@ export class FollowUpService extends Dexie  {
          "lead_id":6,
          "start_date":"16-10-2024",
          "source":"Prospecting",
+         "contacts":[
+          {
+            "id":7,
+            "name":"John Koe",
+            "email":"johnkoe@yuxpay.com",
+            "phone":"237698253120",
+            "role":"DTO",
+            "user_id":9,
+            "weight":"4.0"
+
+          },
+          {
+            "id":8,
+            "name":"Sarah Tah",
+            "email":"s.tah@yuxpay.com",
+            "phone":"237699253230",
+            "role":"Secretary General",
+            "user_id":9,
+            "weight":"3.5"
+
+          }
+         ],
          "activities":[
           {
             "action_detail":"Envoyer le brochure de presentation de Blue seed pour...",
@@ -280,6 +382,28 @@ export class FollowUpService extends Dexie  {
          "lead_id":7,
          "start_date":"20-12-2023",
          "source":"Prospecting",
+         "contacts":[
+          {
+            "id":9,
+            "name":"John Koe",
+            "email":"johnkoe@yuxpay.com",
+            "phone":"237698253120",
+            "role":"DTO",
+            "user_id":10,
+            "weight":"4.0"
+
+          },
+          {
+            "id":10,
+            "name":"Sarah Tah",
+            "email":"s.tah@yuxpay.com",
+            "phone":"237699253230",
+            "role":"Secretary General",
+            "user_id":10,
+            "weight":"3.5"
+
+          }
+         ],
          "activities":[
           {
             "action_detail":"Envoyer le brochure de presentation de eGov pour...",
@@ -345,7 +469,43 @@ export class FollowUpService extends Dexie  {
          "lead_id":8,
          "start_date":"03-02-2025",
          "source":"Prospecting",
+          "contacts":[
+          {
+            "id":11,
+            "name":"John Koe",
+            "email":"johnkoe@yuxpay.com",
+            "phone":"237698253120",
+            "role":"DTO",
+            "user_id":11,
+            "weight":"4.0"
+
+          },
+          {
+            "id":12,
+            "name":"Sarah Tah",
+            "email":"s.tah@yuxpay.com",
+            "phone":"237699253230",
+            "role":"Secretary General",
+            "user_id":12,
+            "weight":"3.5"
+
+          }
+         ],
          "activities":[
+          {
+            "action_detail":"Appeler x pour confimer y",
+            "last_action":"Point sur eGov",
+            "last_action_date":"1-03-2025",
+            "next_action":"Relancer le propect la semaine prochaine"
+      
+          },
+          {
+            "action_detail":"Envoyer le brochure de presentation de Aptos pour...",
+            "last_action":"presentation de eGov",
+            "last_action_date":"27-02-2025",
+            "next_action":"Relancer le propect la semaine prochaine"
+      
+          },
           {
             "action_detail":"Envoyer le brochure de presentation de Aptos pour...",
             "last_action":"presentation de eGov",
@@ -353,6 +513,7 @@ export class FollowUpService extends Dexie  {
             "next_action":"Relancer le propect la semaine prochaine"
       
           }
+
          ],
          "meetings":[
           {
@@ -436,6 +597,7 @@ export class FollowUpService extends Dexie  {
       }
 
       async getFollowupById(idFollowup: number): Promise<FollowUp> {
+        console.log( this.followup.where('id').equals(idFollowup).first())
         return await this.followup.where('id').equals(idFollowup).first();
 
       }

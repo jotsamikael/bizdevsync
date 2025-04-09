@@ -72,6 +72,7 @@ export interface User {
         user_id: number;
       start_date:string;
       source:string;
+      contacts:Contact[];
       activities: Activity[],
       meetings:Meeting[]
     

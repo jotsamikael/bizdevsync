@@ -51,6 +51,7 @@
     "flatpickr": "^4.6.13",
     "leaflet": "^1.9.4",
     "masonry-layout": "^4.2.2",
+    "mat-table-exporter": "^15.0.0",
     "metismenujs": "^1.4.0",
     "ng-apexcharts": "^1.7.7",
     "ng-chartist": "^8.1.0",

@@ -86,11 +86,21 @@ import { LeadComponent } from './bizdev/lead/lead.component';
 import { FollowupComponent } from './bizdev/followup/followup.component';
 import { FollowupDetailsComponent } from './bizdev/followup/single-follow-up-details/followup-details/followup-details.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CreatemeetingmodalComponent } from './bizdev/followup/single-follow-up-details/followup-details/createmeetingmodal/createmeetingmodal.component';
+
 
 
 @NgModule({
-  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent],
+  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent, CreatemeetingmodalComponent],
   imports: [
+    MatFormFieldModule,
+  MatInputModule,
+  MatChipsModule,
+  MatAutocompleteModule,
+  MatIconModule,
+    MatTableExporterModule,
     AccordionModule,
     MatAutocompleteModule,
     MatBadgeModule,

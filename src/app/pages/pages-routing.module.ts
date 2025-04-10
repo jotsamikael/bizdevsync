@@ -9,11 +9,12 @@ import { CardManagementComponent } from './card-management/card-management.compo
 import { BusinessDevDashboardComponent } from './bizdev/business-dev-dashboard/business-dev-dashboard.component';
 import { EnterpriseDashboardComponent } from './enterprise-dashboard/enterprise-dashboard.component';
 import { EnterpriseManagementComponent } from './enterprise-management/enterprise-management.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './common/profile/profile.component';
 import { LeadComponent } from './bizdev/lead/lead.component';
 import { ActivityComponent } from './bizdev/activity/activity.component';
 import { FollowupComponent } from './bizdev/followup/followup.component';
 import { FollowupDetailsComponent } from './bizdev/followup/single-follow-up-details/followup-details/followup-details.component';
+import { HelpSupportInquiryComponent } from './common/help-support-inquiry/help-support-inquiry.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'dashboard' },
@@ -29,7 +30,7 @@ const routes: Routes = [
  //bizdev
  { path: 'business-dev-dashboard', component: BusinessDevDashboardComponent },
  { path: 'activity-management', component: ActivityComponent },
- { path: 'bizdev-client', component: LeadComponent },
+ { path: 'bizdev-leads', component: LeadComponent },
  { path: 'follow-ups', component: FollowupComponent },
  { path: 'follow-up-details', component: FollowupDetailsComponent },
 
@@ -37,6 +38,8 @@ const routes: Routes = [
 
  //common
  { path: 'profile', component: ProfileComponent },
+
+ { path: 'help-and-support', component: HelpSupportInquiryComponent },
 
 
 

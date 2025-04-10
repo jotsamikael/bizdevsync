@@ -10,6 +10,8 @@ import { FollowUpService } from 'src/app/services/indexdb/followup/followup.serv
 import { LeadService } from 'src/app/services/indexdb/lead/lead.service';
 import { TokenService } from 'src/app/services/indexdb/token.service';
 import { FollowUp, Lead } from 'src/app/services/models/model';
+import { FollowupDetailsComponent } from './single-follow-up-details/followup-details/followup-details.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-followup',
@@ -58,7 +60,9 @@ export class FollowupComponent {
     private tokenService: TokenService,
     private followUpService: FollowUpService,
     private modalService: BsModalService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
+    
   ) {
     this.getCurrentUser();
     this.getClientsOfLoggedInUser();
@@ -70,7 +74,6 @@ export class FollowupComponent {
 form = new FormGroup({
   business_competitors: new FormControl('', [Validators.required]),
   country: new FormControl('', [Validators.required]),
-  region: new FormControl('', [Validators.required]),
   actor_type: new FormControl('', [Validators.required]),
   name: new FormControl('', [Validators.required, Validators.maxLength(64), Validators.minLength(1)]),
 
@@ -82,7 +85,6 @@ disableForm() {
 
   this.form.controls['actor_type'].disable();
 
-  this.form.controls['region'].disable();
   this.form.controls['country'].disable();
   this.form.controls['business_competitors'].disable();
 
@@ -95,7 +97,6 @@ enableForm() {
 
   this.form.controls['actor_type'].enable();
 
-  this.form.controls['region'].enable();
   this.form.controls['country'].enable();
   this.form.controls['business_competitors'].enable();
 }
@@ -120,7 +121,7 @@ get f() {
   }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Client Portfolio', active: true }];
+    this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Followup Portfolio', active: true }];
 
   }
 
@@ -137,6 +138,18 @@ get f() {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  /*openFollowupDetailsModal(followupItem:FollowUp) {
+    localStorage.setItem('followup',JSON.stringify(followupItem))
+
+    const dialogRef = this.dialog.open(FollowupDetailsComponent, 
+      { width:'100vw', height:'100vw' },
+    );
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }*/
 
   goToFollowUpDetails(followupItem:FollowUp){
     console.log(followupItem)

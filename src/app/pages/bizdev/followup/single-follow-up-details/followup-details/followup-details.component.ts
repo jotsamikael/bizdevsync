@@ -266,6 +266,9 @@ openEditMeetingReport(editMeetingReport: any, meeting: Meeting) {
 }
 
 
+gotoFollowups(){
+  this.router.navigate(['backend/follow-ups']);
+}
 
 }
 

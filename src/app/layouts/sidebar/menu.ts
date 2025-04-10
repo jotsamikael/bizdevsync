@@ -252,7 +252,7 @@ export const MENU: MenuItem[] = [
 },
 {
     id: 36,
-    label: 'Activity Management',
+    label: 'Activities',
     icon: 'bxs-folder-open',
     link: 'activity-management',
     roles: ['business_developer','solo_business_developer']
@@ -261,9 +261,9 @@ export const MENU: MenuItem[] = [
 
 {
     id: 35,
-    label: 'Porfolio Management',
+    label: 'Leads',
     icon: 'bxs-briefcase',
-    link: 'bizdev-client',
+    link: 'bizdev-leads',
     roles: ['business_developer','solo_business_developer']
 
 },
@@ -274,7 +274,7 @@ export const MENU: MenuItem[] = [
     id: 30,
     label: 'Help & Support',
     icon: 'bx-headphone',
-    link: 'page-',
+    link: 'help-and-support',
     roles: ['enterprise_admin','business_developer','solo_business_developer']
 
 

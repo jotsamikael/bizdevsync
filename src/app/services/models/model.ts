@@ -75,8 +75,6 @@ export interface User {
       contacts:Contact[];
       activities: Activity[],
       meetings:Meeting[]
-    
-     
       }
 
     

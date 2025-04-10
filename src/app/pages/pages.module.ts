@@ -89,11 +89,12 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CreatemeetingmodalComponent } from './bizdev/followup/single-follow-up-details/followup-details/createmeetingmodal/createmeetingmodal.component';
+import { HelpSupportInquiryComponent } from './common/help-support-inquiry/help-support-inquiry.component';
 
 
 
 @NgModule({
-  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent, CreatemeetingmodalComponent],
+  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent, CreatemeetingmodalComponent, HelpSupportInquiryComponent],
   imports: [
     MatFormFieldModule,
   MatInputModule,

@@ -17,11 +17,11 @@ export class LeadComponent {
 
   breadCrumbItems: Array<{}>;
 
-  displayedColumns: string[] = ["id","enterprise_id","user_id","name", "country", "region", "actor_type","current_supplier","business_competitors","actions"];
+  displayedColumns: string[] = ["name", "country", "actor_type","current_supplier","actions"];
   dataSource: MatTableDataSource<Lead>;
 
   user: User;
-  clients: Lead[];
+  leads: Lead[];
   leadStat = [
     {
       title:"Total Leads",
@@ -57,7 +57,7 @@ export class LeadComponent {
     private modalService: BsModalService
   ) {
     this.getCurrentUser();
-    this.getClientsOfLoggedInUser();
+    this.getLeadsOfLoggedInUser();
     // Assign the data to the data source for the table to render
    
   }
@@ -111,16 +111,16 @@ get f() {
     this.user = JSON.parse(localStorage.getItem("token") || "{}");
   }
 
-  getClientsOfLoggedInUser() {
-    this.leadService.getLeadsByUser(this.user.id).then((clients) => {
-      this.clients = clients;
-      this.dataSource = new MatTableDataSource(this.clients);
-    console.log(this.clients)
+  getLeadsOfLoggedInUser() {
+    this.leadService.getLeadsByUser(this.user.id).then((leads) => {
+      this.leads = leads;
+      this.dataSource = new MatTableDataSource(this.leads);
+    console.log(this.leads)
     });
   }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Client Portfolio', active: true }];
+    this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Leads Portfolio', active: true }];
 
   }
 

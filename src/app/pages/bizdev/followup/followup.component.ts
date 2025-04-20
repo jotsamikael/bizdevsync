@@ -12,6 +12,7 @@ import { TokenService } from 'src/app/services/indexdb/token.service';
 import { FollowUp, Lead } from 'src/app/services/models/model';
 import { FollowupDetailsComponent } from './single-follow-up-details/followup-details/followup-details.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-followup',
@@ -22,7 +23,7 @@ export class FollowupComponent {
 
   breadCrumbItems: Array<{}>;
 
-  displayedColumns: string[] = ["id","lead_id","start_date","source","last_action_date","activities","meetings","actions"];
+  displayedColumns: string[] = ["lead_id","start_date","last_action_date","activities","meetings","actions"];
   dataSource: MatTableDataSource<FollowUp>;
 
   user: User;
@@ -55,9 +56,11 @@ export class FollowupComponent {
 
   modalRef?:BsModalRef;
   processing: boolean = false;
+  leads: Lead[];
 
   constructor(
     private tokenService: TokenService,
+    private leadService: LeadService,
     private followUpService: FollowUpService,
     private modalService: BsModalService,
     private router: Router,
@@ -72,33 +75,30 @@ export class FollowupComponent {
 
   
 form = new FormGroup({
-  business_competitors: new FormControl('', [Validators.required]),
-  country: new FormControl('', [Validators.required]),
-  actor_type: new FormControl('', [Validators.required]),
-  name: new FormControl('', [Validators.required, Validators.maxLength(64), Validators.minLength(1)]),
+  source: new FormControl('', [Validators.required]),
+  start_date: new FormControl('', [Validators.required]),
+  lead_id: new FormControl('', [Validators.required]),
 
 
 });
 
 disableForm() {
-  this.form.controls['name'].disable();
+  this.form.controls['lead_id'].disable();
 
-  this.form.controls['actor_type'].disable();
+  this.form.controls['start_date'].disable();
 
-  this.form.controls['country'].disable();
-  this.form.controls['business_competitors'].disable();
+  this.form.controls['source'].disable();
 
 
 }
 
 
 enableForm() {
-  this.form.controls['name'].enable();
+  this.form.controls['lead_id'].enable();
 
-  this.form.controls['actor_type'].enable();
+  this.form.controls['start_date'].enable();
 
-  this.form.controls['country'].enable();
-  this.form.controls['business_competitors'].enable();
+  this.form.controls['source'].enable();
 }
 
 
@@ -110,6 +110,7 @@ get f() {
 
   getCurrentUser() {
     this.user = JSON.parse(localStorage.getItem("token") || "{}");
+    console.log(this.user)
   }
 
   getClientsOfLoggedInUser() {
@@ -122,6 +123,7 @@ get f() {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Followup Portfolio', active: true }];
+    this.getAllLeadsForUser()
 
   }
 
@@ -139,18 +141,6 @@ get f() {
     }
   }
 
-  /*openFollowupDetailsModal(followupItem:FollowUp) {
-    localStorage.setItem('followup',JSON.stringify(followupItem))
-
-    const dialogRef = this.dialog.open(FollowupDetailsComponent, 
-      { width:'100vw', height:'100vw' },
-    );
-  
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }*/
-
   goToFollowUpDetails(followupItem:FollowUp){
     console.log(followupItem)
     localStorage.setItem('followup',JSON.stringify(followupItem))
@@ -161,5 +151,29 @@ get f() {
   openCreateNewModal(addNew: any) {
     this.modalRef = this.modalService.show(addNew,{class: 'modal-nd'})
     }
+
+   confirmDelete(row: FollowUp) {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#566fe6',
+            cancelButtonColor: '#f46a6a',
+            confirmButtonText: 'Yes, delete it!'
+          }).then(result => {
+            if (result.value) {
+              Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            }
+          });
+        }
+
+
+        getAllLeadsForUser(){
+          this.leadService.getAllLeadsForUser( this.user.id).then(leads=>{
+            this.leads = leads
+            console.log(leads)
+          })
+        }
 
 }

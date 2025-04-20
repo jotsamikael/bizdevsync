@@ -90,12 +90,20 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CreatemeetingmodalComponent } from './bizdev/followup/single-follow-up-details/followup-details/createmeetingmodal/createmeetingmodal.component';
 import { HelpSupportInquiryComponent } from './common/help-support-inquiry/help-support-inquiry.component';
+import { LeadDetailsComponent } from './bizdev/lead/lead-details/lead-details.component';
+import { BizdevProductsComponent } from './bizdev/product-management/bizdev-products/bizdev-products.component';
+import { BizdevCategoriesComponent } from './bizdev/product-management/bizdev-categories/bizdev-categories.component';
+import { SingleProductDetailsComponent } from './bizdev/product-management/bizdev-products/single-product-details/single-product-details.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CaseManagementComponent } from './bizdev/case/case-management/case-management.component';
+import { CaseDetailComponent } from './bizdev/case/case-detail/case-detail.component';
 
 
 
 @NgModule({
-  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent, CreatemeetingmodalComponent, HelpSupportInquiryComponent],
+  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent, CreatemeetingmodalComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, SingleProductDetailsComponent, CaseManagementComponent, CaseDetailComponent],
   imports: [
+    CKEditorModule,
     MatFormFieldModule,
   MatInputModule,
   MatChipsModule,

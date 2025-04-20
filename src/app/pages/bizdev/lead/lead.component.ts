@@ -1,12 +1,20 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, TemplateRef, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { Router } from "@angular/router";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { BusinessService } from "src/app/services/indexdb/businessSector/businessSection.service";
+import { CommonService } from "src/app/services/indexdb/common/common.service";
+import { FormBuilderService } from "src/app/services/indexdb/common/services/form-builder.service";
+import { CountryAndRegionService } from "src/app/services/indexdb/countryandregion/countryandregion.service";
 import { LeadService } from "src/app/services/indexdb/lead/lead.service";
 import { TokenService } from "src/app/services/indexdb/token.service";
 import { Lead, User } from "src/app/services/models/model";
+import Swal from "sweetalert2";
+import { LeadStateService } from "./services/lead-state.service";
 
 @Component({
   selector: "app-lead",
@@ -17,7 +25,7 @@ export class LeadComponent {
 
   breadCrumbItems: Array<{}>;
 
-  displayedColumns: string[] = ["name", "country", "actor_type","current_supplier","actions"];
+  displayedColumns: string[] = ["created_by_user_id","name", "country", "actor_type","status","actions"];
   dataSource: MatTableDataSource<Lead>;
 
   user: User;
@@ -45,16 +53,27 @@ export class LeadComponent {
     }*/
   ]
 
+  @ViewChild('createLeadDialog') createLeadDialog: TemplateRef<any>;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   modalRef?:BsModalRef;
   processing: boolean = false;
+  form: FormGroup<any>;
 
   constructor(
+    private formBuilderService : FormBuilderService,
     private tokenService: TokenService,
     private leadService: LeadService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private countryService: CountryAndRegionService,
+    private businessSector: BusinessService,
+    private commonService: CommonService,
+    private router: Router,
+    private dialog: MatDialog,
+    private leadStateService: LeadStateService
+
   ) {
     this.getCurrentUser();
     this.getLeadsOfLoggedInUser();
@@ -62,27 +81,19 @@ export class LeadComponent {
    
   }
 
+  ngOnInit(): void {
+    this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Leads Portfolio', active: true }];
+    this.form = this.formBuilderService.createLeadForm()
+  }
 
   
-form = new FormGroup({
-  business_competitors: new FormControl('', [Validators.required]),
-  country: new FormControl('', [Validators.required]),
-  region: new FormControl('', [Validators.required]),
-  actor_type: new FormControl('', [Validators.required]),
-  name: new FormControl('', [Validators.required, Validators.maxLength(64), Validators.minLength(1)]),
 
-
-});
 
 disableForm() {
   this.form.controls['name'].disable();
-
   this.form.controls['actor_type'].disable();
-
-  this.form.controls['region'].disable();
   this.form.controls['country'].disable();
-  this.form.controls['business_competitors'].disable();
-
+  this.form.controls['is_private'].disable();
 
 }
 
@@ -90,12 +101,10 @@ disableForm() {
 
 enableForm() {
   this.form.controls['name'].enable();
-
   this.form.controls['actor_type'].enable();
-
-  this.form.controls['region'].enable();
   this.form.controls['country'].enable();
-  this.form.controls['business_competitors'].enable();
+  this.form.controls['is_private'].enable();
+
 }
 
 
@@ -107,9 +116,24 @@ get f() {
 
 }
 
+
   getCurrentUser() {
     this.user = JSON.parse(localStorage.getItem("token") || "{}");
   }
+
+
+  getRegionByCountry():string {
+   return this.countryService.getRegionByCountry(this.form.controls['country'].value);
+  }
+
+  getAllCountries(): string[] {
+   return this.countryService.getAllCountries()
+  }
+
+  getAllBusinessSector(): string[] {
+    return this.businessSector.getAllBusinessSector()
+   }
+   
 
   getLeadsOfLoggedInUser() {
     this.leadService.getLeadsByUser(this.user.id).then((leads) => {
@@ -119,9 +143,11 @@ get f() {
     });
   }
 
-  ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Leads Portfolio', active: true }];
+  
 
+  goToDetails(lead: Lead): void {
+    this.leadStateService.setLead(lead);
+    this.router.navigate(['/backend/lead-details']);
   }
 
   ngAfterViewInit() { 
@@ -142,4 +168,41 @@ get f() {
     this.modalRef = this.modalService.show(addNew,{class: 'modal-nd'})
     }
 
+    createLead(){
+      const newLead = {
+        name:   this.form.controls['name'].value ,
+        actor_type: this.form.controls['actor_type'].value,
+        country : this.form.controls['country'].value ,
+        is_private: this.commonService.getTrueOrFalse(this.form.controls['is_private'].value) ,
+
+      }
+      console.log(newLead)
+    }
+
+
+     confirmDelete() {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'You won\'t be able to revert this!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#566fe6',
+          cancelButtonColor: '#f46a6a',
+          confirmButtonText: 'Yes, delete it!'
+        }).then(result => {
+          if (result.value) {
+            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+          }
+        });
+      }
+
+      openImport(imported: any) {
+        this.modalRef = this.modalService.show(imported,{class: 'modal-nd'})
+        }
+
+
+        openLeadDialog() {
+          this.dialog.open(this.createLeadDialog);
+        }
+        
 }

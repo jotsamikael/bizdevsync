@@ -177,26 +177,7 @@ export const MENU: MenuItem[] = [
         roles: ['enterprise_admin']
 
     },
-    {
-        id: 23,
-        icon: 'bxs-store',
-        label: 'Products',
-        roles: ['enterprise_admin','solo_business_developer'],
-        subItems: [
-            {
-                id: 26,
-                label: 'Category',
-                link: 'tables/basic',
-                parentId: 23
-            },
-            {
-                id: 27,
-                label: 'Products',
-                link: 'tables/advanced',
-                parentId: 23
-            }
-        ]
-    },
+   
     {
         id: 24,
         label: 'Business Sectors',
@@ -262,11 +243,40 @@ export const MENU: MenuItem[] = [
 {
     id: 35,
     label: 'Leads',
-    icon: 'bxs-briefcase',
+    icon: 'bxs-user-pin',
     link: 'bizdev-leads',
     roles: ['business_developer','solo_business_developer']
 
 },
+{
+    id: 33,
+    label: 'Cases',
+    icon: 'bxs-briefcase',
+    link: 'bizdev-cases',
+    roles: ['business_developer','solo_business_developer']
+
+},
+{
+    id: 23,
+    icon: 'bxs-store',
+    label: 'Products',
+    roles: ['enterprise_admin','solo_business_developer','business_developer'],
+    subItems: [
+        {
+            id: 26,
+            label: 'Products',
+            link: 'products',
+            parentId: 23
+        },
+        {
+            id: 27,
+            label: 'Categories',
+            link: 'product-categories',
+            parentId: 23
+        }
+    ]
+},
+
 
 
 // (common to all users)
@@ -283,20 +293,12 @@ export const MENU: MenuItem[] = [
     id: 31,
     label: 'Profile Settings',
     icon: 'bxs-user-circle',
-    link: 'page-earphone',
+    link: 'profile',
     roles: ['super_admin','enterprise_admin','business_developer','solo_business_developer','operator','admin']
 
 
 },
-{
-    id: 32,
-    label: 'Logout',
-    icon: 'bxs-log-out',
-    link: 'page-earphone',
-    roles: ['super_admin','enterprise_admin','business_developer','solo_business_developer','operator','admin']
 
-
-},
 
     // END
     {

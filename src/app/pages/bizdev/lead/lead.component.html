@@ -1,18 +1,22 @@
 <div class="container-fluid">
-    <app-page-title title="client Portfolio" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <app-page-title title="lead Portfolio" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
 
     <div class="row justify-content-end mb-3">
         <div class="col-md-4 text-end">
             <button class="btn btn-soft-primary  waves-effect waves-light mx-2"
                 (click)="openCreateNewModal(addNew)">Create Lead</button>
-            <button class="btn btn-soft-primary  waves-effect waves-light mx-2">Import Lead</button>
-            <button class="btn btn-soft-primary  waves-effect waves-light" (click)="exporter.exportTable('csv')">Export Lead</button>
+            <button class="btn btn-soft-primary  waves-effect waves-light mx-2" (click)="openImport(import)">Import Lead</button>
+            <button class="btn btn-soft-primary  waves-effect waves-light" (click)="exporter.exportTable('csv')">Export
+                Lead</button>
 
         </div>
 
     </div>
 
+    <button (click)="openLeadDialog()">test</button>
+
+ 
 
     <div class="row">
         <div *ngFor="let stat of leadStat" class="col-md-4">
@@ -21,34 +25,23 @@
     </div>
 
 
-    <div class="row justify-content-end">
+    <div class="row justify-content-start">
         <div class="col-md-3">
             <mat-form-field matTooltip="Enter a prospect name">
                 <mat-label>Filter</mat-label>
-                <input  matInput (keyup)="applyFilter($event)" placeholder="Ex. Pacific bank" #input>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Pacific bank" #input>
             </mat-form-field>
         </div>
-        <div class="mat-elevation-z8">
+        <div class="card">
             <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows matTableExporter
-            #exporter="matTableExporter">
+                #exporter="matTableExporter">
 
-                <!-- ID Column 
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                </ng-container> -->
-
-                <!-- enterprise_id Column 
-                <ng-container matColumnDef="enterprise_id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> enterprise_id </th>
-                    <td mat-cell *matCellDef="let row"> {{row.enterprise_id}} </td>
-                </ng-container> -->
-
-                <!-- user_id Column 
-                <ng-container matColumnDef="user_id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> user_id </th>
-                    <td mat-cell *matCellDef="let row"> {{row.user_id}} </td>
-                </ng-container> -->
+                <!-- owner Column -->
+                <ng-container matColumnDef="created_by_user_id" *ngIf="this.user.role !='solo_business_developer'">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="The creator of this lead"> owner
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.created_by_user_id}} </td>
+                </ng-container>
 
                 <!-- name Column -->
                 <ng-container matColumnDef="name">
@@ -56,13 +49,13 @@
                     <td mat-cell *matCellDef="let row"> {{row.name}} </td>
                 </ng-container>
 
-                <!-- region Column -->
+                <!-- country Column -->
                 <ng-container matColumnDef="country">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> country </th>
                     <td mat-cell *matCellDef="let row"> {{row.country.name}} </td>
                 </ng-container>
 
-              
+
 
                 <!-- actor_type Column -->
                 <ng-container matColumnDef="actor_type">
@@ -70,10 +63,16 @@
                     <td mat-cell *matCellDef="let row"> {{row.actor_type}} </td>
                 </ng-container>
 
-                <!-- current_supplier Column -->
-                <ng-container matColumnDef="current_supplier">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> current_supplier </th>
-                    <td mat-cell *matCellDef="let row"> {{row.current_supplier}} </td>
+                <!-- status Column -->
+                <ng-container matColumnDef="status" *ngIf="this.user.role !='solo_business_developer'">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> status </th>
+                    <td mat-cell *matCellDef="let row">
+                        <span matTooltip="public" *ngIf="row.is_private" style="font-size: 32px;"
+                            class="text-primary"> <i class="bx bx-lock"></i></span>
+                        <span matTooltip="private" *ngIf="!row.is_private" style="font-size: 32px;"
+                            class="text-info"><i class="bx bx-lock-open"></i></span>
+
+                    </td>
                 </ng-container>
 
 
@@ -84,9 +83,8 @@
                         <button mat-button [matMenuTriggerFor]="menu" #menuTrigger><i
                                 class="bx bx-dots-vertical-rounded"></i></button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item><i class="bx bx-book-open"></i> details</button>
-                            <button mat-menu-item><i class="bx bx-edit"></i>edit</button>
-                            <button mat-menu-item><i class="bx bx-trash"></i>delete</button>
+                            <button mat-menu-item (click)="goToDetails(row)"><i class="bx bx-book-open" ></i> details</button>
+                            <button mat-menu-item (click)="confirmDelete()"><i class="bx bx-trash"></i>delete</button>
                         </mat-menu>
 
                     </td>
@@ -101,7 +99,7 @@
                 </tr>
             </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of clients"></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of leads"></mat-paginator>
         </div>
 
 
@@ -111,18 +109,32 @@
 
 </div>
 
+
+   <!-- Import lead modal  -->
+<ng-template #createLeadDialog>
+    <h2 mat-dialog-title>Create New Lead</h2>
+    <mat-dialog-content>
+ <p>Mat table within component</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-flat-button color="primary" (click)="saveLead()">Save</button>
+    </mat-dialog-actions>
+  </ng-template>
+
+
 <!--  Add new modal example -->
 <ng-template #addNew let-modal>
       <div class="modal-header">
-            <h5 class="modal-title" id="myLargeModalLabel">Create client</h5>
+            <h5 class="modal-title" id="myLargeModalLabel">Create lead</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"      
             (click)="modalRef?.hide()"></button>
           </div>
-      <form [formGroup]="form" (ngSubmit)="createClient()">
+      <form [formGroup]="form" (ngSubmit)="createLead()">
 
           <div class="modal-body">
-                  <div class="mb-2">
-                        <label class="form-label">Name</label>
+                  <div class="mb-1">
+                        <label class="form-label">Name*</label>
                         <input class="form-control" name="name" formControlName="name" type="text"
                     placeholder="Enter name">
                         <small *ngIf="f.name.touched && f.name.invalid" class="error">
@@ -132,53 +144,54 @@
                               <div *ngIf="f.name.errors.minlength">Name should be atleast 1 character.</div>
                             </small>
                    </div>
-            <div class="mb-2">
-                  <label class="form-label">business_competitors</label>
-                <select class="form-select" name="business_competitors" formControlName="business_competitors">
-                    <option value="">Select</option>
-                    <option value="ABF Inc">ABF Inc</option>
-                    <option value="MonetLab">MonetLab</option>
-                </select>
-            </div>
-              <div class="mb-2">
-                  <label class="form-label">actor_type</label>
+
+              <div class="mb-1">
+                  <label class="form-label">actor_type *</label>
                 <select class="form-select" name="actor_type" formControlName="actor_type">
                     <option value="">Select</option>
-                    <option value="Microfinace ">Microfinace</option>
-                    <option value="Bank">Bank</option>
-                    <option value="FinTech">FinTech</option>
+                    <option *ngFor="let sector of this.getAllBusinessSector()" value={{sector}}>{{sector}}</option>
+                  
 
                 </select>
-            </div>
-            <div class="row">
+                <small *ngIf="f.actor_type.touched && f.actor_type.invalid" class="error">
+                              <div *ngIf="f.actor_type.errors.required">actor_type is required.</div>
+                </small>
+                  
+                   </div>
+            
+            <div class="row mb-1">
                 <div class="col-md-6">
                     <div class="mb-2">
                           <label class="form-label">country</label>
                         <select class="form-select" name="country" formControlName="country">
                             <option value="">Select</option>
-                            <option value="Cameroon ">Cameroon</option>
-                            <option value="Gabon">Gabon</option>
-                            <option value="Congo Brazzavile">Congo Brazzavile</option>
-        
+                            <option  *ngFor="let country of this.getAllCountries()" value={{country}}>{{country}}</option>
+                        
+
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-2">
                           <label class="form-label">region</label>
-                        <select class="form-select" name="region" formControlName="region">
-                            <option value="">Select</option>
-                            <option value="Cameroon ">Central Africa</option>
-                            <option value="Gabon">West Africa</option>
-                            <option value="Congo Brazzavile">East Africa</option>
-        
-                        </select>
+                            <input class="form-control" name="region" formControlName="region" type="text"
+                            readonly dis value={{this.getRegionByCountry()}}>
+                            <small class="text-info">region is auto filled based on country</small>
                     </div>
                        
                 </div>
             </div>
-          
-         
+            <div class="row">
+                <div class="mb-1">
+                    <label for="example-password-input" class="col-form-label">is_private
+                    </label><br>
+                    <mat-radio-group name="is_private"
+                        formControlName="is_private" aria-label="Select an option">
+                        <mat-radio-button value='Yes'>Yes</mat-radio-button>
+                        <mat-radio-button value='No'>No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
              
         </div>
           <div class="modal-footer">
@@ -186,8 +199,33 @@
 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                 (click)="modalRef?.hide()">Close</button>
-                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button [disabled]="!form.valid  || (processing)"      
-                class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button
+                [disabled]="!form.valid  || (processing)"       class="btn btn-primary">Submit</button>
               </div>
     </form>
 </ng-template><!-- /.modal -->
+
+
+
+<!-- Import lead modal  -->
+<ng-template #import let-modal>
+      <div class="modal-header">
+            <h5 class="modal-title" id="myLargeModalLabel">Create lead</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"      
+            (click)="modalRef?.hide()"></button>
+          </div>
+          <div class="modal-body">
+            <h6 class="text-center">You can import a list of leads here, download the file example below</h6>
+            <p class="text-center"><a href="#" class="text-center">Example File</a></p>
+
+        </div>
+        <div class="modal-footer">
+                <mat-spinner [diameter]="25" *ngIf="this.processing"></mat-spinner>
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                (click)="modalRef?.hide()">Close</button>
+                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button
+                     class="btn btn-primary">Submit</button>
+              </div>
+
+</ng-template>

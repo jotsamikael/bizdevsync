@@ -39,6 +39,10 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
+  logout() {
+    localStorage.setItem('token', "");
+    this.router.navigate(['/login']);
+  }
 
   //filter menu items based on user role
   filterMenuItems(menu: MenuItem[], role: string): MenuItem[] {

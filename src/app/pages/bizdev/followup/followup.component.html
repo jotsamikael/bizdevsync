@@ -5,7 +5,7 @@
         <div class="col-md-4 text-end">
             <button class="btn btn-soft-primary  waves-effect waves-light mx-2"
                 (click)="openCreateNewModal(addNew)">Create Followup</button>
-            <button class="btn btn-soft-primary  waves-effect waves-light">Import Follow ups</button>
+            <button (click)="exporter.exportTable('csv')" class="btn btn-soft-primary  waves-effect waves-light">Export Follow ups</button>
         </div>
 
     </div>
@@ -16,21 +16,16 @@
         </div>
     </div>
 
-    <div class="row justify-content-end">
+    <div class="row justify-content-start">
         <div class="col-md-3">
             <mat-form-field>
                 <mat-label>Filter</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Pacific bank" #input>
             </mat-form-field>
         </div>
-        <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" matSort>
-
-                <!-- ID Column -->
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                </ng-container>
+        <div class="card">
+            <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows matTableExporter
+            #exporter="matTableExporter">
 
 
                 <!-- lead_id Column -->
@@ -42,19 +37,13 @@
                 <!-- start_date Column -->
                 <ng-container matColumnDef="start_date">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> start_date </th>
-                    <td mat-cell *matCellDef="let row"> {{row.start_date}} </td>
-                </ng-container>
-
-                <!-- source Column -->
-                <ng-container matColumnDef="source">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> source </th>
-                    <td mat-cell *matCellDef="let row"> {{row.source}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.start_date | date}}  </td>
                 </ng-container>
 
                 <!-- lastactiondate Column -->
                 <ng-container matColumnDef="last_action_date">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Last action date </th>
-                    <td mat-cell *matCellDef="let row"> {{row.activities[row.activities.length - 1].last_action_date}}
+                    <td mat-cell *matCellDef="let row"> {{row.activities[row.activities.length - 1].last_action_date | date}}
                     </td>
                 </ng-container>
 
@@ -72,9 +61,9 @@
 
                 <!-- actions Column -->
                 <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> actions </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Operations </th>
                     <td mat-cell *matCellDef="let row">
-                       
+
                         <button mat-button [matMenuTriggerFor]="menu" #menuTrigger>
                             <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
@@ -82,11 +71,8 @@
                             <button mat-menu-item (click)="goToFollowUpDetails(row)">
                                 <i class="bx bx-book-open"></i> details
                             </button>
-                           
-                            <button mat-menu-item (click)="edit(row)">
-                                <i class="bx bx-edit"></i> edit
-                            </button>
-                            <button mat-menu-item (click)="delete(row)">
+
+                            <button mat-menu-item (click)="confirmDelete(row)">
                                 <i class="bx bx-trash"></i> delete
                             </button>
                         </mat-menu>
@@ -115,71 +101,36 @@
 <!--  Add new modal example -->
 <ng-template #addNew let-modal>
       <div class="modal-header">
-            <h5 class="modal-title" id="myLargeModalLabel">Create client</h5>
+            <h5 class="modal-title" id="myLargeModalLabel">Create follow-up</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"      
             (click)="modalRef?.hide()"></button>
           </div>
       <form [formGroup]="form" (ngSubmit)="createClient()">
 
           <div class="modal-body">
-                  <div class="mb-2">
-                        <label class="form-label">Name</label>
-                        <input class="form-control" name="name" formControlName="name" type="text"
-                    placeholder="Enter name">
-                        <small *ngIf="f.name.touched && f.name.invalid" class="error">
-
-                              <div *ngIf="f.name.errors.required">Name is required.</div>
-                              <div *ngIf="f.name.errors.maxlength">Name should be less than 64 characters.</div>
-                              <div *ngIf="f.name.errors.minlength">Name should be atleast 1 character.</div>
-                            </small>
-                   </div>
             <div class="mb-2">
-                  <label class="form-label">business_competitors</label>
-                <select class="form-select" name="business_competitors" formControlName="business_competitors">
+                  <label class="form-label">Lead</label>
+                <select class="form-select" name="lead_id" formControlName="lead_id">
                     <option value="">Select</option>
-                    <option value="ABF Inc">ABF Inc</option>
-                    <option value="MonetLab">MonetLab</option>
+                    <option *ngFor="let lead of this.leads" value={{lead.id}}>{{lead.name}}</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                  <label class="form-label">source</label>
+                <select class="form-select" name="source" formControlName="source">
+                    <option value="">Select</option>
+                    <option value="Annoncement">Annoncement</option>
+                    <option value="Partner">Partner</option>
                 </select>
             </div>
               <div class="mb-2">
-                  <label class="form-label">actor_type</label>
-                <select class="form-select" name="actor_type" formControlName="actor_type">
-                    <option value="">Select</option>
-                    <option value="Microfinace ">Microfinace</option>
-                    <option value="Bank">Bank</option>
-                    <option value="FinTech">FinTech</option>
+                <label  class="form-label">start_date</label>
+                <input class="form-control" name="start_date" formControlName="start_date" type="date">
+                        <small *ngIf="f.start_date.touched && f.start_date.invalid" class="error">
 
-                </select>
+                              <div *ngIf="f.start_date.errors.required">start_date is required.</div>
+                            </small>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-2">
-                          <label class="form-label">country</label>
-                        <select class="form-select" name="country" formControlName="country">
-                            <option value="">Select</option>
-                            <option value="Cameroon ">Cameroon</option>
-                            <option value="Gabon">Gabon</option>
-                            <option value="Congo Brazzavile">Congo Brazzavile</option>
-
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-2">
-                          <label class="form-label">region</label>
-                        <select class="form-select" name="region" formControlName="region">
-                            <option value="">Select</option>
-                            <option value="Cameroon ">Central Africa</option>
-                            <option value="Gabon">West Africa</option>
-                            <option value="Congo Brazzavile">East Africa</option>
-
-                        </select>
-                    </div>
-                       
-                </div>
-            </div>
-
-
              
         </div>
           <div class="modal-footer">

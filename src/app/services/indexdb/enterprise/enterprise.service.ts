@@ -1,24 +1,27 @@
 import { Injectable } from "@angular/core";
 import { Dexie, Table } from "dexie";
 import { Enterprise } from "../../models/model";
+import { DexieService } from "../mockdb.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class EnterpriseService extends Dexie  {
-     enterprise!: Table<Enterprise, number>;
+export class EnterpriseService  {
+  constructor(private db: DexieService) {}
+
 
       enterpriseTestData: Enterprise[] = [
         {
-          "id": 1,
+          "id":30,
           "name": "TechPlus",
           "country": "Cameroon",
           "sector": "SSII"
     
         },
         {
-          "id": 2,
+          "id":31,
+
           "name": "InnovaCorp",
           "country": "France",
           "sector": "E-banking"
@@ -26,21 +29,16 @@ export class EnterpriseService extends Dexie  {
         }
       ]
 
-    constructor() {
-        super('BusdevSync'); // Database name
-    
-        // Define database schema
-        this.version(5).stores({
-          enterprise: '++id, name, country, sector' // `++id` means auto-incremented primary key
-        });
-    
-      //this.loadEnterpriseToDIndexDB()
-    }
+      async loadEnterpriseToDIndexDB(){
 
-      
+        this.db.enterprises.clear();
 
-      loadEnterpriseToDIndexDB(){
+        try {
+          await this.db.enterprises.bulkAdd(this.enterpriseTestData);
+        } catch (error) {
+          console.error("Error loading users:", error);
+        }
         console.log("enterprise load done")
-        this.enterprise.bulkAdd(this.enterpriseTestData)
+
       }
 }

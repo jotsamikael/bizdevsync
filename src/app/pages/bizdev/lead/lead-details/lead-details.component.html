@@ -1,0 +1,270 @@
+<div class="container-fluid">
+    <!-- breadcrumb item -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <div class="page-title-left">
+                    <ol class="breadcrumb m-0">
+                        <ng-container>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{{lead.name}}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{lead.country.name}}
+                            </li>
+                        </ng-container>
+                    </ol>
+                </div>
+                <button class="btn btn-danger" matTooltip="close" (click)="gotoLeadManagement()"><i
+                        class="bx bx-x"></i></button>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mx-2">
+        <div class="col-md-7 text-end">
+
+            <input class="form-control form-control-lg mb-2" type="text" value={{this.lead.name}}
+                id="example-text-input">
+            <div class="row mt-4">
+
+
+            </div>
+            <div class="row  mb-3">
+                <div class="col-12">
+                    <button class="btn btn-soft-primary  waves-effect waves-light mx-2"
+                        (click)="openCreateNewModalContact(addNewContact)">Add Contact</button>
+                    <button class="btn btn-soft-primary  waves-effect waves-light"
+                        (click)="exporter.exportTable('csv')">Export Contacts</button>
+                </div>
+
+
+            </div>
+            <table class="smtable" mat-table [dataSource]="dataSourceContact" multiTemplateDataRows matTableExporter
+                #exporter="matTableExporter" class="mat-elevation-z8">
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayContact">
+                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="column !== 'weight'">{{element[column]}}</span>
+                        <span *ngIf="column === 'weight'" [ngClass]="getWeightClass(element.weight)">
+                            {{element[column]}}
+                        </span>
+                    </td>
+
+                </ng-container>
+                <ng-container matColumnDef="expand">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button aria-label="expand row"
+                            (click)="toggleExpandContact(element); $event.stopPropagation()">
+                            <mat-icon *ngIf="expandedElementContact !== element">keyboard_arrow_down</mat-icon>
+                            <mat-icon *ngIf="expandedElementContact === element">keyboard_arrow_up</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpandContact.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="element == expandedElementContact ? 'expanded' : 'collapsed'">
+
+                            <div class="row example-element-description">
+                                <div class="col-7">
+                                    <div><b>Description</b></div>
+                                    {{element.description}}
+
+                                    <!-- <span class="example-element-description-attribution"> -- Next Action </span> -->
+
+
+                                </div>
+                                <div class="col-5">
+                                    <button (click)="openEditModaContact(edit, element)" class="btn btn-soft-info mx-1">
+                                        <i class="bx bxs-edit"></i>
+                                    </button>
+                                    <button class="btn btn-soft-info mx-1">
+                                        <i class="bx bx-share-alt"></i>
+                                    </button>
+                                    <button class="btn btn-soft-danger mx-1">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandContact"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpandContact;"
+                    class="example-element-row" [class.example-expanded-row]="expandedElementContact === element"
+                    (click)="expandedElementContact = expandedElementContact === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+
+
+        </div>
+
+        <div class="col-md-5">
+            <accordion [isAnimated]="true" class="accordion custom-accordion" [closeOthers]="true">
+                <accordion-group [isOpen]="isFirstOpen" heading="Basic Infos" class="accordion-item" #flush1>
+                    <span accordion-heading class="float-end fs-5">
+                        <i class="mdi"
+                            [ngClass]="!flush1?.isOpen ? 'mdi mdi-chevron-down accor-plus-icon': 'mdi mdi-chevron-up accor-plus-icon'"></i>
+                    </span>
+                    <div class="text-muted">
+                        <!-- START BASIC FOLLOWUP INFOS FORM -->
+                        <form class="row mb-4" [formGroup]="basicInfoForm">
+                            <div class="mb-3 row">
+                                <label for="example-datetime-local-input"
+                                    class="col-md-2 col-form-label font-size-11">Country</label>
+                                <div class="col-md-10">
+                                    <select class="form-select" name="country" formControlName="country">
+                                        <option *ngFor="let country of this.getAllCountries()" value={{country}}>
+                                            {{country}}</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-datetime-local-input"
+                                    class="col-md-2 col-form-label font-size-11">Region</label>
+                                <div class="col-md-10">
+                                    <input style="cursor: not-allowed;" class="form-control" name="region"
+                                        formControlName="region" type="text" readonly
+                                        value={{this.getRegionByCountry()}}>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-text-input"
+                                    class="col-md-2 col-form-label font-size-11">Sector</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" name="actor_type" formControlName="actor_type"
+                                        type="text" value={{this.lead.actor_type}}>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-datetime-local-input"
+                                    class="col-md-2 col-form-label font-size-11">Owner</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" style="cursor: not-allowed;" type="text" readonly
+                                        value={{this.lead.created_by_user_id}}>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="example-datetime-local-input"
+                                    class="col-md-2 col-form-label font-size-11">is_private</label>
+                                <div class="col-md-10">
+                                    <mat-radio-group name="is_private" formControlName="is_private"
+                                        aria-label="Select an option">
+                                        <mat-radio-button value='Yes'>Yes</mat-radio-button>
+                                        <mat-radio-button value='No'>No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="mb-3 px-4 row">
+                                <button class=" text-center btn btn-block btn-lg btn-soft-primary"><i
+                                        class="bx bx-save"></i> Save</button>
+                            </div>
+                        </form>
+
+                        <!-- END BASIC FOLLOWUP INFOS FORM -->
+                    </div>
+                </accordion-group>
+                <accordion-group heading="About {{this.lead.name}}" class="accordion-item" #flush2>
+                    <b>BankCam</b> is a leading full-service financial institution headquartered in Douala, Cameroon.
+                    Established in 2006, BankCam has grown to become a trusted banking partner for individuals, SMEs,
+                    and large enterprises across Central Africa. With a strong commitment to innovation, financial
+                    inclusion, and customer satisfaction, BankCam offers a wide range of modern banking solutions
+                    tailored to meet the diverse needs of its clientele.
+
+                    Our services include retail and corporate banking, digital banking, asset management, mobile money
+                    solutions, and trade finance. Through a robust network of branches, ATMs, and digital platforms, we
+                    provide secure, accessible, and efficient banking experiences to over 500,000 customers nationwide.
+
+                    At the heart of our operations is a vision to "transform lives through accessible and innovative
+                    financial services." We are proud to champion Cameroon’s economic growth by supporting
+                    entrepreneurship, empowering youth, and promoting sustainable development.
+
+                    BankCam is licensed and regulated by the Bank of Central African States (BEAC) and operates under
+                    the highest standards of governance, compliance, and data security.
+
+                </accordion-group>
+
+            </accordion>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+<!--  Add new modal contact start -->
+<ng-template #addNewContact let-modal>
+      <div class="modal-header">
+            <h5 class="modal-title" id="myLargeModalLabel">Add Contact</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="modalRef?.hide()"></button>
+          </div>
+      <form [formGroup]="formContact" (ngSubmit)="addContact()">
+
+          <div class="modal-body">
+                  <div class="mb-2">
+                        <label class="form-label">action_detail</label>
+                        <input class="form-control" name="action_detail" formControlName="action_detail" type="text"
+                    placeholder="Enter name">
+                        <small *ngIf="f.action_detail.touched && f.action_detail.invalid" class="error">
+
+                              <div *ngIf="f.action_detail.errors.required">action_detail is required.</div>
+                            </small>
+            </div>
+              <div class="mb-2">
+                        <label class="form-label">last_action</label>
+                        <input class="form-control" name="last_action" formControlName="last_action" type="text"
+                    placeholder="Enter name">
+                        <small *ngIf="f.last_action.touched && f.last_action.invalid" class="error">
+
+                              <div *ngIf="f.last_action.errors.required">last_action is required.</div>
+                            </small>
+            </div>
+
+            <div class="mb-2">
+                       
+                <label for="example-datetime-local-input" class="col-md-2 col-form-label">last_action_date</label>
+                <input class="form-control" name="last_action_date" formControlName="last_action_date" type="date">
+                        <small *ngIf="f.last_action_date.touched && f.last_action_date.invalid" class="error">
+
+                              <div *ngIf="f.last_action_date.errors.required">last_action_date is required.</div>
+                            </small>
+            </div>
+            <div class="mb-2">
+                        <label class="form-label">next_action</label>
+                        <input class="form-control" name="next_action" formControlName="next_action" type="text"
+                    placeholder="Enter next_action">
+                        <small *ngIf="f.next_action.touched && f.next_action.invalid" class="error">
+
+                              <div *ngIf="f.next_action.errors.required">next_action is required.</div>
+                            </small>
+            </div>
+
+        </div>
+          <div class="modal-footer">
+                <mat-spinner [diameter]="25" *ngIf="this.processing"></mat-spinner>
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                (click)="modalRef?.hide()">Close</button>
+                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button
+                [disabled]="!formContact.valid  || (processing)"       class="btn btn-primary">Submit</button>
+              </div>
+    </form>
+</ng-template>
+<!-- Add new modal Contact End -->

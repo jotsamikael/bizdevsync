@@ -7,6 +7,8 @@ import { map, Observable, startWith } from 'rxjs';
 import { Contact } from 'src/app/services/models/model';
 import { FollowUpService } from 'src/app/services/indexdb/followup/followup.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CommonService } from 'src/app/services/indexdb/common/common.service';
+import { CaseService } from 'src/app/services/indexdb/case/case.service';
 
 
 @Component({
@@ -28,10 +30,11 @@ export class CreatemeetingmodalComponent {
   allContacts: Contact[] = [];
   @ViewChild('participantInput') participantInput: ElementRef<HTMLInputElement>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private followupService:FollowUpService ){
-    //get all contacts for this followup
-    console.log(this.data.id)
-    this.loadFollowupData(Number(this.data.id));  // Load data asynchronously
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+   private followupService:FollowUpService,
+   private caseService: CaseService,
+  private commonService: CommonService ){
+    this.loadData(Number(this.data.id));  // Load data asynchronously
 
 
     this.filteredContacts = this.participantCtrl.valueChanges.pipe(
@@ -43,17 +46,15 @@ export class CreatemeetingmodalComponent {
     );
   }
 
-  async loadFollowupData(idFollowup: number) {
+  async loadData(id: number) {
     try {
       // Wait for the followup to be fetched
-      const followup = await this.followupService.getFollowupById(idFollowup);
+      const data = await this.followupService.getFollowupById(id) || await this.caseService.getById(id);
       
-      // Log the fetched data
-      console.log('Fetched followup:', followup);
 
       // Ensure that the followup contains contacts before assigning
-      if (followup && followup.contacts) {
-        this.allContacts = followup.contacts; // Assign contacts to the array
+      if (data && this.commonService.getLeadContacts(data.lead_id)) {
+        this.allContacts = await this.commonService.getLeadContacts(data.lead_id); // Assign contacts to the array
       } else {
         console.error('No contacts found in the followup.');
       }

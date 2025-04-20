@@ -12,6 +12,8 @@ import { MatSort } from '@angular/material/sort';
 import { CreatemeetingmodalComponent } from './createmeetingmodal/createmeetingmodal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Width } from 'ngx-owl-carousel-o/lib/services/carousel.service';
+import { FormBuilderService } from 'src/app/services/indexdb/common/services/form-builder.service';
+import { CommonService } from 'src/app/services/indexdb/common/common.service';
 
 
 
@@ -33,6 +35,7 @@ export class FollowupDetailsComponent {
 
   displayedColumnsContact: string[] = ["name","role","actions"];
   dataSourceContact: MatTableDataSource<Contact>;
+  formMeetingReport: FormGroup
 
 
   applyFilter(event: Event) {
@@ -98,23 +101,37 @@ export class FollowupDetailsComponent {
      private router: Router,
       private leadService: LeadService,
         private modalService: BsModalService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private commonService: CommonService,
+        private formBuilderService: FormBuilderService,
+        
     ){
      
   }
  
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     //get followup form localstorage
     this.getFollowUpItemFromLocalStrotage()
+
     //get lead from lead-id in followup
     this.getLeadById(this.followup.lead_id)  
+    
+    const contacts = await this.getLeadContacts(this.followup.lead_id);
+
     this.dataSourceActivity = new MatTableDataSource(this.followup.activities);
     this.dataSourceMeeting = new MatTableDataSource(this.followup.meetings);
-    this.dataSourceContact = new MatTableDataSource(this.followup.contacts)
+    this.dataSourceContact = new MatTableDataSource(contacts)
     // Collapse value
     this.isCollapsed = false;
+    this.formMeetingReport = this.formBuilderService.createFormMeetingReport()
+
    
+  }
+
+  async getLeadContacts(lead_id: number): Promise<Contact[]> {
+    const lead = await this.leadService.getLeadById(lead_id);
+    return lead.contacts;
   }
 
   toggleExpandActivity(element: Activity): void {
@@ -205,12 +222,7 @@ toggleExpandMeeting(element: Meeting): void {
 
 
 
-formMeetingReport = new FormGroup({
-  summary: new FormControl('', [Validators.required]),
-  date: new FormControl('', [Validators.required]),
-  next_action: new FormControl('', [Validators.required])
-  // participants is not included as a basic input field
-});
+
 
 disableFormMeetingReport() {
   this.formMeetingReport.controls['summary'].disable();

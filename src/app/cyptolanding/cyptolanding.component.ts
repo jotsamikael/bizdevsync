@@ -5,10 +5,11 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Router } from '@angular/router';
 import { UserService } from '../services/indexdb/users/user.service';
 import { EnterpriseService } from '../services/indexdb/enterprise/enterprise.service';
-import { ProductService } from '../services/indexdb/product/product.service';
+import { ProductService } from '../services/indexdb/product/product-and-categories.service';
 import { ActivityService } from '../services/indexdb/activity/activity.service';
 import { LeadService } from '../services/indexdb/lead/lead.service';
 import { FollowUpService } from '../services/indexdb/followup/followup.service';
+import { CaseService } from '../services/indexdb/case/case.service';
 
 @Component({
   selector: 'app-cyptolanding',
@@ -27,6 +28,7 @@ export class CyptolandingComponent implements OnInit {
     private enterpriseService: EnterpriseService,
     private productService: ProductService,
     private followupService: FollowUpService,
+    private caseService: CaseService,
     private activityService: ActivityService
   
   ){
@@ -94,13 +96,14 @@ export class CyptolandingComponent implements OnInit {
   this.userService.loadUsersToDIndexDB()
   this.leadService.loadLeadsToDIndexDB()
   this.enterpriseService.loadEnterpriseToDIndexDB()
-  this.productService.loadProductsToDIndexDB()
+  this.productService.loadInitiaProductlData()
   this.followupService.loadFollowUpToDIndexDB()
+  this.caseService.loadCasesToDIndexDB()
   //this.activityService.loadActivitiesToDIndexDB()
 
-    this._trialEndsAt = "2025-04-31";
+    this._trialEndsAt = "2025-06-31";
 
-    interval(3000).pipe(
+    interval(1000).pipe(
       map((x) => {
         this._diff = Date.parse(this._trialEndsAt) - Date.parse(new Date().toString());
       })).subscribe((x) => {

@@ -15,6 +15,13 @@ import { ActivityComponent } from './bizdev/activity/activity.component';
 import { FollowupComponent } from './bizdev/followup/followup.component';
 import { FollowupDetailsComponent } from './bizdev/followup/single-follow-up-details/followup-details/followup-details.component';
 import { HelpSupportInquiryComponent } from './common/help-support-inquiry/help-support-inquiry.component';
+import { LeadDetailsComponent } from './bizdev/lead/lead-details/lead-details.component';
+import { ProductsComponent } from './ecommerce/products/products.component';
+import { BizdevCategoriesComponent } from './bizdev/product-management/bizdev-categories/bizdev-categories.component';
+import { BizdevProductsComponent } from './bizdev/product-management/bizdev-products/bizdev-products.component';
+import { SingleProductDetailsComponent } from './bizdev/product-management/bizdev-products/single-product-details/single-product-details.component';
+import { CaseManagementComponent } from './bizdev/case/case-management/case-management.component';
+import { CaseDetailComponent } from './bizdev/case/case-detail/case-detail.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'dashboard' },
@@ -27,12 +34,26 @@ const routes: Routes = [
  { path: 'enterprise-management', component: EnterpriseManagementComponent },
  { path: 'enterprise-dashboard', component: EnterpriseDashboardComponent },
 
- //bizdev
+ //bizdev,solo-biz-dev,
  { path: 'business-dev-dashboard', component: BusinessDevDashboardComponent },
  { path: 'activity-management', component: ActivityComponent },
  { path: 'bizdev-leads', component: LeadComponent },
  { path: 'follow-ups', component: FollowupComponent },
  { path: 'follow-up-details', component: FollowupDetailsComponent },
+ { path: 'lead-details', component: LeadDetailsComponent },
+ { path: 'bizdev-cases', component: CaseManagementComponent},
+ { path: 'bizdev-cases-details', component: CaseDetailComponent},
+
+
+ //solo-biz-dev, enterprise admin
+ { path: 'products', component: BizdevProductsComponent },
+ { path: 'product-categories', component: BizdevCategoriesComponent },
+ { path: 'product-details', component: SingleProductDetailsComponent},
+
+
+
+
+
 
 
 

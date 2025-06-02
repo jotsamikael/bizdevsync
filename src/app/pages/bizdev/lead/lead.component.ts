@@ -1,7 +1,7 @@
 import { Component, TemplateRef, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
@@ -10,11 +10,12 @@ import { BusinessService } from "src/app/services/indexdb/businessSector/busines
 import { CommonService } from "src/app/services/indexdb/common/common.service";
 import { FormBuilderService } from "src/app/services/indexdb/common/services/form-builder.service";
 import { CountryAndRegionService } from "src/app/services/indexdb/countryandregion/countryandregion.service";
-import { LeadService } from "src/app/services/indexdb/lead/lead.service";
+import { CountriesService, LeadsService } from "src/app/bizdevsyncbackend/services";
 import { TokenService } from "src/app/services/indexdb/token.service";
-import { Lead, User } from "src/app/services/models/model";
 import Swal from "sweetalert2";
 import { LeadStateService } from "./services/lead-state.service";
+import { Country, Lead, User } from "src/app/bizdevsyncbackend/models";
+import { map, Observable } from "rxjs";
 
 @Component({
   selector: "app-lead",
@@ -25,12 +26,18 @@ export class LeadComponent {
 
   breadCrumbItems: Array<{}>;
 
-  displayedColumns: string[] = ["created_by_user_id","name", "country", "actor_type","status","actions"];
+  displayedColumns: string[] = ["created_by_user_id","name", "email","Country_idCountry", "activitySector","is_private","status","source"];
   dataSource: MatTableDataSource<Lead>;
+  hoveredRow: any = null;
+
 
   user: User;
-  leads: Lead[];
-  leadStat = [
+  leads: Lead[] = [];
+  totalLeads = 0;
+limit = 10;
+page = 1;
+  isLoading: boolean = false;
+  errorMsg: string = '';  leadStat = [
     {
       title:"Total Leads",
       value :"34",
@@ -61,13 +68,15 @@ export class LeadComponent {
   modalRef?:BsModalRef;
   processing: boolean = false;
   form: FormGroup<any>;
+  countryList: Country[];
 
   constructor(
     private formBuilderService : FormBuilderService,
     private tokenService: TokenService,
-    private leadService: LeadService,
+    //private leadService: LeadService,
+    private leadsService: LeadsService,
     private modalService: BsModalService,
-    private countryService: CountryAndRegionService,
+    private countryService: CountriesService,
     private businessSector: BusinessService,
     private commonService: CommonService,
     private router: Router,
@@ -84,6 +93,11 @@ export class LeadComponent {
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Leads Portfolio', active: true }];
     this.form = this.formBuilderService.createLeadForm()
+    
+    //get all countries
+    this.getAllCountries().subscribe(countries => {
+    this.countryList = countries;
+  });
   }
 
   
@@ -97,8 +111,6 @@ disableForm() {
 
 }
 
-
-
 enableForm() {
   this.form.controls['name'].enable();
   this.form.controls['actor_type'].enable();
@@ -106,7 +118,6 @@ enableForm() {
   this.form.controls['is_private'].enable();
 
 }
-
 
 
 
@@ -122,26 +133,57 @@ get f() {
   }
 
 
-  getRegionByCountry():string {
+  /*getRegionByCountry():string {
    return this.countryService.getRegionByCountry(this.form.controls['country'].value);
-  }
+  }*/
 
-  getAllCountries(): string[] {
-   return this.countryService.getAllCountries()
-  }
+  getAllCountries(): Observable<Country[]> {
+  return this.countryService.countriesGetAllGet().pipe(
+    map(response => response.rows || [])
+  );
+}
+
 
   getAllBusinessSector(): string[] {
     return this.businessSector.getAllBusinessSector()
    }
    
+getLeadsOfLoggedInUser(page: number = 1, limit: number = 10): void {
+  this.isLoading = true;
+  this.errorMsg = '';
+  this.limit = limit;
+  this.page = page;
 
-  getLeadsOfLoggedInUser() {
+  this.leadsService.leadsAssignedToMeGet({ page, limit }).subscribe({
+     next: (response: any) => {
+      this.leads = response.rows;
+      this.totalLeads = response.count;
+      this.dataSource = new MatTableDataSource(this.leads);
+      this.dataSource.sort = this.sort;
+      this.isLoading = false;
+    },
+    error: (error) => {
+      console.error('Error fetching leads:', error);
+      this.errorMsg = 'Failed to load leads. Please try again.';
+      this.isLoading = false;
+    }
+  });
+}
+
+onPageChange(event: PageEvent): void {
+  const pageIndex = event.pageIndex + 1; // MatPaginator is 0-based
+  const pageSize = event.pageSize;
+  this.getLeadsOfLoggedInUser(pageIndex, pageSize);
+}
+
+
+  /*getLeadsOfLoggedInUser() {
     this.leadService.getLeadsByUser(this.user.id).then((leads) => {
       this.leads = leads;
       this.dataSource = new MatTableDataSource(this.leads);
     console.log(this.leads)
     });
-  }
+  }*/
 
   
 
@@ -151,8 +193,7 @@ get f() {
   }
 
   ngAfterViewInit() { 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    
   }
 
   applyFilter(event: Event) {

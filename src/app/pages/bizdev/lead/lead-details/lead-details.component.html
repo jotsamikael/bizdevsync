@@ -1,213 +1,495 @@
 <div class="container-fluid">
-    <!-- breadcrumb item -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-flex align-items-center justify-content-between">
-                <div class="page-title-left">
-                    <ol class="breadcrumb m-0">
-                        <ng-container>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">{{lead.name}}</a>
-                            </li>
-                            <li class="breadcrumb-item active">{{lead.country.name}}
-                            </li>
-                        </ng-container>
-                    </ol>
-                </div>
-                <button class="btn btn-danger" matTooltip="close" (click)="gotoLeadManagement()"><i
-                        class="bx bx-x"></i></button>
 
-            </div>
-        </div>
-    </div>
+    <!-- <div class="row m-2">
+        <div class="card">
+            <div class="card-body overflow-hidden">
+                <h4 class="card-title">Lead: {{lead.name}}</h4>
+                <p class="card-title-desc">{{lead.country.name}}</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <tabset [justified]="true" [vertical]="true" class="nav-pills  custom-vertical-tabs">
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                    <span class="d-none d-sm-block">Basic Information</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <form class="row mb-4" [formGroup]="basicInfoForm">
+                                        <div class="mb-3 row">
+                                            <label for="example-datetime-local-input"
+                                                class="col-md-2 col-form-label font-size-11">Country</label>
+                                            <div class="col-md-10">
+                                                <select class="form-select" name="country" formControlName="country">
+                                                    <option *ngFor="let country of this.getAllCountries()"
+                                                        value={{country}}>
+                                                        {{country}}</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="example-datetime-local-input"
+                                                class="col-md-2 col-form-label font-size-11">Region</label>
+                                            <div class="col-md-10">
+                                                <input style="cursor: not-allowed;" class="form-control" name="region"
+                                                    formControlName="region" type="text" readonly
+                                                    value={{this.getRegionByCountry()}}>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="example-text-input"
+                                                class="col-md-2 col-form-label font-size-11">Sector</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" name="actor_type"
+                                                    formControlName="actor_type" type="text"
+                                                    value={{this.lead.actor_type}}>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="example-datetime-local-input"
+                                                class="col-md-2 col-form-label font-size-11">Owner</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" style="cursor: not-allowed;" type="text"
+                                                    readonly value={{this.lead.created_by_user_id}}>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label for="example-datetime-local-input"
+                                                class="col-md-2 col-form-label font-size-11">is_private</label>
+                                            <div class="col-md-10">
+                                                <mat-radio-group name="is_private" formControlName="is_private"
+                                                    aria-label="Select an option">
+                                                    <mat-radio-button value='Yes'>Yes</mat-radio-button>
+                                                    <mat-radio-button value='No'>No</mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
 
 
-    <div class="row mx-2">
-        <div class="col-md-7 text-end">
-
-            <input class="form-control form-control-lg mb-2" type="text" value={{this.lead.name}}
-                id="example-text-input">
-            <div class="row mt-4">
-
-
-            </div>
-            <div class="row  mb-3">
-                <div class="col-12">
-                    <button class="btn btn-soft-primary  waves-effect waves-light mx-2"
-                        (click)="openCreateNewModalContact(addNewContact)">Add Contact</button>
-                    <button class="btn btn-soft-primary  waves-effect waves-light"
-                        (click)="exporter.exportTable('csv')">Export Contacts</button>
-                </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <label for="example-datetime-local-input"
+                                                class="col-md-2 col-form-label font-size-11"></label>
+                                            <div class="col-md-10">
+                                                <button class=" text-center btn btn-block btn-lg btn-soft-primary"><i
+                                                    class="bx bx-save"></i> Save</button>
+                                            </div>
 
 
-            </div>
-            <table class="smtable" mat-table [dataSource]="dataSourceContact" multiTemplateDataRows matTableExporter
-                #exporter="matTableExporter" class="mat-elevation-z8">
-                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplayContact">
-                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="column !== 'weight'">{{element[column]}}</span>
-                        <span *ngIf="column === 'weight'" [ngClass]="getWeightClass(element.weight)">
-                            {{element[column]}}
-                        </span>
-                    </td>
+                                        </div>
+                                    </form>
+                                </div>
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                    <span class="d-none d-sm-block">Contacts</span>
+                                </ng-template>
+                                <div class="tab-page-content">
 
-                </ng-container>
-                <ng-container matColumnDef="expand">
-                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-                    <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button aria-label="expand row"
-                            (click)="toggleExpandContact(element); $event.stopPropagation()">
-                            <mat-icon *ngIf="expandedElementContact !== element">keyboard_arrow_down</mat-icon>
-                            <mat-icon *ngIf="expandedElementContact === element">keyboard_arrow_up</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
+                                    <div class="row mx-2">
 
-                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-                <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpandContact.length">
-                        <div class="example-element-detail"
-                            [@detailExpand]="element == expandedElementContact ? 'expanded' : 'collapsed'">
+                                            <div class="row  mb-3 justify-content-end">
+                                                    <div class="col-md-3">
+                                                        <mat-form-field matTooltip="Enter a prospect name">
+                                                            <mat-label>Filter</mat-label>
+                                                            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Pacific bank" #input>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-9 text-end">
+                                                        <button class="btn btn-soft-primary  waves-effect waves-light mx-2"
+                                                        (click)="openCreateNewModalContact(addNewContact)">Add
+                                                        Contact</button>
+                                                    <button class="btn btn-soft-primary  waves-effect waves-light"
+                                                        (click)="exporter.exportTable('csv')">Export Contacts</button>
+                                                
+                                                    </div>
+                                                   
 
-                            <div class="row example-element-description">
-                                <div class="col-7">
-                                    <div><b>Description</b></div>
-                                    {{element.description}}
 
-                                    <!-- <span class="example-element-description-attribution"> -- Next Action </span> -->
+                                            </div>
+                                            <table class="smtable" mat-table [dataSource]="dataSourceContact"
+                                                multiTemplateDataRows matTableExporter #exporter="matTableExporter"
+                                                class="mat-elevation-z8">
+                                                <ng-container matColumnDef="{{column}}"
+                                                    *ngFor="let column of columnsToDisplayContact">
+                                                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        <span *ngIf="column !== 'weight'">{{element[column]}}</span>
+                                                        <span *ngIf="column === 'weight'"
+                                                            [ngClass]="getWeightClass(element.weight)">
+                                                            {{element[column]}}
+                                                        </span>
+                                                    </td>
 
+                                                </ng-container>
+                                                <ng-container matColumnDef="expand">
+                                                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+                                                        &nbsp;</th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        <button mat-icon-button aria-label="expand row"
+                                                            (click)="toggleExpandContact(element); $event.stopPropagation()">
+                                                            <mat-icon
+                                                                *ngIf="expandedElementContact !== element">keyboard_arrow_down</mat-icon>
+                                                            <mat-icon
+                                                                *ngIf="expandedElementContact === element">keyboard_arrow_up</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="expandedDetail">
+                                                    <td mat-cell *matCellDef="let element"
+                                                        [attr.colspan]="columnsToDisplayWithExpandContact.length">
+                                                        <div class="example-element-detail"
+                                                            [@detailExpand]="element == expandedElementContact ? 'expanded' : 'collapsed'">
+
+                                                            <div class="row example-element-description">
+                                                                <div class="col-7">
+                                                                    <div><b>Description</b></div>
+                                                                    {{element.description}}
+
+
+
+                                                                </div>
+                                                                <div class="col-5">
+                                                                    <button (click)="openEditModaContact(edit, element)"
+                                                                        class="btn btn-soft-info mx-1">
+                                                                        <i class="bx bxs-edit"></i>
+                                                                    </button>
+                                                                    <button class="btn btn-soft-info mx-1">
+                                                                        <i class="bx bx-share-alt"></i>
+                                                                    </button>
+                                                                    <button class="btn btn-soft-danger mx-1">
+                                                                        <i class="bx bx-trash"></i>
+                                                                    </button>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandContact">
+                                                </tr>
+                                                <tr mat-row
+                                                    *matRowDef="let element; columns: columnsToDisplayWithExpandContact;"
+                                                    class="example-element-row"
+                                                    [class.example-expanded-row]="expandedElementContact === element"
+                                                    (click)="expandedElementContact = expandedElementContact === element ? null : element">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                                                    class="example-detail-row"></tr>
+                                            </table>
+
+
+                                    </div>
 
                                 </div>
-                                <div class="col-5">
-                                    <button (click)="openEditModaContact(edit, element)" class="btn btn-soft-info mx-1">
-                                        <i class="bx bxs-edit"></i>
-                                    </button>
-                                    <button class="btn btn-soft-info mx-1">
-                                        <i class="bx bx-share-alt"></i>
-                                    </button>
-                                    <button class="btn btn-soft-danger mx-1">
-                                        <i class="bx bx-trash"></i>
-                                    </button>
+
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                    <span class="d-none d-sm-block">Description</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <ckeditor formControlName="long_description" [editor]="Editor"
+                                    data="<b>BankCam</b> <p>is a leading full-service financial institution headquartered in Douala, Cameroon. Established in 2006, BankCam has grown to become a trusted banking partner for individuals, SMEs,
+                                        and large enterprises across Central Africa. With a strong commitment to innovation, financial. inclusion, and customer satisfaction, BankCam offers a wide range of modern banking solutions
+                                        tailored to meet the diverse needs of its clientele.</p>"></ckeditor>
+                                    
                                 </div>
 
 
-                            </div>
-                        </div>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandContact"></tr>
-                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpandContact;"
-                    class="example-element-row" [class.example-expanded-row]="expandedElementContact === element"
-                    (click)="expandedElementContact = expandedElementContact === element ? null : element">
-                </tr>
-                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-            </table>
-
-
-        </div>
-
-        <div class="col-md-5">
-            <accordion [isAnimated]="true" class="accordion custom-accordion" [closeOthers]="true">
-                <accordion-group [isOpen]="isFirstOpen" heading="Basic Infos" class="accordion-item" #flush1>
-                    <span accordion-heading class="float-end fs-5">
-                        <i class="mdi"
-                            [ngClass]="!flush1?.isOpen ? 'mdi mdi-chevron-down accor-plus-icon': 'mdi mdi-chevron-up accor-plus-icon'"></i>
-                    </span>
-                    <div class="text-muted">
-                        <!-- START BASIC FOLLOWUP INFOS FORM -->
-                        <form class="row mb-4" [formGroup]="basicInfoForm">
-                            <div class="mb-3 row">
-                                <label for="example-datetime-local-input"
-                                    class="col-md-2 col-form-label font-size-11">Country</label>
-                                <div class="col-md-10">
-                                    <select class="form-select" name="country" formControlName="country">
-                                        <option *ngFor="let country of this.getAllCountries()" value={{country}}>
-                                            {{country}}</option>
-                                    </select>
-                                </div>
-
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="example-datetime-local-input"
-                                    class="col-md-2 col-form-label font-size-11">Region</label>
-                                <div class="col-md-10">
-                                    <input style="cursor: not-allowed;" class="form-control" name="region"
-                                        formControlName="region" type="text" readonly
-                                        value={{this.getRegionByCountry()}}>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="example-text-input"
-                                    class="col-md-2 col-form-label font-size-11">Sector</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="actor_type" formControlName="actor_type"
-                                        type="text" value={{this.lead.actor_type}}>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="example-datetime-local-input"
-                                    class="col-md-2 col-form-label font-size-11">Owner</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" style="cursor: not-allowed;" type="text" readonly
-                                        value={{this.lead.created_by_user_id}}>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label for="example-datetime-local-input"
-                                    class="col-md-2 col-form-label font-size-11">is_private</label>
-                                <div class="col-md-10">
-                                    <mat-radio-group name="is_private" formControlName="is_private"
-                                        aria-label="Select an option">
-                                        <mat-radio-button value='Yes'>Yes</mat-radio-button>
-                                        <mat-radio-button value='No'>No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-
-
-                            </div>
-
-
-                            <div class="mb-3 px-4 row">
-                                <button class=" text-center btn btn-block btn-lg btn-soft-primary"><i
-                                        class="bx bx-save"></i> Save</button>
-                            </div>
-                        </form>
-
-                        <!-- END BASIC FOLLOWUP INFOS FORM -->
+                            </tab>
+                           
+                        </tabset>
                     </div>
-                </accordion-group>
-                <accordion-group heading="About {{this.lead.name}}" class="accordion-item" #flush2>
-                    <b>BankCam</b> is a leading full-service financial institution headquartered in Douala, Cameroon.
-                    Established in 2006, BankCam has grown to become a trusted banking partner for individuals, SMEs,
-                    and large enterprises across Central Africa. With a strong commitment to innovation, financial
-                    inclusion, and customer satisfaction, BankCam offers a wide range of modern banking solutions
-                    tailored to meet the diverse needs of its clientele.
-
-                    Our services include retail and corporate banking, digital banking, asset management, mobile money
-                    solutions, and trade finance. Through a robust network of branches, ATMs, and digital platforms, we
-                    provide secure, accessible, and efficient banking experiences to over 500,000 customers nationwide.
-
-                    At the heart of our operations is a vision to "transform lives through accessible and innovative
-                    financial services." We are proud to champion Cameroon’s economic growth by supporting
-                    entrepreneurship, empowering youth, and promoting sustainable development.
-
-                    BankCam is licensed and regulated by the Bank of Central African States (BEAC) and operates under
-                    the highest standards of governance, compliance, and data security.
-
-                </accordion-group>
-
-            </accordion>
-
+                </div>
+            </div>
         </div>
+    </div> -->
+    <div class="row">
+        <div class="card">
+            <div class="card-body overflow-hidden">
+                <div class="row align-items-center justify-content-between mb-3">
+                    <div class="col">
+                        <h1 class="card-title m-0">{{ this.lead.name }}</h1>
+                        <p class="card-title-desc">Manage lead</p>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-danger" matTooltip="close" (click)="gotoLeadManagement()">
+                            <i class="bx bx-x"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <tabset [justified]="true" [vertical]="true" class="nav-pills  custom-vertical-tabs">
 
+                            <tab>
+                                <ng-template tabHeading>
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-user"></i> Profile</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <div class="card">
+                                        <form class=" mb-4" [formGroup]="basicInfoForm">
+                                            <!-- name -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Name</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="name" formControlName="name"
+                                                        type="text">
+                                                </div>
+                                            </div>
+                                            <!-- email -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Email</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="email" formControlName="email"
+                                                        type="email">
+                                                </div>
+                                            </div>
+                                            <!-- telephone -->
+                                            <div class="mb-3 row">
+                                                <label for="example-tel-input"
+                                                    class="col-md-2 col-form-label font-size-11">Telephone</label>
+                                                <div class="col-md-10">
+
+                                                    <input class="form-control" name="telephone"
+                                                        formControlName="telephone" type="text">
+                                                </div>
+                                            </div>
+                                            <!-- website -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">website</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="website" formControlName="website"
+                                                        type="text">
+                                                </div>
+                                            </div>
+
+                                            <!-- address -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Address</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="address" formControlName="address"
+                                                        type="text">
+                                                </div>
+                                            </div>
+                                            <!-- town -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">town</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="town" formControlName="town"
+                                                        type="text">
+                                                </div>
+                                            </div>
+                                            <!-- activitySector -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">activity Sector</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="activitySector"
+                                                        formControlName="activitySector" type="text">
+                                                </div>
+                                            </div>
+                                            <!-- lead value -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">lead
+                                                    value</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="lead_value"
+                                                        formControlName="lead_value" type="text">
+                                                </div>
+                                            </div>
+
+                                            <!-- date_converted -->
+                                            <div class="mb-3 row">
+                                                <label for="example-date-input"
+                                                    class="col-md-2 col-form-label">Date</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" type="date" name="date_converted"
+                                                        formControlName="date_converted" id="example-date-input">
+                                                </div>
+                                            </div>
+
+                                            <!-- is_private -->
+
+                                            <div class="row">
+                                                <label for="example-datetime-local-input"
+                                                    class="col-md-2 col-form-label font-size-11">is_private</label>
+                                                <div class="col-md-10">
+                                                    <mat-radio-group name="is_private" formControlName="is_private"
+                                                        aria-label="Select an option">
+                                                        <mat-radio-button value='Yes'>Yes</mat-radio-button>
+                                                        <mat-radio-button value='No'>No</mat-radio-button>
+                                                    </mat-radio-group>
+                                                </div>
+
+
+                                            </div>
+                                            <!-- country -->
+                                            <div class="mb-3 row">
+                                                <label for="example-datetime-local-input"
+                                                    class="col-md-2 col-form-label font-size-11">Country</label>
+                                                <div class="col-md-10">
+                                                    <select class="form-select" name="country"
+                                                        formControlName="country">
+                                                        <option value={{this.lead.country}}>{{this.lead.Country.short_name}}</option>
+                                                        <option *ngFor="let country of this.countryList"
+                                                            value={{country.id}}>
+                                                            {{country.short_name}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </tab>
+
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-contact"></i>
+                                        Contact</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <p>
+                                        Food truck fixie locavore, accusamus mcsweeney's marfa nulla
+                                        single-origin coffee squid. Exercitation +1 labore velit, blog
+                                        sartorial PBR leggings next level wes anderson artisan four loko
+                                        farm-to-table craft beer twee. Qui photo booth letterpress,
+                                        commodo enim craft beer mlkshk.
+                                    </p>
+                                    <p class="mb-0"> Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip
+                                        jean shorts
+                                        ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic
+                                        magna 8-bit</p>
+                                </div>
+
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-book"></i> Notes</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <p>
+                                        Etsy mixtape wayfarers, ethical wes anderson tofu before they
+                                        sold out mcsweeney's organic lomo retro fanny pack lo-fi
+                                        farm-to-table readymade. Messenger bag gentrify pitchfork
+                                        tattooed craft beer, iphone skateboard locavore carles etsy
+                                        salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
+                                        Leggings gentrify squid 8-bit cred.
+                                    </p>
+                                    <p class="mb-0">DIY synth PBR banksy irony.
+                                        Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
+                                        mi whatever gluten-free.</p>
+                                </div>
+
+
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-none d-sm-block tabheading">Followup</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <p>
+                                        Etsy mixtape wayfarers, ethical wes anderson tofu before they
+                                        sold out mcsweeney's organic lomo retro fanny pack lo-fi
+                                        farm-to-table readymade. Messenger bag gentrify pitchfork
+                                        tattooed craft beer, iphone skateboard locavore carles etsy
+                                        salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
+                                        Leggings gentrify squid 8-bit cred.
+                                    </p>
+                                    <p class="mb-0">DIY synth PBR banksy irony.
+                                        Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
+                                        mi whatever gluten-free.</p>
+                                </div>
+
+
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-briefcase"></i>
+                                        Business</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <p>
+                                        Etsy mixtape wayfarers, ethical wes anderson tofu before they
+                                        sold out mcsweeney's organic lomo retro fanny pack lo-fi
+                                        farm-to-table readymade. Messenger bag gentrify pitchfork
+                                        tattooed craft beer, iphone skateboard locavore carles etsy
+                                        salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
+                                        Leggings gentrify squid 8-bit cred.
+                                    </p>
+                                    <p class="mb-0">DIY synth PBR banksy irony.
+                                        Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
+                                        mi whatever gluten-free.</p>
+                                </div>
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-none d-sm-block tabheading">Activities</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <p>
+                                        Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
+                                        art party before they sold out master cleanse gluten-free squid
+                                        scenester freegan cosby sweater. Fanny pack portland seitan DIY,
+                                        art party locavore wolf cliche high life echo park Austin. Cred
+                                        vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
+                                        farm-to-table.
+                                    </p>
+                                    <p class="mb-0">Fanny pack portland seitan DIY,
+                                        art party locavore wolf cliche high life echo park Austin. Cred
+                                        vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
+                                        farm-to-table.
+                                    </p>
+                                </div>
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading class="mb-2">
+                                    <span class="d-none d-sm-block tabheading">Meetings</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <p>
+                                        Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
+                                        art party before they sold out master cleanse gluten-free squid
+                                        scenester freegan cosby sweater. Fanny pack portland seitan DIY,
+                                        art party locavore wolf cliche high life echo park Austin. Cred
+                                        vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
+                                        farm-to-table.
+                                    </p>
+                                    <p class="mb-0">Fanny pack portland seitan DIY,
+                                        art party locavore wolf cliche high life echo park Austin. Cred
+                                        vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
+                                        farm-to-table.
+                                    </p>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- app.component.html -->
+
+
 
 
 
 </div>
-
-
 <!--  Add new modal contact start -->
 <ng-template #addNewContact let-modal>
       <div class="modal-header">

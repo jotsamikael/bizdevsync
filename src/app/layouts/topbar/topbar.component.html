@@ -352,9 +352,9 @@
 
       <div class="dropdown d-inline-block" dropdown>
         <button type="button" class="btn header-item" dropdownToggle id="page-header-user-dropdown">
-          <!-- <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar"> -->
-          <div  class="rounded-circle" alt="...">{{reduceName()}}</div>
-          <span class="d-none d-xl-inline-block ms-1">{{this.loggedInUser.full_name}} </span>
+           <img class="rounded-circle header-profile-user" src={{this.loggedInUser.avatar}} alt="Header Avatar">
+          <!-- <div  class="rounded-circle" alt="...">{{reduceName()}}</div> -->
+          <span class="d-none d-xl-inline-block ms-1">{{this.loggedInUser.first_name}} </span>
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-end" *dropdownMenu>

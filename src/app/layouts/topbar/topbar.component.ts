@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
-import { User } from 'src/app/services/models/model';
+import { User } from 'src/app/bizdevsyncbackend/models';
 
 @Component({
   selector: 'app-topbar',
@@ -48,8 +48,7 @@ export class TopbarComponent implements OnInit {
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
   ngOnInit() {
-    this.loggedInUser = JSON.parse(localStorage.getItem("token") || "{}");
-
+    this.loggedInUser  = JSON.parse(localStorage.getItem("user") || "{}");
     this.openMobileMenu = false;
     this.element = document.documentElement;
 
@@ -89,12 +88,12 @@ export class TopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    localStorage.setItem('token', "");
+    localStorage.setItem('user', "");
     this.router.navigate(['/login']);
   }
 
   reduceName():string{
-    return this.loggedInUser.full_name.substring(0, 2);
+    return this.loggedInUser.first_name.substring(0, 2);
   }
 
   /**

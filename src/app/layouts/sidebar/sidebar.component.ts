@@ -40,7 +40,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   logout() {
-    localStorage.setItem('token', "");
+    localStorage.setItem('user', "");
     this.router.navigate(['/login']);
   }
 
@@ -158,7 +158,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   initialize(): void {
     //this.menuItems = MENU;
     //filter menuItems based on user role
-    this.user = JSON.parse(localStorage.getItem('token') || '{}');
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
     //console.log(this.user.role)
     this.menuItems = this.filterMenuItems(MENU, this.user.role);
     //console.log(this.menuItems)

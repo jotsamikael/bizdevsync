@@ -94,3 +94,17 @@ table {
     border-width: 1px;
   }
   
+  .tabheading {
+  text-align: left;
+  min-width: 150px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+
+}
+
+a .nav-link .active {
+    color: var(--bs-nav-pills-link-active-color);
+    background-color: #e6c555!important;
+}
+
+

@@ -5,7 +5,7 @@ export interface User {
     password:string;
       role: string;
       full_name: string;
-      enterprise_id?: number;
+      enterprise_id?: number; //some users don't have enterpris 
     }
     
     export interface Enterprise {
@@ -39,7 +39,6 @@ export interface User {
       product_category_id: number;
       short_description: string;
       long_description: string;
-
     }
     
   export interface Contact{

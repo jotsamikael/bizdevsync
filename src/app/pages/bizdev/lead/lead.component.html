@@ -2,30 +2,38 @@
     <app-page-title title="lead Portfolio" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
 
-    <div class="row justify-content-end mb-3">
-        <div class="col-md-4 text-end">
-            <button class="btn btn-soft-primary  waves-effect waves-light mx-2"
-                (click)="openCreateNewModal(addNew)">Create Lead</button>
-            <button class="btn btn-soft-primary  waves-effect waves-light mx-2" (click)="openImport(import)">Import Lead</button>
-            <button class="btn btn-soft-primary  waves-effect waves-light" (click)="exporter.exportTable('csv')">Export
+    <div class="row justify-content-start mb-3">
+        <div class="col-md-4 text-start">
+            <button class="btn btn-primary  waves-effect waves-light mx-2" (click)="openCreateNewModal(addNew)">+ Create
+                Lead</button>
+            <button class="btn btn-soft-primary  waves-effect waves-light mx-2" (click)="openImport(import)"><i
+                    class="bx bx-upload"></i> Import Lead</button>
+            <button class="btn btn-soft-primary  waves-effect waves-light" (click)="exporter.exportTable('csv')"><i
+                    class="bx bx-download"></i> Export
                 Lead</button>
 
         </div>
 
     </div>
 
-    <button (click)="openLeadDialog()">test</button>
+    <!--  <div class="row">
+        <button (click)="openLeadDialog()">test</button>
 
- 
-
-    <div class="row">
         <div *ngFor="let stat of leadStat" class="col-md-4">
             <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"></app-stat>
         </div>
-    </div>
+    </div> -->
 
 
-    <div class="row justify-content-start">
+    <div class="row justify-content-end">
+        <div class="col-md-9 my-4">
+            <mat-chip-listbox aria-label="Lead status">
+                <mat-chip-option color="primary" selected>All</mat-chip-option>
+                <mat-chip-option color="primary">Contacted</mat-chip-option>
+                <mat-chip-option color="primary">Converted</mat-chip-option>
+                <mat-chip-option color="primary">Qualified</mat-chip-option>
+            </mat-chip-listbox>
+        </div>
         <div class="col-md-3">
             <mat-form-field matTooltip="Enter a prospect name">
                 <mat-label>Filter</mat-label>
@@ -40,43 +48,70 @@
                 <ng-container matColumnDef="created_by_user_id" *ngIf="this.user.role !='solo_business_developer'">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="The creator of this lead"> owner
                     </th>
-                    <td mat-cell *matCellDef="let row"> {{row.created_by_user_id}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.creator.first_name}} </td>
                 </ng-container>
 
                 <!-- name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> name </th>
-                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                    <td mat-cell *matCellDef="let row"> <b>{{row.name}}</b> <br>
+                        <div class="row" *ngIf="hoveredRow === row">
+                            <div class="col-12 py-2">
+                                <span class="action-details-btn" (click)="goToDetails(row)"><i class="bx bx-book-open"></i>
+                                    Details
+                                </span>
+                                <span class="action-delete-btn" (click)="confirmDelete()"><i class="bx bx-trash"></i>delete</span>
+                            </div>
+
+                        </div>
+                    </td>
+
+                </ng-container>
+
+                <!-- name Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> email </th>
+                    <td mat-cell *matCellDef="let row"> {{row.email}} </td>
                 </ng-container>
 
                 <!-- country Column -->
-                <ng-container matColumnDef="country">
+                <ng-container matColumnDef="Country_idCountry">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> country </th>
-                    <td mat-cell *matCellDef="let row"> {{row.country.name}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.Country.short_name}} </td>
                 </ng-container>
 
 
 
                 <!-- actor_type Column -->
-                <ng-container matColumnDef="actor_type">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> actor_type </th>
-                    <td mat-cell *matCellDef="let row"> {{row.actor_type}} </td>
+                <ng-container matColumnDef="activitySector">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> activitySector </th>
+                    <td mat-cell *matCellDef="let row"> {{row.activitySector}} </td>
                 </ng-container>
 
-                <!-- status Column -->
-                <ng-container matColumnDef="status" *ngIf="this.user.role !='solo_business_developer'">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> status </th>
+                <!-- is_private Column -->
+                <ng-container matColumnDef="is_private" *ngIf="this.user.role !='solo_business_developer'">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Privacy </th>
                     <td mat-cell *matCellDef="let row">
-                        <span matTooltip="public" *ngIf="row.is_private" style="font-size: 32px;"
-                            class="text-primary"> <i class="bx bx-lock"></i></span>
-                        <span matTooltip="private" *ngIf="!row.is_private" style="font-size: 32px;"
-                            class="text-info"><i class="bx bx-lock-open"></i></span>
+                        <span matTooltip="public" *ngIf="row.is_private" style="font-size: 32px;" class="text-primary">
+                            <i class="bx bx-lock"></i></span>
+                        <span matTooltip="private" *ngIf="!row.is_private" style="font-size: 32px;" class="text-info"><i
+                                class="bx bx-lock-open"></i></span>
 
                     </td>
                 </ng-container>
+                <!-- status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                    <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+                </ng-container>
 
+                <!-- source Column -->
+                <ng-container matColumnDef="source">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> source </th>
+                    <td mat-cell *matCellDef="let row"> {{row.Source.label}} </td>
+                </ng-container>
 
-                <!-- actions Column -->
+                <!-- actions Column 
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> actions </th>
                     <td mat-cell *matCellDef="let row">
@@ -88,10 +123,16 @@
                         </mat-menu>
 
                     </td>
-                </ng-container>
+                </ng-container>-->
 
+                <tr mat-row *matRowDef="let row; columns: displayedColumns" (mouseenter)="hoveredRow = row"
+                    (mouseleave)="hoveredRow = null">
+                </tr>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            
+                <!-- Row shown when data is being fetched. -->
+                <mat-spinner *ngIf="isLoading"></mat-spinner>
 
                 <!-- Row shown when there is no matching data. -->
                 <tr class="mat-row" *matNoDataRow>
@@ -99,7 +140,10 @@
                 </tr>
             </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of leads"></mat-paginator>
+            <mat-paginator [length]="totalLeads" [pageSize]="limit" [pageSizeOptions]="[5, 10, 25, 100]"
+                showFirstLastButtons (page)="onPageChange($event)">
+            </mat-paginator>
+
         </div>
 
 
@@ -110,17 +154,17 @@
 </div>
 
 
-   <!-- Import lead modal  -->
+<!-- Import lead modal  -->
 <ng-template #createLeadDialog>
     <h2 mat-dialog-title>Create New Lead</h2>
     <mat-dialog-content>
- <p>Mat table within component</p>
+        <p>Mat table within component</p>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>Cancel</button>
-      <button mat-flat-button color="primary" (click)="saveLead()">Save</button>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-flat-button color="primary" (click)="saveLead()">Save</button>
     </mat-dialog-actions>
-  </ng-template>
+</ng-template>
 
 
 <!--  Add new modal example -->
@@ -150,23 +194,25 @@
                 <select class="form-select" name="actor_type" formControlName="actor_type">
                     <option value="">Select</option>
                     <option *ngFor="let sector of this.getAllBusinessSector()" value={{sector}}>{{sector}}</option>
-                  
+
 
                 </select>
                 <small *ngIf="f.actor_type.touched && f.actor_type.invalid" class="error">
                               <div *ngIf="f.actor_type.errors.required">actor_type is required.</div>
                 </small>
-                  
-                   </div>
-            
+                 
+                   
+            </div>
+
             <div class="row mb-1">
                 <div class="col-md-6">
                     <div class="mb-2">
                           <label class="form-label">country</label>
                         <select class="form-select" name="country" formControlName="country">
                             <option value="">Select</option>
-                            <option  *ngFor="let country of this.getAllCountries()" value={{country}}>{{country}}</option>
-                        
+                            <option *ngFor="let country of this.getAllCountries()" value={{country}}>{{country}}
+                            </option>
+
 
                         </select>
                     </div>
@@ -174,9 +220,9 @@
                 <div class="col-md-6">
                     <div class="mb-2">
                           <label class="form-label">region</label>
-                            <input class="form-control" name="region" formControlName="region" type="text"
-                            readonly dis value={{this.getRegionByCountry()}}>
-                            <small class="text-info">region is auto filled based on country</small>
+                            <input class="form-control" name="region" formControlName="region" type="text" readonly dis
+                            value={{this.getRegionByCountry()}}>
+                        <small class="text-info">region is auto filled based on country</small>
                     </div>
                        
                 </div>
@@ -185,8 +231,7 @@
                 <div class="mb-1">
                     <label for="example-password-input" class="col-form-label">is_private
                     </label><br>
-                    <mat-radio-group name="is_private"
-                        formControlName="is_private" aria-label="Select an option">
+                    <mat-radio-group name="is_private" formControlName="is_private" aria-label="Select an option">
                         <mat-radio-button value='Yes'>Yes</mat-radio-button>
                         <mat-radio-button value='No'>No</mat-radio-button>
                     </mat-radio-group>
@@ -214,18 +259,18 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"      
             (click)="modalRef?.hide()"></button>
           </div>
-          <div class="modal-body">
-            <h6 class="text-center">You can import a list of leads here, download the file example below</h6>
-            <p class="text-center"><a href="#" class="text-center">Example File</a></p>
+      <div class="modal-body">
+        <h6 class="text-center">You can import a list of leads here, download the file example below</h6>
+        <p class="text-center"><a href="#" class="text-center">Example File</a></p>
 
-        </div>
-        <div class="modal-footer">
-                <mat-spinner [diameter]="25" *ngIf="this.processing"></mat-spinner>
+    </div>
+    <div class="modal-footer">
+            <mat-spinner [diameter]="25" *ngIf="this.processing"></mat-spinner>
 
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                (click)="modalRef?.hide()">Close</button>
-                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button
-                     class="btn btn-primary">Submit</button>
-              </div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            (click)="modalRef?.hide()">Close</button>
+            <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button    
+             class="btn btn-primary">Submit</button>
+          </div>
 
 </ng-template>

@@ -2,3 +2,17 @@
     font-size: 12px;
     color: red;
 }
+
+
+
+.action-details-btn, .action-delete-btn{
+    cursor: pointer;
+}
+
+.action-details-btn:hover{
+color: rgb(59, 59, 227);
+}
+
+.action-delete-btn:hover{
+color: rgb(223, 67, 150);
+}

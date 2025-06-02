@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Lead } from 'src/app/services/models/model';
+import { Lead } from 'src/app/bizdevsyncbackend/models/lead';
 /**
  * IS USED TO TRANSFER DATA FROM ONE COMPONENT TO ANOTHER EFFICIENTLY
  */

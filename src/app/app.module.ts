@@ -30,6 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivateAccountComponent } from './activate-account/activate-account.component';
+import { CredentialsInterceptor } from './bizdevsyncbackend/interceptor/http-interceptor.interceptor';
 
 
 if (environment.defaultauth === 'firebase') {
@@ -77,6 +78,11 @@ export function createTranslateLoader(http: HttpClient): any {
   ],
   bootstrap: [AppComponent],
   providers: [
+    {
+  provide: HTTP_INTERCEPTORS,
+  useClass: CredentialsInterceptor,
+  multi: true
+}
    //{ provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
     //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     //{ provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },

@@ -1,191 +1,949 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.0",
   "info": {
-    "title": "OpenApi specifiction - APPLYCAM",
-    "description": "OpenApi documentation for applycam project",
-    "termsOfService": "Terms of service",
+    "title": "OpenAPI Specification - BizdevSync",
+    "version": "1.0.0",
+    "description": "OpenAPI documentation for the BizdevSync project",
+    "termsOfService": "https://dodibo.com/terms",
     "contact": {
       "name": "jotsamikael",
-      "url": "https://dodibo.com/",
-      "email": "jotsamikael@gmail.com"
+      "email": "jotsamikael@gmail.com",
+      "url": "https://dodibo.com/"
     },
-    "license": { "name": "Licence name", "url": "https://someurl.com" },
-    "version": "1.0"
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
-    { "url": "http://localhost:8088/api/v1", "description": "Local ENV." },
-    { "url": "https://something:8088/api/v1", "description": "Prod ENV." }
+    {
+      "url": "http://localhost:8885/api",
+      "description": "Local ENV."
+    },
+    {
+      "url": "https://your-production-url.com/api",
+      "description": "Production ENV."
+    }
   ],
-  "security": [{ "bearerAuth": [] }],
-  "paths": {
-    "/trainingcenter/create-training-center": {
-      "post": {
-        "tags": ["trainingcenter"],
-        "operationId": "createTrainingCenter",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTainingCenterRequest"
-              }
-            }
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT Authorization header using the Bearer scheme"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
           },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "string" } }
-            }
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "is_activated": {
+            "type": "boolean"
+          },
+          "is_verified": {
+            "type": "boolean"
+          },
+          "role": {
+            "type": "string"
+          },
+          "will_expire": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "is_archived": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Enterprise_idEnterprise": {
+            "type": "integer",
+            "nullable": true
+          },
+          "plan_id": {
+            "type": "integer"
+          },
+          "telephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_ip": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_login": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "last_activity": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "google_auth_secret": {
+            "type": "string",
+            "nullable": true
+          },
+          "email_signature": {
+            "type": "string",
+            "nullable": true
+          },
+          "default_language": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkedIn": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Lead": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "UNQUALIFIED",
+              "QUALIFIED",
+              "CONVERTED"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "integer",
+            "nullable": true
+          },
+          "assigned_to_user_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "town": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "string",
+            "nullable": true
+          },
+          "activitySector": {
+            "type": "string"
+          },
+          "is_private": {
+            "type": "boolean"
+          },
+          "is_archived": {
+            "type": "boolean"
+          },
+          "lead_value": {
+            "type": "integer",
+            "nullable": true
+          },
+          "last_activity": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "date_assigned": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "last_status_change": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "date_converted": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          }
+        }
+      },
+      "Activity": {
+        "type": "object",
+        "properties": {
+          "idActivity": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "COMPLETED",
+              "PENDING",
+              "IN_PROGRESS",
+              "NOT_STARTED",
+              "WAITING_FEEDBACK"
+            ]
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "tags": {
+            "type": "string",
+            "nullable": true
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "CRITICAL",
+              "IMPORTANT",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "last_action": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_action_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "next_action": {
+            "type": "string",
+            "nullable": true
+          },
+          "next_action_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "Followup_idFollowup": {
+            "type": "integer",
+            "nullable": true
+          },
+          "Business_idBusiness": {
+            "type": "integer",
+            "nullable": true
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Meeting": {
+        "type": "object",
+        "properties": {
+          "idMeeting": {
+            "type": "integer"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "COMPLETED",
+              "PENDING",
+              "IN_PROGRESS",
+              "NOT STARTED",
+              "WAITING FEEDBACK"
+            ]
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "next_action": {
+            "type": "string"
+          },
+          "next_action_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "Followup_idFollowup": {
+            "type": "integer",
+            "nullable": true
+          },
+          "Business_idBusiness": {
+            "type": "integer",
+            "nullable": true
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "assignedToUser": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "position": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "product_category_id": {
+            "type": "integer"
+          },
+          "short_description": {
+            "type": "string",
+            "nullable": true
+          },
+          "long_description": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ProductCategory": {
+        "type": "object",
+        "properties": {
+          "idProductCategory": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Region": {
+        "type": "object",
+        "properties": {
+          "idRegion": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Source": {
+        "type": "object",
+        "properties": {
+          "idSource": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "invoice_no": {
+            "type": "string"
+          },
+          "payment_id": {
+            "type": "string"
+          },
+          "plan_id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "gateway_id": {
+            "type": "integer"
+          },
+          "amount": {
+            "type": "number",
+            "format": "float"
+          },
+          "tax": {
+            "type": "number",
+            "format": "float"
+          },
+          "status": {
+            "type": "integer",
+            "description": "0 = pending, 1 = paid"
+          },
+          "will_expire": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "meta": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Plan": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "labelcolor": {
+            "type": "string"
+          },
+          "iconname": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "float"
+          },
+          "is_featured": {
+            "type": "integer"
+          },
+          "is_recommended": {
+            "type": "integer"
+          },
+          "is_trial": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "days": {
+            "type": "integer"
+          },
+          "trial_days": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Followup": {
+        "type": "object",
+        "properties": {
+          "idFollowup": {
+            "type": "integer"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "lead_score": {
+            "type": "number",
+            "format": "float"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "CRITICAL",
+              "IMPORTANT",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "followup_status": {
+            "type": "string",
+            "enum": [
+              "Hot",
+              "Warm",
+              "Cold"
+            ]
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Country": {
+        "type": "object",
+        "properties": {
+          "idCountry": {
+            "type": "integer"
+          },
+          "short_name": {
+            "type": "string"
+          },
+          "long_name": {
+            "type": "string"
+          },
+          "iso2": {
+            "type": "string",
+            "nullable": true
+          },
+          "iso3": {
+            "type": "string",
+            "nullable": true
+          },
+          "calling_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_un_member": {
+            "type": "boolean"
+          },
+          "is_archived": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Enterprise": {
+        "type": "object",
+        "properties": {
+          "idEnterprise": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string"
+          },
+          "sector": {
+            "type": "string",
+            "enum": [
+              "Technology",
+              "Healthcare",
+              "Education",
+              "Finance",
+              "Retail",
+              "Logistics",
+              "Manufacturing",
+              "Media"
+            ]
+          },
+          "website": {
+            "type": "string"
+          },
+          "email_domain": {
+            "type": "string"
+          },
+          "contact_email": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "plan": {
+            "type": "integer"
+          },
+          "is_verified": {
+            "type": "boolean"
+          },
+          "subscription_status": {
+            "type": "string"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Business": {
+        "type": "object",
+        "properties": {
+          "idBusiness": {
+            "type": "integer"
+          },
+          "need": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "OPPORTUNITY",
+              "PORPOSAL_SENT",
+              "NEGOCIATION",
+              "WON"
+            ],
+            "nullable": true
+          },
+          "approach": {
+            "type": "string",
+            "nullable": true
+          },
+          "engagement_score": {
+            "type": "number",
+            "format": "float"
+          },
+          "client_constraints": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "case_level": {
+            "type": "string",
+            "nullable": true
+          },
+          "total_turnover": {
+            "type": "string",
+            "nullable": true
+          },
+          "potential_time_for_delivery": {
+            "type": "string",
+            "nullable": true
+          },
+          "case_started_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "current_supplier": {
+            "type": "string",
+            "nullable": true
+          },
+          "previous_vc": {
+            "type": "string",
+            "nullable": true
+          },
+          "turnover_signable": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "closed_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Competitor": {
+        "type": "object",
+        "properties": {
+          "idCompetitor": {
+            "type": "integer"
+          },
+          "last_updated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "sector": {
+            "type": "string",
+            "nullable": true
+          },
+          "headquater_location": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference_clients": {
+            "type": "string",
+            "nullable": true
+          },
+          "product_line": {
+            "type": "string",
+            "nullable": true
+          },
+          "website": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_archived": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Gateway": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "charge": {
+            "type": "number",
+            "format": "float"
+          },
+          "multiply": {
+            "type": "number",
+            "format": "float"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "min_amount": {
+            "type": "number",
+            "format": "float"
+          },
+          "max_amount": {
+            "type": "number",
+            "format": "float"
+          },
+          "is_auto": {
+            "type": "integer"
+          },
+          "image_accept": {
+            "type": "integer"
+          },
+          "test_mode": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "phone_required": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }
-    },
-    "/trainingcenter/agreement/{agreement-number}": {
+    }
+  },
+  "paths": {
+    "/activities/create": {
       "post": {
-        "tags": ["trainingcenter"],
-        "operationId": "uploadAgreementFile",
-        "parameters": [
+        "summary": "Create a new activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
           {
-            "name": "agreement-number",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
+            "bearerAuth": []
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "required": ["file"],
                 "type": "object",
                 "properties": {
-                  "file": { "type": "string", "format": "binary" }
+                  "title": {
+                    "type": "string"
+                  },
+                  "detail": {
+                    "type": "string"
+                  },
+                  "created_date": {
+                    "type": "string"
+                  },
+                  "start_date": {
+                    "type": "string"
+                  },
+                  "end_date": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "string"
+                  },
+                  "last_action": {
+                    "type": "string"
+                  },
+                  "last_action_date": {
+                    "type": "string"
+                  },
+                  "next_action": {
+                    "type": "string"
+                  },
+                  "next_action_date": {
+                    "type": "string"
+                  },
+                  "_idFollowup": {
+                    "type": "number"
+                  },
+                  "_idBusiness": {
+                    "type": "number"
+                  }
                 }
               }
             }
           }
         },
         "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "object" } }
-            }
-          }
-        }
-      }
-    },
-    "/staff/create-staff": {
-      "post": {
-        "tags": ["staff"],
-        "operationId": "createStaff",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateStaffRequest" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "string" } }
-            }
-          }
-        }
-      }
-    },
-    "/campus": {
-      "post": {
-        "tags": ["campus"],
-        "operationId": "createCampus",
-        "parameters": [
-          {
-            "name": "request",
-            "in": "query",
-            "required": true,
-            "schema": { "$ref": "#/components/schemas/CreateCampusRequest" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "string" } }
-            }
-          }
-        }
-      }
-    },
-    "/auth/promoter-register": {
-      "post": {
-        "tags": ["Authentication"],
-        "operationId": "createStaff_1",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreatePromoterRequest" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "string" } }
-            }
-          }
-        }
-      }
-    },
-    "/auth/candidate-register": {
-      "post": {
-        "tags": ["Authentication"],
-        "operationId": "register",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidateRegistrationRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "content": {
-              "application/json": { "schema": { "type": "object" } }
-            }
-          }
-        }
-      }
-    },
-    "/auth/authenticate": {
-      "post": {
-        "tags": ["Authentication"],
-        "operationId": "authenticate",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/AuthenticationRequest" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Activity created",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthenticationResponse"
+                  "$ref": "#/components/schemas/Activity"
                 }
               }
             }
@@ -193,110 +951,50 @@
         }
       }
     },
-    "/staff/update-staff/{email}": {
-      "patch": {
-        "tags": ["staff"],
-        "operationId": "updateStaff",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateStaffRequest" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "string" } }
-            }
-          }
-        }
-      }
-    },
-    "/promoter/update-promoter": {
-      "patch": {
-        "tags": ["promoter"],
-        "operationId": "updatePromoter",
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreatePromoterRequest" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "string" } }
-            }
-          }
-        }
-      }
-    },
-    "/promoter/reset-password": {
-      "patch": {
-        "tags": ["promoter"],
-        "operationId": "resetPassword",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "string" } }
-            }
-          }
-        }
-      }
-    },
-    "/candidate": {
-      "patch": {
-        "tags": ["candidate"],
-        "operationId": "updateCandidate",
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CandidateRequest" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": { "schema": { "type": "string" } }
-            }
-          }
-        }
-      }
-    },
-    "/trainingcenter/get-training-centers-of-connected-promoter": {
+    "/activities/get-all": {
       "get": {
-        "tags": ["trainingcenter"],
-        "operationId": "getTrainingCenterOfConnectedPromoter",
+        "summary": "Get all activities of the logged-in user (paginated)",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "List of activities",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TrainingCenterResponse"
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Activity"
+                      }
+                    }
                   }
                 }
               }
@@ -305,232 +1003,2625 @@
         }
       }
     },
-    "/trainingcenter/get-training-by-agreement-number": {
+    "/activities/get-by-id/{id}": {
       "get": {
-        "tags": ["trainingcenter"],
-        "operationId": "getTrainingCenterByAgreementNumber",
-        "parameters": [
+        "summary": "Get an activity by ID",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
           {
-            "name": "agreementNumber",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "string" }
+            "bearerAuth": []
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TrainingCenterResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/trainingcenter/get-all": {
-      "get": {
-        "tags": ["trainingcenter"],
-        "operationId": "getTrainingCenterByAgreementNumber_1",
         "parameters": [
           {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 0 }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 10 }
-          },
-          {
-            "name": "field",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string", "default": "name" }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "boolean", "default": true }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageResponseTrainingCenterResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/staff": {
-      "get": {
-        "tags": ["staff"],
-        "operationId": "getAllStaffs",
-        "parameters": [
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 0 }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 10 }
-          },
-          {
-            "name": "field",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string", "default": "name" }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "boolean", "default": true }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageResponseStaffResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/staff/find-by-email": {
-      "get": {
-        "tags": ["staff"],
-        "operationId": "findStaffByEmail",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/StaffResponse" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/promoter/get-all": {
-      "get": {
-        "tags": ["promoter"],
-        "operationId": "getAllStaffs_1",
-        "parameters": [
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 0 }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 10 }
-          },
-          {
-            "name": "field",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string", "default": "firstname" }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "boolean", "default": true }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageResponsePromoterResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/promoter/find-by-email": {
-      "get": {
-        "tags": ["promoter"],
-        "operationId": "findStaffByEmail_1",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/PromoterResponse" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/division/get-by-region/{region}": {
-      "get": {
-        "tags": ["division"],
-        "operationId": "getDivisionByRegion",
-        "parameters": [
-          {
-            "name": "region",
+            "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Activity details"
+          }
+        }
+      }
+    },
+    "/activities/followups/{followupId}": {
+      "get": {
+        "summary": "Get paginated activities for a followup",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "followupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of activities"
+          }
+        }
+      }
+    },
+    "/activities/businesses/{businessId}": {
+      "get": {
+        "summary": "Get paginated activities for a business",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of activities"
+          }
+        }
+      }
+    },
+    "/activities/update/{id}": {
+      "put": {
+        "summary": "Update an activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "detail": {
+                    "type": "string"
+                  },
+                  "created_date": {
+                    "type": "string"
+                  },
+                  "start_date": {
+                    "type": "string"
+                  },
+                  "end_date": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "string"
+                  },
+                  "last_action": {
+                    "type": "string"
+                  },
+                  "last_action_date": {
+                    "type": "string"
+                  },
+                  "next_action": {
+                    "type": "string"
+                  },
+                  "next_action_date": {
+                    "type": "string"
+                  },
+                  "_idFollowup": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Activity updated"
+          }
+        }
+      }
+    },
+    "/activities/delete/{id}": {
+      "delete": {
+        "summary": "Archive an activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity archived"
+          }
+        }
+      }
+    },
+    "/businesses/create": {
+      "post": {
+        "summary": "Create a new business opportunity",
+        "tags": [
+          "Businesses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "need": {
+                    "type": "string",
+                    "example": "Improve supply chain efficiency"
+                  },
+                  "approach": {
+                    "type": "string",
+                    "example": "Product presentation followed by workshop"
+                  },
+                  "stage": {
+                    "type": "string",
+                    "example": "opportunity"
+                  },
+                  "client_constraints": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Client requires government certification"
+                  },
+                  "business_type": {
+                    "type": "string",
+                    "example": "Software subscription"
+                  },
+                  "case_level": {
+                    "type": "string",
+                    "example": "Strategic"
+                  },
+                  "total_turnover": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "3M EUR"
+                  },
+                  "potential_time_for_delivery": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Q3 2025"
+                  },
+                  "case_started_date": {
+                    "type": "string",
+                    "example": "2025-05-19"
+                  },
+                  "current_supplier": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Oracle"
+                  },
+                  "previous_vc": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "None"
+                  },
+                  "turnover_signable": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "500K EUR"
+                  },
+                  "notes": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Client showed interest in our new integration API."
+                  },
+                  "closed_date": {
+                    "type": "string",
+                    "format": "date",
+                    "nullable": true,
+                    "example": "2025-08-01"
+                  },
+                  "_idLead": {
+                    "type": "integer",
+                    "example": 7
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Business created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Business"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/businesses/get-all": {
+      "get": {
+        "summary": "Get all businesses created by the logged-in user (paginated)",
+        "tags": [
+          "Businesses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of businesses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Business"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/businesses/get-by-id/{id}": {
+      "get": {
+        "summary": "Get a business by ID",
+        "tags": [
+          "Businesses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Business details"
+          }
+        }
+      }
+    },
+    "/businesses/get-by-lead-id/{idLead}": {
+      "get": {
+        "summary": "Get a business by lead id",
+        "tags": [
+          "Businesses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "idLead",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of businesses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Business"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/businesses/update/{id}": {
+      "put": {
+        "summary": "Update a business",
+        "tags": [
+          "Businesses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "need": {
+                    "type": "string",
+                    "example": "Improve supply chain efficiency"
+                  },
+                  "approach": {
+                    "type": "string",
+                    "example": "Product presentation followed by workshop"
+                  },
+                  "stage": {
+                    "type": "string",
+                    "example": "opportunity"
+                  },
+                  "client_constraints": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Client requires government certification"
+                  },
+                  "business_type": {
+                    "type": "string",
+                    "example": "Software subscription"
+                  },
+                  "case_level": {
+                    "type": "string",
+                    "example": "Strategic"
+                  },
+                  "total_turnover": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "3M EUR"
+                  },
+                  "potential_time_for_delivery": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Q3 2025"
+                  },
+                  "case_started_date": {
+                    "type": "string",
+                    "example": "2025-05-19"
+                  },
+                  "current_supplier": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Oracle"
+                  },
+                  "previous_vc": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "None"
+                  },
+                  "turnover_signable": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "500K EUR"
+                  },
+                  "notes": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Client showed interest in our new integration API."
+                  },
+                  "closed_date": {
+                    "type": "string",
+                    "format": "date",
+                    "nullable": true,
+                    "example": "2025-08-01"
+                  },
+                  "_idLead": {
+                    "type": "integer",
+                    "example": 7
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Business updated"
+          }
+        }
+      }
+    },
+    "/businesses/delete/{id}": {
+      "delete": {
+        "summary": "Archive a business",
+        "tags": [
+          "Businesses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Business archived"
+          }
+        }
+      }
+    },
+    "/businesses/next-action/{businessId}": {
+      "get": {
+        "summary": "Get next scheduled action (activity/meeting) for a business",
+        "tags": [
+          "Businesses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Business ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Next action (activity or meeting) for the business"
+          }
+        }
+      }
+    },
+    "/businesses/overdue-actions/{businessId}": {
+      "get": {
+        "summary": "Get overdue actions (activity/meeting) for a business",
+        "tags": [
+          "Businesses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Business ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of overdue activities and meetings for the business"
+          }
+        }
+      }
+    },
+    "/competitors/create": {
+      "post": {
+        "summary": "Create a new competitor",
+        "tags": [
+          "Competitors"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "TechNova"
+                  },
+                  "sector": {
+                    "type": "string",
+                    "example": "Cloud Services"
+                  },
+                  "headquater_location": {
+                    "type": "string",
+                    "example": "San Francisco, USA"
+                  },
+                  "reference_clients": {
+                    "type": "string",
+                    "example": "Acme Corp, GlobalTel, Fintech Group"
+                  },
+                  "product_line": {
+                    "type": "string",
+                    "example": "Enterprise cloud storage, backup solutions"
+                  },
+                  "website": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "https://www.technova.com"
+                  },
+                  "notes": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Known for aggressive pricing and strong customer support."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Competitor created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Competitor"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/competitors/get-all": {
+      "get": {
+        "summary": "Get all competitors (paginated)",
+        "tags": [
+          "Competitors"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of competitors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Competitor"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/competitors/get-by-id/{id}": {
+      "get": {
+        "summary": "Get a competitor by ID",
+        "tags": [
+          "Competitors"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Competitor details"
+          }
+        }
+      }
+    },
+    "/competitors/update/{id}": {
+      "put": {
+        "summary": "Update a competitor",
+        "tags": [
+          "Competitors"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the competitor to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "TechNova"
+                  },
+                  "sector": {
+                    "type": "string",
+                    "example": "Cloud Services"
+                  },
+                  "headquater_location": {
+                    "type": "string",
+                    "example": "San Francisco, USA"
+                  },
+                  "reference_clients": {
+                    "type": "string",
+                    "example": "Acme Corp, GlobalTel"
+                  },
+                  "product_line": {
+                    "type": "string",
+                    "example": "Backup solutions, cloud storage"
+                  },
+                  "website": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "https://www.technova.com"
+                  },
+                  "notes": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Leading in government contracts"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Competitor updated successfully"
+          },
+          "404": {
+            "description": "Competitor not found or already archived"
+          }
+        }
+      }
+    },
+    "/competitors/delete/{id}": {
+      "delete": {
+        "summary": "Archive a competitor",
+        "tags": [
+          "Competitors"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Competitor archived"
+          }
+        }
+      }
+    },
+    "/competitors/businesses/{businessId}": {
+      "get": {
+        "summary": "Get paginated competitors linked to a business",
+        "tags": [
+          "Competitors"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of competitors"
+          }
+        }
+      }
+    },
+    "/business-has-competitors/competitor-business/create": {
+      "post": {
+        "summary": "Link a competitor to a business with additional insights",
+        "tags": [
+          "CompetitorHasBusiness"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "market_position": {
+                    "type": "string",
+                    "example": "Market Leader in SME Segment"
+                  },
+                  "weaknesses": {
+                    "type": "string",
+                    "example": "Limited support in French-speaking regions"
+                  },
+                  "strengths": {
+                    "type": "string",
+                    "example": "Excellent integration with existing CRMs"
+                  },
+                  "reference_clients": {
+                    "type": "string",
+                    "example": "Orange, Canal+, TechSavvy Inc."
+                  },
+                  "risk_level": {
+                    "type": "string",
+                    "example": "High"
+                  },
+                  "_idCompetitor": {
+                    "type": "integer",
+                    "example": 3
+                  },
+                  "_idBusiness": {
+                    "type": "integer",
+                    "example": 12
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Link created successfully"
+          }
+        }
+      }
+    },
+    "/business-has-competitors/link-business/{businessId}/{id}": {
+      "put": {
+        "summary": "Update the link between a competitor and a business",
+        "tags": [
+          "CompetitorHasBusiness"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Competitor ID"
+          },
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Business ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "market_position": {
+                    "type": "string",
+                    "example": "Top 3 in the African logistics sector"
+                  },
+                  "weaknesses": {
+                    "type": "string",
+                    "example": "Limited technical support"
+                  },
+                  "strengths": {
+                    "type": "string",
+                    "example": "Affordable pricing, large regional presence"
+                  },
+                  "reference_clients": {
+                    "type": "string",
+                    "example": "Transcom, QuickMove"
+                  },
+                  "risk_level": {
+                    "type": "string",
+                    "example": "Medium"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Link updated successfully"
+          },
+          "404": {
+            "description": "Link not found or archived"
+          }
+        }
+      }
+    },
+    "/business-has-competitors/unlink-business/{businessId}/{id}": {
+      "delete": {
+        "summary": "Unlink a competitor from a business (soft delete)",
+        "tags": [
+          "CompetitorHasBusiness"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Competitor ID"
+          },
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Business ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Link removed successfully"
+          }
+        }
+      }
+    },
+    "/business-has-competitors/businesses/{id}": {
+      "get": {
+        "summary": "Get all businesses linked to a competitor",
+        "tags": [
+          "CompetitorHasBusiness"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Competitor ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of linked businesses"
+          }
+        }
+      }
+    },
+    "/contacts/create": {
+      "post": {
+        "summary": "Create a new contact",
+        "tags": [
+          "Contacts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "assignedToUser": {
+                    "type": "integer"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "language": {
+                    "type": "object"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "_idLead": {
+                    "type": "integer"
+                  },
+                  "_idCountry": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contact created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts/get-all": {
+      "get": {
+        "summary": "Get all contacts (paginated)",
+        "tags": [
+          "Contacts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of contacts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Contact"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts/get-contacts-by-lead/{leadId}": {
+      "get": {
+        "summary": "Get all contacts for a specific lead",
+        "tags": [
+          "Contacts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "leadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the Lead"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of contacts for the specified lead",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching contacts"
+          }
+        }
+      }
+    },
+    "/contacts/get-by-id/{id}": {
+      "get": {
+        "summary": "Get contact by ID",
+        "tags": [
+          "Contacts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact detail"
+          }
+        }
+      }
+    },
+    "/contacts/update/{id}": {
+      "put": {
+        "summary": "Update a contact",
+        "tags": [
+          "Contacts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact updated"
+          }
+        }
+      }
+    },
+    "/contacts/delete/{id}": {
+      "delete": {
+        "summary": "Archive a contact (soft delete)",
+        "tags": [
+          "Contacts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact archived"
+          }
+        }
+      }
+    },
+    "/contacts/get-by-meeting/{meetingId}": {
+      "get": {
+        "summary": "Get paginated contacts linked to a meeting",
+        "tags": [
+          "ContactHasMeeting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of contacts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Contact"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact-has-meeting/link-meeting/{id}": {
+      "post": {
+        "summary": "Link a contact to a meeting",
+        "tags": [
+          "ContactHasMeeting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Contact ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "meeting_idMeeting": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contact linked to Meeting"
+          }
+        }
+      }
+    },
+    "/contact-has-meeting/unlink-meeting/{meetingId}/{id}": {
+      "delete": {
+        "summary": "Unlink a contact from a meeting",
+        "tags": [
+          "ContactHasMeeting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Contact ID"
+          },
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Meeting ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact unlinked from Meeting"
+          }
+        }
+      }
+    },
+    "/contact-has-meeting/meetings/{id}": {
+      "get": {
+        "summary": "Get all meetings linked to a contact",
+        "tags": [
+          "ContactHasMeeting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Contact ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of linked meetings"
+          }
+        }
+      }
+    },
+    "/contact-has-meeting/contacts/{id}": {
+      "get": {
+        "summary": "Get all contacts linked to a contact",
+        "tags": [
+          "ContactHasMeeting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Contact ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of linked contacts"
+          }
+        }
+      }
+    },
+    "/countries/create": {
+      "post": {
+        "summary": "Create a new country",
+        "tags": [
+          "Countries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "short_name": {
+                    "type": "string"
+                  },
+                  "long_name": {
+                    "type": "string"
+                  },
+                  "iso2": {
+                    "type": "string"
+                  },
+                  "iso3": {
+                    "type": "string"
+                  },
+                  "calling_code": {
+                    "type": "string"
+                  },
+                  "is_un_member": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Country created"
+          }
+        }
+      }
+    },
+    "/countries/get-all": {
+      "get": {
+        "summary": "Get all countries (paginated)",
+        "tags": [
+          "Countries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of countries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Country"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/countries/get-by-id/{id}": {
+      "get": {
+        "summary": "Get a country by ID",
+        "tags": [
+          "Countries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Country details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Country"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/countries/update/{id}": {
+      "patch": {
+        "summary": "Update a country",
+        "tags": [
+          "Countries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "short_name": {
+                    "type": "string"
+                  },
+                  "long_name": {
+                    "type": "string"
+                  },
+                  "iso2": {
+                    "type": "string"
+                  },
+                  "iso3": {
+                    "type": "string"
+                  },
+                  "calling_code": {
+                    "type": "string"
+                  },
+                  "is_un_member": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Country updated"
+          }
+        }
+      }
+    },
+    "/countries/delete/{id}": {
+      "delete": {
+        "summary": "Archive a country (soft delete)",
+        "tags": [
+          "Countries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Country archived"
+          }
+        }
+      }
+    },
+    "/enterprises/create": {
+      "post": {
+        "summary": "Create a new enterprise",
+        "tags": [
+          "Enterprises"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "sector": {
+                    "type": "string",
+                    "enum": [
+                      "Technology",
+                      "Healthcare",
+                      "Education",
+                      "Finance",
+                      "Retail",
+                      "Logistics",
+                      "Manufacturing",
+                      "Media"
+                    ]
+                  },
+                  "email_domain": {
+                    "type": "string"
+                  },
+                  "website": {
+                    "type": "string"
+                  },
+                  "contact_email": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "integer"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully"
+          }
+        }
+      }
+    },
+    "/enterprises/get-all": {
+      "get": {
+        "summary": "Get all enterprises (paginated)",
+        "tags": [
+          "Enterprises"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of enterprises",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Enterprise"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enterprises/get-by-id/{id}": {
+      "get": {
+        "summary": "Get an enterprise by ID",
+        "tags": [
+          "Enterprises"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enterprise details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Enterprise"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enterprises/update/{id}": {
+      "patch": {
+        "summary": "Update an existing enterprise",
+        "description": "Partially updates an enterprise's information",
+        "tags": [
+          "Enterprises"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The ID of the enterprise to update"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Enterprise name"
+                  },
+                  "sector": {
+                    "type": "string",
+                    "description": "Enterprise sector"
+                  },
+                  "email_domain": {
+                    "type": "string",
+                    "description": "Enterprise email domain"
+                  },
+                  "website": {
+                    "type": "string",
+                    "description": "Enterprise website URL"
+                  },
+                  "contact_email": {
+                    "type": "string",
+                    "description": "Enterprise contact email"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Enterprise physical address"
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "Enterprise country identifier"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "example": {
+                  "name": "Tech Corp",
+                  "sector": "Technology",
+                  "email_domain": "techcorp.com",
+                  "website": "https://techcorp.com",
+                  "contact_email": "contact@techcorp.com",
+                  "address": "123 Main St",
+                  "country": "US"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Enterprise updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Enterprise updated successfully"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enterprises/delete/{id}": {
+      "delete": {
+        "summary": "Archive an enterprise (soft delete)",
+        "tags": [
+          "Enterprises"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enterprise archived"
+          }
+        }
+      }
+    },
+    "/followups/create": {
+      "post": {
+        "summary": "Create a new followup",
+        "tags": [
+          "Followups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "start_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "Lead_idLead": {
+                    "type": "integer"
+                  },
+                  "outcome": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "in_progress",
+                      "completed",
+                      "paused",
+                      "cancelled"
+                    ]
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "CRITICAL",
+                      "IMPORTANT",
+                      "HIGH",
+                      "MEDIUM",
+                      "LOW"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Followup created"
+          }
+        }
+      }
+    },
+    "/followups/get-all": {
+      "get": {
+        "summary": "Get all followups (paginated) of logged in user",
+        "tags": [
+          "Followups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of followups"
+          }
+        }
+      }
+    },
+    "/followups/get-by-id/{id}": {
+      "get": {
+        "summary": "Get a followup by ID",
+        "tags": [
+          "Followups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Followup details"
+          }
+        }
+      }
+    },
+    "/followups/update/{id}": {
+      "put": {
+        "summary": "Update a followup",
+        "tags": [
+          "Followups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "start_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "_idLead": {
+                    "type": "integer"
+                  },
+                  "outcome": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "in_progress",
+                      "completed",
+                      "paused",
+                      "cancelled"
+                    ]
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "CRITICAL",
+                      "IMPORTANT",
+                      "HIGH",
+                      "MEDIUM",
+                      "LOW"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Followup updated"
+          }
+        }
+      }
+    },
+    "/followups/delete/{id}": {
+      "delete": {
+        "summary": "Archive a followup",
+        "tags": [
+          "Followups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Followup archived successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Followup"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/followups/next-action/{followupId}": {
+      "get": {
+        "summary": "Get next scheduled action (activity/meeting) for a followup",
+        "tags": [
+          "Followups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "followupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Next action (activity/meeting)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Meeting"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/followups/overdue-actions/{followupId}": {
+      "get": {
+        "summary": "Get overdue actions (activity/meeting) for a followup",
+        "tags": [
+          "Followups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "followupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Overdue actions list"
+          }
+        }
+      }
+    },
+    "/followups/update-score": {
+      "put": {
+        "summary": "Update followup scores",
+        "tags": [
+          "Followups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Followup scores updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Followup scores updated"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gateway/create": {
+      "post": {
+        "summary": "Create a new payment gateway (staff biz dev by default)",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "currency": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "1 = active, 0 = inactive"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Gateway"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gateways": {
+      "get": {
+        "summary": "Get all payment gateways (admin only)",
+        "description": "Retrieve all configured payment gateways regardless of their status.",
+        "tags": [
+          "Gateways"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of all gateways",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Division" }
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "currency": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "integer",
+                        "description": "1 = active, 0 = inactive"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (no token)"
+          },
+          "403": {
+            "description": "Forbidden (not allowed role)"
+          }
+        }
+      }
+    },
+    "/leads/create": {
+      "post": {
+        "summary": "Create a new lead",
+        "tags": [
+          "Leads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "integer"
+                  },
+                  "activitySector": {
+                    "type": "string"
+                  },
+                  "assigned_to_user_id": {
+                    "type": "integer"
+                  },
+                  "website": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "telephone": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "town": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "string"
+                  },
+                  "is_private": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "integer"
+                  },
+                  "lead_value": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Lead created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lead"
                 }
               }
             }
@@ -538,43 +3629,51 @@
         }
       }
     },
-    "/candidate/get-all": {
+    "/leads/assigned-to-me": {
       "get": {
-        "tags": ["candidate"],
-        "operationId": "getAllCandidates",
+        "summary": "Get all leads assigned to the logged-in user",
+        "tags": [
+          "Leads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
-            "name": "offset",
             "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 0 }
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
           },
           {
-            "name": "pageSize",
             "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 10 }
-          },
-          {
-            "name": "field",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string", "default": "name" }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "boolean", "default": true }
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "List of leads",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageResponseCandidateResponse"
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Lead"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -582,728 +3681,1680 @@
         }
       }
     },
-    "/candidate/find-by-email": {
+    "/leads/created-by-me": {
       "get": {
-        "tags": ["candidate"],
-        "operationId": "findCandidateByEmail",
+        "summary": "Get all leads created by the logged-in user",
+        "tags": [
+          "Leads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of leads",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Lead"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leads/update/{id}": {
+      "put": {
+        "summary": "Update a lead",
+        "tags": [
+          "Leads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "activitySector": {
+                    "type": "string"
+                  },
+                  "assigned_to_user_id": {
+                    "type": "integer"
+                  },
+                  "website": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "telephone": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "town": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "string"
+                  },
+                  "is_private": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "integer"
+                  },
+                  "lead_value": {
+                    "type": "number"
+                  },
+                  "last_activity": {
+                    "type": "string"
+                  },
+                  "date_assigned": {
+                    "type": "string"
+                  },
+                  "last_status_change": {
+                    "type": "string"
+                  },
+                  "date_converted": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lead updated"
+          }
+        }
+      }
+    },
+    "/leads/delete/{id}": {
+      "delete": {
+        "summary": "Archive a lead (soft delete)",
+        "tags": [
+          "Leads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lead archived"
+          }
+        }
+      }
+    },
+    "/meetings/create": {
+      "post": {
+        "summary": "Create a new meeting",
+        "tags": [
+          "Meetings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "next_action": {
+                    "type": "string"
+                  },
+                  "next_action_date": {
+                    "type": "string"
+                  },
+                  "due_date": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "_idFollowup": {
+                    "type": "number"
+                  },
+                  "_idBusiness": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Meeting created"
+          }
+        }
+      }
+    },
+    "/meetings/get-all": {
+      "get": {
+        "summary": "Get all meetings f the logged-in user (paginated)",
+        "tags": [
+          "Meetings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of meetings"
+          }
+        }
+      }
+    },
+    "/meetings/get-by-id/{id}": {
+      "get": {
+        "summary": "Get a meeting by ID",
+        "tags": [
+          "Meetings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Meeting details"
+          }
+        }
+      }
+    },
+    "/meetings/update/{id}": {
+      "put": {
+        "summary": "Update a meeting",
+        "tags": [
+          "Meetings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "next_action": {
+                    "type": "string"
+                  },
+                  "next_action_date": {
+                    "type": "string"
+                  },
+                  "due_date": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "_idFollowup": {
+                    "type": "number"
+                  },
+                  "_idBusiness": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Meeting updated"
+          }
+        }
+      }
+    },
+    "/meetings/get-by-followup/{followupId}": {
+      "get": {
+        "summary": "Get paginated meetings for a followup",
+        "tags": [
+          "Meetings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "followupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of meetings"
+          }
+        }
+      }
+    },
+    "/meetings/get-by-business/{businessId}": {
+      "get": {
+        "summary": "Get paginated meetings for a business",
+        "tags": [
+          "Meetings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of meetings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Meeting"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meetings/delete/{id}": {
+      "delete": {
+        "summary": "Archive a meeting",
+        "tags": [
+          "Meetings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Meeting archived",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meeting"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "summary": "Create a subscription order for a plan using a payment gateway",
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "plan_id",
+                  "gateway_id"
+                ],
+                "properties": {
+                  "plan_id": {
+                    "type": "integer",
+                    "description": "ID of the selected subscription plan"
+                  },
+                  "gateway_id": {
+                    "type": "integer",
+                    "description": "ID of the selected payment gateway"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully, with payment instructions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/confirm": {
+      "post": {
+        "summary": "Confirm an order manually and activate the subscription",
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "order_id"
+                ],
+                "properties": {
+                  "order_id": {
+                    "type": "integer",
+                    "description": "ID of the order to confirm"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subscription activated successfully"
+          },
+          "404": {
+            "description": "Order not found or already processed"
+          },
+          "500": {
+            "description": "Error confirming order"
+          }
+        }
+      }
+    },
+    "/plans": {
+      "post": {
+        "summary": "Create a new subscription plan",
+        "tags": [
+          "Plans"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "price"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Name of the plan"
+                  },
+                  "labelcolor": {
+                    "type": "string",
+                    "description": "Label color for UI badge (e.g. '#FF0000')"
+                  },
+                  "iconname": {
+                    "type": "string",
+                    "description": "Name of the icon for UI"
+                  },
+                  "price": {
+                    "type": "number",
+                    "description": "Price of the plan"
+                  },
+                  "is_featured": {
+                    "type": "integer"
+                  },
+                  "is_recommended": {
+                    "type": "integer"
+                  },
+                  "is_trial": {
+                    "type": "integer"
+                  },
+                  "days": {
+                    "type": "integer",
+                    "description": "Validity period in days"
+                  },
+                  "trial_days": {
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "string",
+                    "description": "JSON string containing feature limits and access (e.g. '{\"leads_limit\":\"200\"}')"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product archived successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Plan"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all active plans",
+        "tags": [
+          "Plans"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of plans"
+          }
+        }
+      }
+    },
+    "/plans/{id}": {
+      "put": {
+        "summary": "Update a specific subscription plan",
+        "tags": [
+          "Plans"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the plan to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "labelcolor": {
+                    "type": "string"
+                  },
+                  "iconname": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "is_featured": {
+                    "type": "integer"
+                  },
+                  "is_recommended": {
+                    "type": "integer"
+                  },
+                  "is_trial": {
+                    "type": "integer"
+                  },
+                  "days": {
+                    "type": "integer"
+                  },
+                  "trial_days": {
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "string",
+                    "description": "JSON string containing feature limits and flags"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Plan updated successfully"
+          },
+          "404": {
+            "description": "Plan not found"
+          },
+          "500": {
+            "description": "Failed to update plan"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Soft delete a specific subscription plan (sets status to 0)",
+        "tags": [
+          "Plans"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the plan to soft delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan deleted (soft) successfully"
+          },
+          "404": {
+            "description": "Plan not found"
+          },
+          "500": {
+            "description": "Failed to delete plan"
+          }
+        }
+      }
+    },
+    "/products/create": {
+      "post": {
+        "summary": "Create a new product",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "_idProductCategory": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product created successfully"
+          }
+        }
+      }
+    },
+    "/products/get-all": {
+      "get": {
+        "summary": "Get all products created by the logged-in user",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of products"
+          }
+        }
+      }
+    },
+    "/products/update/{id}": {
+      "put": {
+        "summary": "Update a product",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "_idProductCategory": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Product updated"
+          }
+        }
+      }
+    },
+    "/products/delete/{id}": {
+      "delete": {
+        "summary": "Archive a product (soft delete)",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product archived successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/get-all-by-id/{categoryId}": {
+      "get": {
+        "summary": "Get paginated products for a category",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Product"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product-categories/create": {
+      "post": {
+        "summary": "Create a new product category",
+        "tags": [
+          "ProductCategories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product category created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductCategory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product-categories/get-all": {
+      "get": {
+        "summary": "Get all product categories for currently loggedin user",
+        "tags": [
+          "ProductCategories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of product categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductCategory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product-categories/update/{id}": {
+      "put": {
+        "summary": "Update a product category",
+        "tags": [
+          "ProductCategories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Product category updated"
+          }
+        }
+      }
+    },
+    "/product-categories/delete/{id}": {
+      "delete": {
+        "summary": "Archive a product category (soft delete)",
+        "tags": [
+          "ProductCategories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product category archived"
+          }
+        }
+      }
+    },
+    "/sources/create": {
+      "post": {
+        "summary": "Create a new source",
+        "tags": [
+          "Sources"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "descrption": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Source created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/register": {
+      "post": {
+        "summary": "Register a new user (solo biz dev by default)",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "solo_biz_dev",
+                      "enterprise_admin"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/activate-account": {
+      "post": {
+        "summary": "Activate user account with code",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "code"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account activated successfully"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "User login and token generation",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User authenticated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/get-solo-bizdevs": {
+      "post": {
+        "summary": "Get all solo business developers",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of solo biz devs"
+          }
+        }
+      }
+    },
+    "/user/enterprise/{enterprise_id}": {
+      "post": {
+        "summary": "Get all users of an enterprise",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "enterprise_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of users"
+          }
+        }
+      }
+    },
+    "/user/get-user-by-email": {
+      "get": {
+        "summary": "Get user details by email",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "query",
             "name": "email",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string" }
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/CandidateResponse" }
-              }
-            }
+            "description": "User details"
           }
         }
       }
     },
-    "/campus/get-campus-by-training-town/{town}": {
-      "get": {
-        "tags": ["campus"],
-        "operationId": "findCampusByTown",
+    "/user/saas-staff": {
+      "post": {
+        "summary": "Get all admin/operator/superadmin users",
+        "tags": [
+          "Users"
+        ],
         "parameters": [
           {
-            "name": "town",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
           },
           {
-            "name": "offset",
             "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 0 }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 10 }
-          },
-          {
-            "name": "field",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string", "default": "name" }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "boolean", "default": true }
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageResponseCampusResponse"
+            "description": "Paginated list of SaaS staff"
+          }
+        }
+      }
+    },
+    "/user/reset-password": {
+      "post": {
+        "summary": "Reset password and send new password to email",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
                 }
               }
             }
           }
+        },
+        "responses": {
+          "200": {
+            "description": "New password sent to email"
+          }
         }
       }
     },
-    "/campus/get-campus-by-training-center/{agreementNumber}": {
-      "get": {
-        "tags": ["campus"],
-        "operationId": "findCampusByTrainingCenter",
+    "/user/staff-update/{id}": {
+      "put": {
+        "summary": "Staff update a user's information",
+        "tags": [
+          "Auth"
+        ],
         "parameters": [
           {
-            "name": "agreementNumber",
             "in": "path",
+            "name": "id",
             "required": true,
-            "schema": { "type": "string" }
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/CampusResponse" }
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
                 }
               }
             }
           }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Failed to update user"
+          }
         }
       }
     },
-    "/auth/activate-account": {
-      "get": {
-        "tags": ["Authentication"],
-        "operationId": "confirm",
+    "/user/update-profile/{id}": {
+      "put": {
+        "summary": "Staff update a user's information",
+        "tags": [
+          "Auth"
+        ],
         "parameters": [
           {
-            "name": "token",
-            "in": "query",
+            "in": "path",
+            "name": "id",
             "required": true,
-            "schema": { "type": "string" }
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
-        "responses": { "200": { "description": "OK" } }
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Failed to update user"
+          }
+        }
+      }
+    },
+    "/user/change-password": {
+      "put": {
+        "summary": "Change currently logged in user's password (requires old password confirmation)",
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "old_password",
+                  "new_password",
+                  "confirm_password"
+                ],
+                "properties": {
+                  "old_password": {
+                    "type": "string"
+                  },
+                  "new_password": {
+                    "type": "string"
+                  },
+                  "confirm_password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password updated successfully"
+          },
+          "400": {
+            "description": "Validation error or wrong old password"
+          },
+          "500": {
+            "description": "Failed to update password"
+          }
+        }
       }
     }
   },
-  "components": {
-    "schemas": {
-      "CreateTainingCenterRequest": {
-        "required": [
-          "agreementNumber",
-          "division",
-          "endDateOfAgreement",
-          "fullName",
-          "startDateOfAgreement"
-        ],
-        "type": "object",
-        "properties": {
-          "fullName": { "type": "string" },
-          "acronym": { "type": "string" },
-          "agreementNumber": { "type": "string" },
-          "startDateOfAgreement": { "type": "string", "format": "date" },
-          "endDateOfAgreement": { "type": "string", "format": "date" },
-          "division": { "type": "string" },
-          "centerPresentCandidateForDqp": { "type": "boolean" },
-          "centerPresentCandidateForCqp": { "type": "boolean" }
-        }
-      },
-      "CreateStaffRequest": {
-        "required": [
-          "dateOfBirth",
-          "email",
-          "firstname",
-          "lastname",
-          "nationalIdNumber",
-          "phoneNumber",
-          "positionName"
-        ],
-        "type": "object",
-        "properties": {
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "email": { "type": "string" },
-          "phoneNumber": {
-            "maxLength": 2147483647,
-            "minLength": 9,
-            "type": "string"
-          },
-          "nationalIdNumber": {
-            "maxLength": 2147483647,
-            "minLength": 9,
-            "type": "string"
-          },
-          "positionName": { "type": "string" },
-          "dateOfBirth": { "type": "string" }
-        }
-      },
-      "Application": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "startAcademicYear": { "type": "string", "format": "date" },
-          "endAcademicYear": { "type": "string", "format": "date" },
-          "candidate": { "$ref": "#/components/schemas/Candidate" },
-          "speciality": { "$ref": "#/components/schemas/Speciality" },
-          "archived": { "type": "boolean" },
-          "actived": { "type": "boolean" }
-        }
-      },
-      "Campus": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
-          "capacity": { "type": "integer", "format": "int32" },
-          "quarter": { "type": "string" },
-          "town": { "type": "string" },
-          "trainingCenter": { "$ref": "#/components/schemas/TrainingCenter" },
-          "ycoor": { "type": "number", "format": "double" },
-          "xcoor": { "type": "number", "format": "double" },
-          "archived": { "type": "boolean" },
-          "actived": { "type": "boolean" }
-        }
-      },
-      "Candidate": {
-        "type": "object",
-        "properties": {
-          "idUser": { "type": "integer", "format": "int64" },
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "dateOfBirth": { "type": "string", "format": "date" },
-          "email": { "type": "string" },
-          "phoneNumber": { "type": "string" },
-          "nationalIdNumber": { "type": "string" },
-          "password": { "type": "string" },
-          "accountLocked": { "type": "boolean" },
-          "enabled": { "type": "boolean" },
-          "roles": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Role" }
-          },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "sex": { "type": "string" },
-          "placeOfBirth": { "type": "string" },
-          "motherFullName": { "type": "string" },
-          "fatherFullName": { "type": "string" },
-          "motherProfession": { "type": "string" },
-          "fatherProfession": { "type": "string" },
-          "highestSchoolLevel": { "type": "string" },
-          "nationality": { "type": "string" },
-          "townOfResidence": { "type": "string" },
-          "profilePictureUrl": { "type": "string" },
-          "birthCertificateUrl": { "type": "string" },
-          "nationalIdCardUrl": { "type": "string" },
-          "highestDiplomatUrl": { "type": "string" },
-          "contentStatus": {
-            "type": "string",
-            "enum": ["SUBMITTED", "DRAFT", "PENDING_REVIEW", "APPROVED"]
-          },
-          "hasSchooledList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/HasSchooled" }
-          },
-          "applicationList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Application" }
-          },
-          "name": { "type": "string" },
-          "authorities": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/GrantedAuthority" }
-          },
-          "accountNonExpired": { "type": "boolean" },
-          "credentialsNonExpired": { "type": "boolean" },
-          "username": { "type": "string" },
-          "accountNonLocked": { "type": "boolean" }
-        }
-      },
-      "Course": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
-          "code": { "type": "string" },
-          "description": { "type": "string" },
-          "specialityList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Speciality" }
-          },
-          "archived": { "type": "boolean" },
-          "actived": { "type": "boolean" }
-        }
-      },
-      "CreateCampusRequest": {
-        "required": ["capacity", "name", "quarter", "town"],
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "capacity": { "type": "integer", "format": "int32" },
-          "quarter": { "type": "string" },
-          "town": { "type": "string" },
-          "trainingCenter": { "$ref": "#/components/schemas/TrainingCenter" },
-          "ycoor": { "type": "number", "format": "double" },
-          "xcoor": { "type": "number", "format": "double" }
-        }
-      },
-      "GrantedAuthority": {
-        "type": "object",
-        "properties": { "authority": { "type": "string" } }
-      },
-      "HasSchooled": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "startYear": { "type": "string", "format": "date" },
-          "endYear": { "type": "string", "format": "date" },
-          "candidate": { "$ref": "#/components/schemas/Candidate" },
-          "trainingCenter": { "$ref": "#/components/schemas/TrainingCenter" },
-          "archived": { "type": "boolean" },
-          "actived": { "type": "boolean" }
-        }
-      },
-      "OffersSpeciality": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "agreement": { "type": "string" },
-          "speciality": { "$ref": "#/components/schemas/Speciality" },
-          "trainingCenter": { "$ref": "#/components/schemas/TrainingCenter" },
-          "archived": { "type": "boolean" },
-          "actived": { "type": "boolean" }
-        }
-      },
-      "Promoter": {
-        "type": "object",
-        "properties": {
-          "idUser": { "type": "integer", "format": "int64" },
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "dateOfBirth": { "type": "string", "format": "date" },
-          "email": { "type": "string" },
-          "phoneNumber": { "type": "string" },
-          "nationalIdNumber": { "type": "string" },
-          "password": { "type": "string" },
-          "accountLocked": { "type": "boolean" },
-          "enabled": { "type": "boolean" },
-          "roles": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Role" }
-          },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "address": { "type": "string" },
-          "trainingCenterList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/TrainingCenter" }
-          },
-          "schoolLevel": { "type": "string" },
-          "name": { "type": "string" },
-          "authorities": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/GrantedAuthority" }
-          },
-          "accountNonExpired": { "type": "boolean" },
-          "credentialsNonExpired": { "type": "boolean" },
-          "username": { "type": "string" },
-          "accountNonLocked": { "type": "boolean" }
-        }
-      },
-      "Role": {
-        "type": "object",
-        "properties": {
-          "idRole": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" }
-        }
-      },
-      "Speciality": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
-          "code": { "type": "string" },
-          "description": { "type": "string" },
-          "course": { "$ref": "#/components/schemas/Course" },
-          "offersSpecialityList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/OffersSpeciality" }
-          },
-          "applicationList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Application" }
-          },
-          "archived": { "type": "boolean" },
-          "actived": { "type": "boolean" }
-        }
-      },
-      "TrainingCenter": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "createdDate": { "type": "string", "format": "date-time" },
-          "lastModifiedDate": { "type": "string", "format": "date-time" },
-          "createdBy": { "type": "integer", "format": "int64" },
-          "lastModifiedBy": { "type": "integer", "format": "int64" },
-          "fullName": { "type": "string" },
-          "acronym": { "type": "string" },
-          "agreementNumber": { "type": "string" },
-          "agreementFileUrl": { "type": "string" },
-          "startDateOfAgreement": { "type": "string", "format": "date" },
-          "endDateOfAgreement": { "type": "string", "format": "date" },
-          "division": { "type": "string" },
-          "promoter": { "$ref": "#/components/schemas/Promoter" },
-          "offersSpecialityList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/OffersSpeciality" }
-          },
-          "campusList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Campus" }
-          },
-          "centerPresentCandidateForDqp": { "type": "boolean" },
-          "centerPresentCandidateForCqp": { "type": "boolean" },
-          "archived": { "type": "boolean" },
-          "actived": { "type": "boolean" }
-        }
-      },
-      "CreatePromoterRequest": {
-        "required": [
-          "address",
-          "dateOfBirth",
-          "email",
-          "firstname",
-          "lastname",
-          "nationalIdNumber",
-          "phoneNumber"
-        ],
-        "type": "object",
-        "properties": {
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "email": { "type": "string" },
-          "phoneNumber": {
-            "maxLength": 2147483647,
-            "minLength": 9,
-            "type": "string"
-          },
-          "nationalIdNumber": {
-            "maxLength": 256,
-            "minLength": 9,
-            "type": "string"
-          },
-          "dateOfBirth": { "type": "string" },
-          "address": { "type": "string" },
-          "password": {
-            "maxLength": 256,
-            "minLength": 8,
-            "type": "string"
-          },
-          "schoolLevel": { "type": "string" }
-        }
-      },
-      "CandidateRegistrationRequest": {
-        "required": [
-          "email",
-          "firstname",
-          "lastname",
-          "nationalIdNumber",
-          "phoneNumber"
-        ],
-        "type": "object",
-        "properties": {
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "email": { "type": "string" },
-          "phoneNumber": {
-            "maxLength": 2147483647,
-            "minLength": 9,
-            "type": "string"
-          },
-          "nationalIdNumber": {
-            "maxLength": 2147483647,
-            "minLength": 9,
-            "type": "string"
-          },
-          "password": {
-            "maxLength": 2147483647,
-            "minLength": 8,
-            "type": "string"
-          }
-        }
-      },
-      "AuthenticationRequest": {
-        "required": ["email", "password"],
-        "type": "object",
-        "properties": {
-          "email": { "type": "string" },
-          "password": {
-            "maxLength": 2147483647,
-            "minLength": 8,
-            "type": "string"
-          }
-        }
-      },
-      "AuthenticationResponse": {
-        "type": "object",
-        "properties": { "token": { "type": "string" } }
-      },
-      "CandidateRequest": {
-        "type": "object",
-        "properties": {
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "dateOfBirth": { "type": "string", "format": "date" },
-          "email": { "type": "string" },
-          "phoneNumber": { "type": "string" },
-          "nationalIdNumber": { "type": "string" },
-          "sex": { "type": "string" },
-          "placeOfBirth": { "type": "string" },
-          "motherFullName": { "type": "string" },
-          "fatherFullName": { "type": "string" },
-          "motherProfession": { "type": "string" },
-          "fatherProfession": { "type": "string" },
-          "highestSchoolLevel": { "type": "string" },
-          "nationality": { "type": "string" },
-          "townOfResidence": { "type": "string" },
-          "profilePictureUrl": { "type": "string" },
-          "birthCertificateUrl": { "type": "string" },
-          "nationalIdCardUrl": { "type": "string" },
-          "highestDiplomatUrl": { "type": "string" },
-          "contentStatus": {
-            "type": "string",
-            "enum": ["SUBMITTED", "DRAFT", "PENDING_REVIEW", "APPROVED"]
-          }
-        }
-      },
-      "TrainingCenterResponse": {
-        "type": "object",
-        "properties": {
-          "fullName": { "type": "string" },
-          "acronym": { "type": "string" },
-          "agreementNumber": { "type": "string" },
-          "agreementFile": {
-            "type": "array",
-            "items": { "type": "string", "format": "byte" }
-          },
-          "startDateOfAgreement": { "type": "string", "format": "date" },
-          "endDateOfAgreement": { "type": "string", "format": "date" },
-          "division": { "type": "string" },
-          "promoter": { "$ref": "#/components/schemas/Promoter" },
-          "offersSpecialityList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/OffersSpeciality" }
-          },
-          "campusList": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Campus" }
-          },
-          "centerPresentCandidateForDqp": { "type": "boolean" },
-          "centerPresentCandidateForCqp": { "type": "boolean" }
-        }
-      },
-      "PageResponseTrainingCenterResponse": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/TrainingCenterResponse" }
-          },
-          "number": { "type": "integer", "format": "int32" },
-          "size": { "type": "integer", "format": "int32" },
-          "totalElements": { "type": "integer", "format": "int64" },
-          "totalPages": { "type": "integer", "format": "int32" },
-          "first": { "type": "boolean" },
-          "last": { "type": "boolean" }
-        }
-      },
-      "PageResponseStaffResponse": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/StaffResponse" }
-          },
-          "number": { "type": "integer", "format": "int32" },
-          "size": { "type": "integer", "format": "int32" },
-          "totalElements": { "type": "integer", "format": "int64" },
-          "totalPages": { "type": "integer", "format": "int32" },
-          "first": { "type": "boolean" },
-          "last": { "type": "boolean" }
-        }
-      },
-      "StaffResponse": {
-        "type": "object",
-        "properties": {
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "dateOfBirth": { "type": "string", "format": "date" },
-          "email": { "type": "string" },
-          "phoneNumber": { "type": "string" },
-          "nationalIdNumber": { "type": "string" },
-          "accountLocked": { "type": "boolean" },
-          "enabled": { "type": "boolean" }
-        }
-      },
-      "PageResponsePromoterResponse": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/PromoterResponse" }
-          },
-          "number": { "type": "integer", "format": "int32" },
-          "size": { "type": "integer", "format": "int32" },
-          "totalElements": { "type": "integer", "format": "int64" },
-          "totalPages": { "type": "integer", "format": "int32" },
-          "first": { "type": "boolean" },
-          "last": { "type": "boolean" }
-        }
-      },
-      "PromoterResponse": {
-        "type": "object",
-        "properties": {
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "dateOfBirth": { "type": "string", "format": "date" },
-          "email": { "type": "string" },
-          "phoneNumber": { "type": "string" },
-          "nationalIdNumber": { "type": "string" },
-          "accountLocked": { "type": "boolean" },
-          "enabled": { "type": "boolean" }
-        }
-      },
-      "Division": {
-        "type": "object",
-        "properties": {
-          "department": { "type": "string" },
-          "region": { "type": "string" }
-        }
-      },
-      "CandidateResponse": {
-        "type": "object",
-        "properties": {
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "dateOfBirth": { "type": "string", "format": "date" },
-          "email": { "type": "string" },
-          "phoneNumber": { "type": "string" },
-          "nationalIdNumber": { "type": "string" },
-          "sex": { "type": "string" },
-          "placeOfBirth": { "type": "string" },
-          "motherFullName": { "type": "string" },
-          "fatherFullName": { "type": "string" },
-          "motherProfession": { "type": "string" },
-          "fatherProfession": { "type": "string" },
-          "highestSchoolLevel": { "type": "string" },
-          "nationality": { "type": "string" },
-          "townOfResidence": { "type": "string" },
-          "profilePictureUrl": { "type": "string" },
-          "birthCertificateUrl": { "type": "string" },
-          "nationalIdCardUrl": { "type": "string" },
-          "highestDiplomatUrl": { "type": "string" },
-          "contentStatus": {
-            "type": "string",
-            "enum": ["SUBMITTED", "DRAFT", "PENDING_REVIEW", "APPROVED"]
-          }
-        }
-      },
-      "PageResponseCandidateResponse": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/CandidateResponse" }
-          },
-          "number": { "type": "integer", "format": "int32" },
-          "size": { "type": "integer", "format": "int32" },
-          "totalElements": { "type": "integer", "format": "int64" },
-          "totalPages": { "type": "integer", "format": "int32" },
-          "first": { "type": "boolean" },
-          "last": { "type": "boolean" }
-        }
-      },
-      "CampusResponse": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "capacity": { "type": "integer", "format": "int32" },
-          "quarter": { "type": "string" },
-          "town": { "type": "string" },
-          "trainingCenterCampus": {
-            "$ref": "#/components/schemas/TrainingCenter"
-          },
-          "ycoor": { "type": "number", "format": "double" },
-          "xcoor": { "type": "number", "format": "double" }
-        }
-      },
-      "PageResponseCampusResponse": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/CampusResponse" }
-          },
-          "number": { "type": "integer", "format": "int32" },
-          "size": { "type": "integer", "format": "int32" },
-          "totalElements": { "type": "integer", "format": "int64" },
-          "totalPages": { "type": "integer", "format": "int32" },
-          "first": { "type": "boolean" },
-          "last": { "type": "boolean" }
-        }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "description": "JWT auth description",
-        "in": "header",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
-    }
-  }
+  "tags": []
 }

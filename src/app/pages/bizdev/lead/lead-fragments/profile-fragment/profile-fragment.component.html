@@ -1,0 +1,160 @@
+ <div class="card p-3">
+                                        <form class=" mb-4" [formGroup]="basicInfoForm">
+                                            <!-- name -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Name</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="name" formControlName="name"
+                                                        type="text">
+                                                </div>
+                                            </div>
+                                            <!-- email -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Email</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="email" formControlName="email"
+                                                        type="email">
+                                                </div>
+                                            </div>
+                                            <!-- telephone -->
+                                            <div class="mb-3 row">
+                                                <label for="example-tel-input"
+                                                    class="col-md-2 col-form-label font-size-11">Telephone</label>
+                                                <div class="col-md-10">
+
+                                                    <input class="form-control" name="telephone"
+                                                        formControlName="telephone" type="text">
+                                                </div>
+                                            </div>
+                                            <!-- website -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">website</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="website" formControlName="website"
+                                                        type="text">
+                                                </div>
+                                            </div>
+
+                                            <!-- address -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Address</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="address" formControlName="address"
+                                                        type="text">
+                                                </div>
+                                            </div>
+                                            <!-- town -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Town</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="town" formControlName="town"
+                                                        type="text">
+                                                </div>
+                                            </div>
+                                            <!-- activitySector -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Activity Sector</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="activitySector"
+                                                        formControlName="activitySector" type="text">
+                                                </div>
+                                            </div>
+                                            <!-- lead value -->
+                                            <div class="mb-3 row">
+                                                <label for="example-name"
+                                                    class="col-md-2 col-form-label font-size-11">Lead
+                                                    value</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="lead_value"
+                                                        formControlName="lead_value" type="text">
+                                                </div>
+                                            </div>
+
+                                            <!-- date_converted -->
+                                            <div class="mb-3 row">
+                                                <label for="example-date-input" class="col-md-2 col-form-label">Date
+                                                    Converted</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" type="date" name="date_converted"
+                                                        formControlName="date_converted" id="example-date-input">
+                                                </div>
+                                            </div>
+
+                                            <!-- is_private -->
+
+                                            <div class="row">
+                                                <label for="example-datetime-local-input"
+                                                    class="col-md-2 col-form-label font-size-11">is_private</label>
+                                                <div class="col-md-10">
+                                                    <mat-radio-group name="is_private" formControlName="is_private"
+                                                        aria-label="Select an option">
+                                                        <mat-radio-button value='Yes'>Yes</mat-radio-button>
+                                                        <mat-radio-button value='No'>No</mat-radio-button>
+                                                    </mat-radio-group>
+                                                </div>
+
+
+                                            </div>
+                                            <!-- country -->
+                                            <div class="mb-3 row">
+                                                <label for="example-datetime-local-input"
+                                                    class="col-md-2 col-form-label font-size-11">Country</label>
+                                                <div class="col-md-10">
+                                                    <select class="form-select" name="country"
+                                                        formControlName="country">
+                                                        <option value={{this.lead.country}}>
+                                                            {{this.lead.Country.short_name}}</option>
+                                                        <option *ngFor="let country of this.countryList"
+                                                            value={{country.id}}>
+                                                            {{country.short_name}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <!-- description -->
+                                            <div class="mb-3 row">
+                                                <label for="example-datetime-local-input"
+                                                    class="col-md-2 col-form-label font-size-11">Description</label>
+                                                <div class="col-md-10">
+                                                    <ckeditor formControlName="description" name="description"
+                                                        [editor]="Editor" data=""></ckeditor>
+                                                </div>
+                                            </div>
+
+                                            <!-- tags -->
+                                            <div class="mb-3 row">
+                                                <div class="col-md-2">
+                                                    <label for="example-datetime-local-input"
+                                                        class="col-form-label font-size-11">Tags</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="row">
+                                                        <mat-form-field class="example-form-field">
+                                                            <mat-label>Tags</mat-label>
+                                                            <mat-chip-grid #chipGrid aria-label="Enter keywords"
+                                                                formControlName="tags">
+                                                                <mat-chip-row *ngFor="let keyword of tags"
+                                                                    (removed)="removeKeyword(keyword)">
+                                                                    {{keyword}}
+                                                                    <button matChipRemove
+                                                                        aria-label="'remove ' + keyword">
+                                                                        <mat-icon>cancel</mat-icon>
+                                                                    </button>
+                                                                </mat-chip-row>
+                                                            </mat-chip-grid>
+                                                            <input placeholder="New ta..." [matChipInputFor]="chipGrid"
+                                                                (matChipInputTokenEnd)="add($event)" />
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </form>
+                                    </div>

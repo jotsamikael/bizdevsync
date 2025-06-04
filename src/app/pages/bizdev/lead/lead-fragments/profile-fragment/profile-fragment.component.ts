@@ -1,70 +1,41 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Component, inject } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BusinessService } from 'src/app/services/indexdb/businessSector/businessSection.service';
+import { Observable, map } from 'rxjs';
 import { CommonService } from 'src/app/bizdevsyncbackend/common/common.bizdev.service';
-import { CountryAndRegionService } from 'src/app/services/indexdb/countryandregion/countryandregion.service';
+import { FormBuilderBizdevService } from 'src/app/bizdevsyncbackend/common/formbuilder.bizdev.service';
+import { Contact, Lead, Country } from 'src/app/bizdevsyncbackend/models';
+import { CountriesService, ContactsService } from 'src/app/bizdevsyncbackend/services';
+import { BusinessService } from 'src/app/services/indexdb/businessSector/businessSection.service';
 import { LeadService } from 'src/app/services/indexdb/lead/lead.service';
 import { TokenService } from 'src/app/services/indexdb/token.service';
-import { LeadStateService } from '../services/lead-state.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { FormBuilderBizdevService } from 'src/app/bizdevsyncbackend/common/formbuilder.bizdev.service';
-import { Contact, Country, Lead } from 'src/app/bizdevsyncbackend/models';
-import { ContactsService, CountriesService } from 'src/app/bizdevsyncbackend/services';
-import { Observable, map } from 'rxjs';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { LeadStateService } from '../../services/lead-state.service';
 
 @Component({
-  selector: 'app-lead-details',
-  templateUrl: './lead-details.component.html',
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
-  styleUrls: ['./lead-details.component.scss']
+  selector: 'app-profile-fragment',
+  templateUrl: './profile-fragment.component.html',
+  styleUrls: ['./profile-fragment.component.scss']
 })
-export class LeadDetailsComponent implements OnInit {
+export class ProfileFragmentComponent {
 
-  // Collapse declare
-  isCollapsed: boolean;
-  public firstColleaps: boolean = false;
-  public secondColleaps: boolean = false;
-  public bothColleaps: boolean = false;
-  selectedContact: Contact = null;
-  isFirstOpen: boolean = true;
   basicInfoForm: FormGroup
   tags: String[];
   lead: Lead;
   public Editor = ClassicEditor;
   announcer = inject(LiveAnnouncer);
 
-
-
-  columnsToDisplayContact = ['name', 'role', 'weight', 'email'];
-  columnsToDisplayWithExpandContact = [...this.columnsToDisplayContact, 'expand'];
-  expandedElementContact: Contact | null = null;  // Explicitly initialize as null
   countryList: Country[];
 
 
   constructor(
     private formbuilderBizdevService: FormBuilderBizdevService,
     private leadStateService: LeadStateService,
-    private tokenService: TokenService,
-    private leadService: LeadService,
-    private modalService: BsModalService,
     private countryService: CountriesService,
-    private businessSector: BusinessService,
     private commonService: CommonService,
-    private contactService: ContactsService,
     private router: Router) {
 
   }
@@ -109,13 +80,10 @@ export class LeadDetailsComponent implements OnInit {
 
   }
 
-  toggleExpandContact(element: Contact): void {
-    this.expandedElementContact = this.expandedElementContact === element ? null : element;
-  }
+
 
   ngOnInit(): void {
     this.getLeadFromState()
-    this.isCollapsed = false;
     this.basicInfoForm = this.formbuilderBizdevService.createLeadForm()
     this.setFormbasicInfoForm()
 
@@ -128,21 +96,6 @@ export class LeadDetailsComponent implements OnInit {
     this.tags = this.commonService.formatTagsForDisplay(this.lead.tags)
   }
 
-
-
-  getWeightClass(weight: number | string): string {
-    const w = parseFloat(weight as string);
-    if (w < 2.5) return ' deep-blue';
-    if (w >= 2.5 && w < 4.0) return 'blue';
-    return 'light-blue';
-  }
-
-
-
-
-  gotoLeadManagement() {
-    this.router.navigate(['backend/bizdev-leads'])
-  }
 
 
   getLeadFromState() {
@@ -184,11 +137,6 @@ export class LeadDetailsComponent implements OnInit {
     event.chipInput!.clear();
   }
 
-
-  /*  getRegionByCountry():string {
-     return this.countryService.getRegionByCountry(this.lead.country.name);
-    }
-  */
   getAllCountries(): Observable<Country[]> {
     return this.countryService.countriesGetAllGet().pipe(
       map(response => response.rows || [])
@@ -196,3 +144,4 @@ export class LeadDetailsComponent implements OnInit {
   }
   
 }
+

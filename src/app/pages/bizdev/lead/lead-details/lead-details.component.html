@@ -194,9 +194,7 @@
                                 </ng-template>
                                 <div class="tab-page-content">
                                     <ckeditor formControlName="long_description" [editor]="Editor"
-                                    data="<b>BankCam</b> <p>is a leading full-service financial institution headquartered in Douala, Cameroon. Established in 2006, BankCam has grown to become a trusted banking partner for individuals, SMEs,
-                                        and large enterprises across Central Africa. With a strong commitment to innovation, financial. inclusion, and customer satisfaction, BankCam offers a wide range of modern banking solutions
-                                        tailored to meet the diverse needs of its clientele.</p>"></ckeditor>
+                                    data=""></ckeditor>
                                     
                                 </div>
 
@@ -232,250 +230,43 @@
                                     <span class="d-none d-sm-block tabheading"><i class="bx bx-user"></i> Profile</span>
                                 </ng-template>
                                 <div class="tab-page-content">
-                                    <div class="card">
-                                        <form class=" mb-4" [formGroup]="basicInfoForm">
-                                            <!-- name -->
-                                            <div class="mb-3 row">
-                                                <label for="example-name"
-                                                    class="col-md-2 col-form-label font-size-11">Name</label>
-                                                <div class="col-md-10">
-                                                    <input class="form-control" name="name" formControlName="name"
-                                                        type="text">
-                                                </div>
-                                            </div>
-                                            <!-- email -->
-                                            <div class="mb-3 row">
-                                                <label for="example-name"
-                                                    class="col-md-2 col-form-label font-size-11">Email</label>
-                                                <div class="col-md-10">
-                                                    <input class="form-control" name="email" formControlName="email"
-                                                        type="email">
-                                                </div>
-                                            </div>
-                                            <!-- telephone -->
-                                            <div class="mb-3 row">
-                                                <label for="example-tel-input"
-                                                    class="col-md-2 col-form-label font-size-11">Telephone</label>
-                                                <div class="col-md-10">
-
-                                                    <input class="form-control" name="telephone"
-                                                        formControlName="telephone" type="text">
-                                                </div>
-                                            </div>
-                                            <!-- website -->
-                                            <div class="mb-3 row">
-                                                <label for="example-name"
-                                                    class="col-md-2 col-form-label font-size-11">website</label>
-                                                <div class="col-md-10">
-                                                    <input class="form-control" name="website" formControlName="website"
-                                                        type="text">
-                                                </div>
-                                            </div>
-
-                                            <!-- address -->
-                                            <div class="mb-3 row">
-                                                <label for="example-name"
-                                                    class="col-md-2 col-form-label font-size-11">Address</label>
-                                                <div class="col-md-10">
-                                                    <input class="form-control" name="address" formControlName="address"
-                                                        type="text">
-                                                </div>
-                                            </div>
-                                            <!-- town -->
-                                            <div class="mb-3 row">
-                                                <label for="example-name"
-                                                    class="col-md-2 col-form-label font-size-11">town</label>
-                                                <div class="col-md-10">
-                                                    <input class="form-control" name="town" formControlName="town"
-                                                        type="text">
-                                                </div>
-                                            </div>
-                                            <!-- activitySector -->
-                                            <div class="mb-3 row">
-                                                <label for="example-name"
-                                                    class="col-md-2 col-form-label font-size-11">activity Sector</label>
-                                                <div class="col-md-10">
-                                                    <input class="form-control" name="activitySector"
-                                                        formControlName="activitySector" type="text">
-                                                </div>
-                                            </div>
-                                            <!-- lead value -->
-                                            <div class="mb-3 row">
-                                                <label for="example-name"
-                                                    class="col-md-2 col-form-label font-size-11">lead
-                                                    value</label>
-                                                <div class="col-md-10">
-                                                    <input class="form-control" name="lead_value"
-                                                        formControlName="lead_value" type="text">
-                                                </div>
-                                            </div>
-
-                                            <!-- date_converted -->
-                                            <div class="mb-3 row">
-                                                <label for="example-date-input"
-                                                    class="col-md-2 col-form-label">Date</label>
-                                                <div class="col-md-10">
-                                                    <input class="form-control" type="date" name="date_converted"
-                                                        formControlName="date_converted" id="example-date-input">
-                                                </div>
-                                            </div>
-
-                                            <!-- is_private -->
-
-                                            <div class="row">
-                                                <label for="example-datetime-local-input"
-                                                    class="col-md-2 col-form-label font-size-11">is_private</label>
-                                                <div class="col-md-10">
-                                                    <mat-radio-group name="is_private" formControlName="is_private"
-                                                        aria-label="Select an option">
-                                                        <mat-radio-button value='Yes'>Yes</mat-radio-button>
-                                                        <mat-radio-button value='No'>No</mat-radio-button>
-                                                    </mat-radio-group>
-                                                </div>
-
-
-                                            </div>
-                                            <!-- country -->
-                                            <div class="mb-3 row">
-                                                <label for="example-datetime-local-input"
-                                                    class="col-md-2 col-form-label font-size-11">Country</label>
-                                                <div class="col-md-10">
-                                                    <select class="form-select" name="country"
-                                                        formControlName="country">
-                                                        <option value={{this.lead.country}}>{{this.lead.Country.short_name}}</option>
-                                                        <option *ngFor="let country of this.countryList"
-                                                            value={{country.id}}>
-                                                            {{country.short_name}}</option>
-                                                    </select>
-                                                </div>
-
-                                            </div>
-                                        </form>
-                                    </div>
-
+                                    <app-profile-fragment></app-profile-fragment>
                                 </div>
 
                             </tab>
 
                             <tab>
-                                <ng-template tabHeading class="mb-2">
-                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-contact"></i>
-                                        Contact</span>
+
+                                <ng-template tabHeading>
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-user"></i> Contacts</span>
                                 </ng-template>
                                 <div class="tab-page-content">
-                                    <p>
-                                        Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                                        single-origin coffee squid. Exercitation +1 labore velit, blog
-                                        sartorial PBR leggings next level wes anderson artisan four loko
-                                        farm-to-table craft beer twee. Qui photo booth letterpress,
-                                        commodo enim craft beer mlkshk.
-                                    </p>
-                                    <p class="mb-0"> Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip
-                                        jean shorts
-                                        ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic
-                                        magna 8-bit</p>
+                                        <app-contact-fragment></app-contact-fragment>
+
                                 </div>
+
 
                             </tab>
                             <tab>
-                                <ng-template tabHeading class="mb-2">
+                                <ng-template tabHeading>
                                     <span class="d-none d-sm-block tabheading"><i class="bx bx-book"></i> Notes</span>
                                 </ng-template>
                                 <div class="tab-page-content">
-                                    <p>
-                                        Etsy mixtape wayfarers, ethical wes anderson tofu before they
-                                        sold out mcsweeney's organic lomo retro fanny pack lo-fi
-                                        farm-to-table readymade. Messenger bag gentrify pitchfork
-                                        tattooed craft beer, iphone skateboard locavore carles etsy
-                                        salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
-                                        Leggings gentrify squid 8-bit cred.
-                                    </p>
-                                    <p class="mb-0">DIY synth PBR banksy irony.
-                                        Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
-                                        mi whatever gluten-free.</p>
+                                    <app-note-fragment></app-note-fragment>
+
                                 </div>
 
 
                             </tab>
                             <tab>
-                                <ng-template tabHeading class="mb-2">
-                                    <span class="d-none d-sm-block tabheading">Followup</span>
+                                <ng-template tabHeading>
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-book-open"></i>History</span>
                                 </ng-template>
                                 <div class="tab-page-content">
-                                    <p>
-                                        Etsy mixtape wayfarers, ethical wes anderson tofu before they
-                                        sold out mcsweeney's organic lomo retro fanny pack lo-fi
-                                        farm-to-table readymade. Messenger bag gentrify pitchfork
-                                        tattooed craft beer, iphone skateboard locavore carles etsy
-                                        salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
-                                        Leggings gentrify squid 8-bit cred.
-                                    </p>
-                                    <p class="mb-0">DIY synth PBR banksy irony.
-                                        Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
-                                        mi whatever gluten-free.</p>
-                                </div>
-
-
-                            </tab>
-                            <tab>
-                                <ng-template tabHeading class="mb-2">
-                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-briefcase"></i>
-                                        Business</span>
-                                </ng-template>
-                                <div class="tab-page-content">
-                                    <p>
-                                        Etsy mixtape wayfarers, ethical wes anderson tofu before they
-                                        sold out mcsweeney's organic lomo retro fanny pack lo-fi
-                                        farm-to-table readymade. Messenger bag gentrify pitchfork
-                                        tattooed craft beer, iphone skateboard locavore carles etsy
-                                        salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
-                                        Leggings gentrify squid 8-bit cred.
-                                    </p>
-                                    <p class="mb-0">DIY synth PBR banksy irony.
-                                        Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
-                                        mi whatever gluten-free.</p>
+                                    <app-history-fragment></app-history-fragment>
                                 </div>
                             </tab>
-                            <tab>
-                                <ng-template tabHeading class="mb-2">
-                                    <span class="d-none d-sm-block tabheading">Activities</span>
-                                </ng-template>
-                                <div class="tab-page-content">
-                                    <p>
-                                        Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
-                                        art party before they sold out master cleanse gluten-free squid
-                                        scenester freegan cosby sweater. Fanny pack portland seitan DIY,
-                                        art party locavore wolf cliche high life echo park Austin. Cred
-                                        vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                        farm-to-table.
-                                    </p>
-                                    <p class="mb-0">Fanny pack portland seitan DIY,
-                                        art party locavore wolf cliche high life echo park Austin. Cred
-                                        vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                        farm-to-table.
-                                    </p>
-                                </div>
-                            </tab>
-                            <tab>
-                                <ng-template tabHeading class="mb-2">
-                                    <span class="d-none d-sm-block tabheading">Meetings</span>
-                                </ng-template>
-                                <div class="tab-page-content">
-                                    <p>
-                                        Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
-                                        art party before they sold out master cleanse gluten-free squid
-                                        scenester freegan cosby sweater. Fanny pack portland seitan DIY,
-                                        art party locavore wolf cliche high life echo park Austin. Cred
-                                        vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                        farm-to-table.
-                                    </p>
-                                    <p class="mb-0">Fanny pack portland seitan DIY,
-                                        art party locavore wolf cliche high life echo park Austin. Cred
-                                        vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                        farm-to-table.
-                                    </p>
-                                </div>
-                            </tab>
+                            
                         </tabset>
                     </div>
                 </div>
@@ -490,63 +281,3 @@
 
 
 </div>
-<!--  Add new modal contact start -->
-<ng-template #addNewContact let-modal>
-      <div class="modal-header">
-            <h5 class="modal-title" id="myLargeModalLabel">Add Contact</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            (click)="modalRef?.hide()"></button>
-          </div>
-      <form [formGroup]="formContact" (ngSubmit)="addContact()">
-
-          <div class="modal-body">
-                  <div class="mb-2">
-                        <label class="form-label">action_detail</label>
-                        <input class="form-control" name="action_detail" formControlName="action_detail" type="text"
-                    placeholder="Enter name">
-                        <small *ngIf="f.action_detail.touched && f.action_detail.invalid" class="error">
-
-                              <div *ngIf="f.action_detail.errors.required">action_detail is required.</div>
-                            </small>
-            </div>
-              <div class="mb-2">
-                        <label class="form-label">last_action</label>
-                        <input class="form-control" name="last_action" formControlName="last_action" type="text"
-                    placeholder="Enter name">
-                        <small *ngIf="f.last_action.touched && f.last_action.invalid" class="error">
-
-                              <div *ngIf="f.last_action.errors.required">last_action is required.</div>
-                            </small>
-            </div>
-
-            <div class="mb-2">
-                       
-                <label for="example-datetime-local-input" class="col-md-2 col-form-label">last_action_date</label>
-                <input class="form-control" name="last_action_date" formControlName="last_action_date" type="date">
-                        <small *ngIf="f.last_action_date.touched && f.last_action_date.invalid" class="error">
-
-                              <div *ngIf="f.last_action_date.errors.required">last_action_date is required.</div>
-                            </small>
-            </div>
-            <div class="mb-2">
-                        <label class="form-label">next_action</label>
-                        <input class="form-control" name="next_action" formControlName="next_action" type="text"
-                    placeholder="Enter next_action">
-                        <small *ngIf="f.next_action.touched && f.next_action.invalid" class="error">
-
-                              <div *ngIf="f.next_action.errors.required">next_action is required.</div>
-                            </small>
-            </div>
-
-        </div>
-          <div class="modal-footer">
-                <mat-spinner [diameter]="25" *ngIf="this.processing"></mat-spinner>
-
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                (click)="modalRef?.hide()">Close</button>
-                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button
-                [disabled]="!formContact.valid  || (processing)"       class="btn btn-primary">Submit</button>
-              </div>
-    </form>
-</ng-template>
-<!-- Add new modal Contact End -->

@@ -76,9 +76,9 @@ export class CountriesService extends BaseService {
    * This method doesn't expect any request body.
    */
   countriesGetAllGet$Response(params?: CountriesGetAllGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-    'count'?: number;
-    'rows'?: Array<Country>;
-  }>> {
+'count'?: number;
+'rows'?: Array<Country>;
+}>> {
     return countriesGetAllGet(this.http, this.rootUrl, params, context);
   }
 
@@ -93,23 +93,20 @@ export class CountriesService extends BaseService {
    * This method doesn't expect any request body.
    */
   countriesGetAllGet(params?: CountriesGetAllGet$Params, context?: HttpContext): Observable<{
-    'count'?: number;
-    'rows'?: Array<Country>;
-  }> {
+'count'?: number;
+'rows'?: Array<Country>;
+}> {
     return this.countriesGetAllGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<{
-        'count'?: number;
-        'rows'?: Array<Country>;
-      }>): {
-        'count'?: number;
-        'rows'?: Array<Country>;
-      } => r.body)
+'count'?: number;
+'rows'?: Array<Country>;
+}>): {
+'count'?: number;
+'rows'?: Array<Country>;
+} => r.body)
     );
   }
 
-
-
-  
   /** Path part for operation `countriesGetByIdIdGet()` */
   static readonly CountriesGetByIdIdGetPath = '/countries/get-by-id/{id}';
 

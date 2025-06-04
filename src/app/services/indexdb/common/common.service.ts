@@ -13,10 +13,7 @@ export class CommonService {
 
   }
 
-convertDateTimeToDate(rawDate:string):string{
-const formattedDate = rawDate ? rawDate.split('T')[0] : null;
-return formattedDate
-}
+
 
 getTrueOrFalse(value: string): boolean {
     if(value == 'Yes'){

@@ -52,11 +52,7 @@ export class FormBuilderBizdevService {
       tags: [null],
       activitySector: ['', Validators.required],
       is_private: [false, Validators.required],
-      is_archived: [false, Validators.required],
       lead_value: [null],
-      last_activity: [null],
-      date_assigned: [null],
-      last_status_change: [null],
       date_converted: [null],
     });
   }

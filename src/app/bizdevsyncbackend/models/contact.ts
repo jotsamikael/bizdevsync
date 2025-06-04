@@ -6,6 +6,7 @@ export interface Contact {
   assignedToUser?: number;
   email?: string | null;
   first_name?: string;
+  idContact?: number;
   is_archived?: boolean;
   language?: {
 [key: string]: any;

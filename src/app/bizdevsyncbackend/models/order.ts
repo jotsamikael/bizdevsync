@@ -6,6 +6,7 @@ export interface Order {
   amount?: number;
   created_at?: string;
   gateway_id?: number;
+  id?: number;
   invoice_no?: string;
   is_archived?: boolean;
   meta?: string;

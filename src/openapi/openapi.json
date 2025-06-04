@@ -139,8 +139,32 @@
               "CONVERTED"
             ]
           },
+          "id": {
+            "type": "integer"
+          },
           "description": {
             "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "creator": {
+            "first_name": {
+              "type": "string"
+            }
+          },
+          "Country": {
+            "short_name": {
+              "type": "string"
+            }
+          },
+          "Source": {
+            "label": {
+              "type": "string"
+            }
           },
           "website": {
             "type": "string",
@@ -338,6 +362,9 @@
       "Contact": {
         "type": "object",
         "properties": {
+          "idContact": {
+            "type": "integer"
+          },
           "assignedToUser": {
             "type": "integer"
           },
@@ -446,6 +473,9 @@
       "Order": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer"
+          },
           "invoice_no": {
             "type": "string"
           },
@@ -496,6 +526,9 @@
       "Plan": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer"
+          },
           "title": {
             "type": "string"
           },
@@ -813,6 +846,9 @@
       "Gateway": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer"
+          },
           "name": {
             "type": "string"
           },

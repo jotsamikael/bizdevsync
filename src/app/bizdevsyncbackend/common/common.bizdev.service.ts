@@ -13,6 +13,20 @@ export class CommonService {
 
   }
 
+
+convertDateTimeToDate(rawDate:string):string{
+const formattedDate = rawDate ? rawDate.split('T')[0] : null;
+return formattedDate
+}
+
+  formatTagsForDisplay(tags:string){
+  return tags?.split(',').map(tag => tag.trim()) || [];
+}
+
+  formatTagsForPost(tags:string[]){
+  return tags.join(',');
+}
+
 getTrueOrFalse(value: string): boolean {
     if(value == 'Yes'){
       return true;

@@ -37,7 +37,8 @@ export class LeadComponent {
 limit = 10;
 page = 1;
   isLoading: boolean = false;
-  errorMsg: string = '';  leadStat = [
+  errorMsg: string = ''; 
+   leadStat = [
     {
       title:"Total Leads",
       value :"34",

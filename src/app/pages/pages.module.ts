@@ -97,11 +97,15 @@ import { SingleProductDetailsComponent } from './bizdev/product-management/bizde
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CaseManagementComponent } from './bizdev/case/case-management/case-management.component';
 import { CaseDetailComponent } from './bizdev/case/case-detail/case-detail.component';
+import { ContactFragmentComponent } from './bizdev/lead/lead-fragments/contact-fragment/contact-fragment.component';
+import { ProfileFragmentComponent } from './bizdev/lead/lead-fragments/profile-fragment/profile-fragment.component';
+import { NoteFragmentComponent } from './bizdev/lead/lead-fragments/note-fragment/note-fragment.component';
+import { HistoryFragmentComponent } from './bizdev/lead/lead-fragments/history-fragment/history-fragment.component';
 
 
 
 @NgModule({
-  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent, CreatemeetingmodalComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, SingleProductDetailsComponent, CaseManagementComponent, CaseDetailComponent],
+  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent, CreatemeetingmodalComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, SingleProductDetailsComponent, CaseManagementComponent, CaseDetailComponent, ContactFragmentComponent, ProfileFragmentComponent, NoteFragmentComponent, HistoryFragmentComponent],
   imports: [
     CKEditorModule,
     MatFormFieldModule,

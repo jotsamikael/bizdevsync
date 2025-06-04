@@ -7,6 +7,7 @@ export interface Plan {
   data?: string;
   days?: number;
   iconname?: string;
+  id?: number;
   is_archived?: boolean;
   is_featured?: number;
   is_recommended?: number;

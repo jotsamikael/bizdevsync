@@ -8,6 +8,7 @@ export interface Gateway {
   created_at?: string;
   currency?: string;
   data?: string;
+  id?: number;
   image_accept?: number;
   is_auto?: number;
   logo?: string;

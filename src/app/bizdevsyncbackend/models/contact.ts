@@ -7,10 +7,7 @@ export interface Contact {
   email?: string | null;
   first_name?: string;
   idContact?: number;
-  is_archived?: boolean;
-  language?: {
-[key: string]: any;
-};
+  language?: string;
   last_name?: string;
   notes?: string | null;
   phone?: string | null;

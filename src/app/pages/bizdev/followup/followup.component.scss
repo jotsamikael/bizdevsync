@@ -2,3 +2,26 @@
     font-size: 12px;
     color: red;
 }
+
+.action-details-btn, .action-delete-btn{
+    cursor: pointer;
+}
+
+.action-details-btn:hover{
+color: rgb(59, 59, 227);
+}
+
+.action-delete-btn:hover{
+color: rgb(223, 67, 150);
+}
+
+::ng-deep .chip-selected {
+  background-color: #007bff !important; /* Bootstrap blue or your preferred blue */
+  color: white !important;
+  font-weight: 500;
+}
+
+::ng-deep .chip-unselected {
+  background-color: #e0e0e0 !important; /* Light gray */
+  color: #333 !important;
+}

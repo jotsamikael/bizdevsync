@@ -75,7 +75,10 @@ export class ProductsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  productsGetAllGet$Response(params?: ProductsGetAllGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  productsGetAllGet$Response(params?: ProductsGetAllGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Product>;
+}>> {
     return productsGetAllGet(this.http, this.rootUrl, params, context);
   }
 
@@ -89,9 +92,18 @@ export class ProductsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  productsGetAllGet(params?: ProductsGetAllGet$Params, context?: HttpContext): Observable<void> {
+  productsGetAllGet(params?: ProductsGetAllGet$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<Product>;
+}> {
     return this.productsGetAllGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Product>;
+}>): {
+'count'?: number;
+'rows'?: Array<Product>;
+} => r.body)
     );
   }
 

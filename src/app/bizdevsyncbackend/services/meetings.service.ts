@@ -79,7 +79,10 @@ export class MeetingsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  meetingsGetAllGet$Response(params?: MeetingsGetAllGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  meetingsGetAllGet$Response(params?: MeetingsGetAllGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Meeting>;
+}>> {
     return meetingsGetAllGet(this.http, this.rootUrl, params, context);
   }
 
@@ -93,9 +96,18 @@ export class MeetingsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  meetingsGetAllGet(params?: MeetingsGetAllGet$Params, context?: HttpContext): Observable<void> {
+  meetingsGetAllGet(params?: MeetingsGetAllGet$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<Meeting>;
+}> {
     return this.meetingsGetAllGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Meeting>;
+}>): {
+'count'?: number;
+'rows'?: Array<Meeting>;
+} => r.body)
     );
   }
 
@@ -178,7 +190,10 @@ export class MeetingsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  meetingsGetByFollowupFollowupIdGet$Response(params: MeetingsGetByFollowupFollowupIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  meetingsGetByFollowupFollowupIdGet$Response(params: MeetingsGetByFollowupFollowupIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Meeting>;
+}>> {
     return meetingsGetByFollowupFollowupIdGet(this.http, this.rootUrl, params, context);
   }
 
@@ -192,9 +207,18 @@ export class MeetingsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  meetingsGetByFollowupFollowupIdGet(params: MeetingsGetByFollowupFollowupIdGet$Params, context?: HttpContext): Observable<void> {
+  meetingsGetByFollowupFollowupIdGet(params: MeetingsGetByFollowupFollowupIdGet$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<Meeting>;
+}> {
     return this.meetingsGetByFollowupFollowupIdGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Meeting>;
+}>): {
+'count'?: number;
+'rows'?: Array<Meeting>;
+} => r.body)
     );
   }
 

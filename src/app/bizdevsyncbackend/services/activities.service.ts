@@ -157,7 +157,10 @@ export class ActivitiesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  activitiesFollowupsFollowupIdGet$Response(params: ActivitiesFollowupsFollowupIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  activitiesFollowupsFollowupIdGet$Response(params: ActivitiesFollowupsFollowupIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Activity>;
+}>> {
     return activitiesFollowupsFollowupIdGet(this.http, this.rootUrl, params, context);
   }
 
@@ -171,9 +174,18 @@ export class ActivitiesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  activitiesFollowupsFollowupIdGet(params: ActivitiesFollowupsFollowupIdGet$Params, context?: HttpContext): Observable<void> {
+  activitiesFollowupsFollowupIdGet(params: ActivitiesFollowupsFollowupIdGet$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<Activity>;
+}> {
     return this.activitiesFollowupsFollowupIdGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Activity>;
+}>): {
+'count'?: number;
+'rows'?: Array<Activity>;
+} => r.body)
     );
   }
 
@@ -190,7 +202,10 @@ export class ActivitiesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  activitiesBusinessesBusinessIdGet$Response(params: ActivitiesBusinessesBusinessIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  activitiesBusinessesBusinessIdGet$Response(params: ActivitiesBusinessesBusinessIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Activity>;
+}>> {
     return activitiesBusinessesBusinessIdGet(this.http, this.rootUrl, params, context);
   }
 
@@ -204,9 +219,18 @@ export class ActivitiesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  activitiesBusinessesBusinessIdGet(params: ActivitiesBusinessesBusinessIdGet$Params, context?: HttpContext): Observable<void> {
+  activitiesBusinessesBusinessIdGet(params: ActivitiesBusinessesBusinessIdGet$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<Activity>;
+}> {
     return this.activitiesBusinessesBusinessIdGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Activity>;
+}>): {
+'count'?: number;
+'rows'?: Array<Activity>;
+} => r.body)
     );
   }
 

@@ -14,6 +14,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { Source } from '../models/source';
 import { sourcesCreatePost } from '../fn/sources/sources-create-post';
 import { SourcesCreatePost$Params } from '../fn/sources/sources-create-post';
+import { sourcesGetAllGet } from '../fn/sources/sources-get-all-get';
+import { SourcesGetAllGet$Params } from '../fn/sources/sources-get-all-get';
 
 @Injectable({ providedIn: 'root' })
 export class SourcesService extends BaseService {
@@ -51,6 +53,51 @@ export class SourcesService extends BaseService {
   sourcesCreatePost(params: SourcesCreatePost$Params, context?: HttpContext): Observable<Source> {
     return this.sourcesCreatePost$Response(params, context).pipe(
       map((r: StrictHttpResponse<Source>): Source => r.body)
+    );
+  }
+
+  /** Path part for operation `sourcesGetAllGet()` */
+  static readonly SourcesGetAllGetPath = '/sources/get-all';
+
+  /**
+   * Get all sources (paginated).
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `sourcesGetAllGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  sourcesGetAllGet$Response(params?: SourcesGetAllGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Source>;
+}>> {
+    return sourcesGetAllGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * Get all sources (paginated).
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `sourcesGetAllGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  sourcesGetAllGet(params?: SourcesGetAllGet$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<Source>;
+}> {
+    return this.sourcesGetAllGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Source>;
+}>): {
+'count'?: number;
+'rows'?: Array<Source>;
+} => r.body)
     );
   }
 

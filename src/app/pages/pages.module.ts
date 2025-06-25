@@ -84,16 +84,13 @@ import { EnterpriseManagementComponent } from './enterprise-management/enterpris
 import { ActivityComponent } from './bizdev/activity/activity.component';
 import { LeadComponent } from './bizdev/lead/lead.component';
 import { FollowupComponent } from './bizdev/followup/followup.component';
-import { FollowupDetailsComponent } from './bizdev/followup/single-follow-up-details/followup-details/followup-details.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CreatemeetingmodalComponent } from './bizdev/followup/single-follow-up-details/followup-details/createmeetingmodal/createmeetingmodal.component';
 import { HelpSupportInquiryComponent } from './common/help-support-inquiry/help-support-inquiry.component';
 import { LeadDetailsComponent } from './bizdev/lead/lead-details/lead-details.component';
 import { BizdevProductsComponent } from './bizdev/product-management/bizdev-products/bizdev-products.component';
 import { BizdevCategoriesComponent } from './bizdev/product-management/bizdev-categories/bizdev-categories.component';
-import { SingleProductDetailsComponent } from './bizdev/product-management/bizdev-products/single-product-details/single-product-details.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CaseManagementComponent } from './bizdev/case/case-management/case-management.component';
 import { CaseDetailComponent } from './bizdev/case/case-detail/case-detail.component';
@@ -101,11 +98,15 @@ import { ContactFragmentComponent } from './bizdev/lead/lead-fragments/contact-f
 import { ProfileFragmentComponent } from './bizdev/lead/lead-fragments/profile-fragment/profile-fragment.component';
 import { NoteFragmentComponent } from './bizdev/lead/lead-fragments/note-fragment/note-fragment.component';
 import { HistoryFragmentComponent } from './bizdev/lead/lead-fragments/history-fragment/history-fragment.component';
+import { FollowupDetailsComponent } from './bizdev/followup/followup-details/followup-details.component';
+import { MeetingFragmentComponent } from './bizdev/followup/followup-fragments/meeting-fragment/meeting-fragment.component';
+import { ActivityFragmentComponent } from './bizdev/followup/followup-fragments/activity-fragment/activity-fragment.component';
+import { BasicinfoFragmentComponent } from './bizdev/followup/followup-fragments/basicinfo-fragment/basicinfo-fragment.component';
 
 
 
 @NgModule({
-  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, FollowupDetailsComponent, CreatemeetingmodalComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, SingleProductDetailsComponent, CaseManagementComponent, CaseDetailComponent, ContactFragmentComponent, ProfileFragmentComponent, NoteFragmentComponent, HistoryFragmentComponent],
+  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, CaseManagementComponent, CaseDetailComponent, ContactFragmentComponent, ProfileFragmentComponent, NoteFragmentComponent, HistoryFragmentComponent, FollowupDetailsComponent, MeetingFragmentComponent, ActivityFragmentComponent, BasicinfoFragmentComponent],
   imports: [
     CKEditorModule,
     MatFormFieldModule,

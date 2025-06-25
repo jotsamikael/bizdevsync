@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormBuilderBizdevService {
   constructor(private fb: FormBuilder) {}
+  public Editor = ClassicEditor;
 
 
   // --- User Form ---
@@ -39,12 +41,13 @@ export class FormBuilderBizdevService {
   // --- Lead Form ---
   createLeadForm(): FormGroup {
     return this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
       status: ['', Validators.required], // enum: ['UNQUALIFIED', 'QUALIFIED', 'CONVERTED']
-      description: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(1000)]],
       website: [null],
-      email: [null, Validators.email],
+      email: [null, [Validators.required,Validators.email]],
       country: [null],
+      source: [null],
       assigned_to_user_id: [null],
       telephone: [null],
       address: [null],
@@ -60,52 +63,51 @@ export class FormBuilderBizdevService {
   // --- Activity Form ---
   createActivityForm(): FormGroup {
     return this.fb.group({
-      idActivity: [null, Validators.required], // Typically not user-editable for new entities
-      title: [null],
+      idActivity: [null], // Typically not user-editable for new entities
+      title: [null,Validators.required],
       detail: [null],
-      status: ['', Validators.required], // enum: ['COMPLETED', 'PENDING', 'IN_PROGRESS', 'NOT_STARTED', 'WAITING_FEEDBACK']
+      status: [''], // enum: ['COMPLETED', 'PENDING', 'IN_PROGRESS', 'NOT_STARTED', 'WAITING_FEEDBACK']
       start_date: ['', Validators.required],
-      end_date: [null],
+      due_date: ['', Validators.required],
       tags: [null],
       priority: ['', Validators.required], // enum: ['CRITICAL', 'IMPORTANT', 'HIGH', 'MEDIUM', 'LOW']
       last_action: [null],
       last_action_date: [null],
       next_action: [null],
       next_action_date: [null],
-      Followup_idFollowup: [null],
-      Business_idBusiness: [null],
-      is_archived: [false, Validators.required],
+      _idFollowup: [null],
+      _idBusiness: [null],
     });
   }
 
   // --- Meeting Form ---
   createMeetingForm(): FormGroup {
     return this.fb.group({
-      idMeeting: [null, Validators.required], // Typically not user-editable for new entities
-      date: ['', Validators.required],
-      status: ['', Validators.required], // enum: ['COMPLETED', 'PENDING', 'IN_PROGRESS', 'NOT STARTED', 'WAITING FEEDBACK']
+      title: ['', Validators.required], // Typically not user-editable for new entities
+      status: [''], // enum: ['COMPLETED', 'PENDING', 'IN_PROGRESS', 'NOT STARTED', 'WAITING FEEDBACK']
       due_date: ['', Validators.required],
-      summary: ['', Validators.required],
+      summary: [''],
       next_action: ['', Validators.required],
       next_action_date: [null],
-      Followup_idFollowup: [null],
-      Business_idBusiness: [null],
-      is_archived: [false, Validators.required],
+      _idFollowup: [null],
+      _idBusiness: [null],
+      contact_emails: this.fb.array([]) // <- array of emails
+
     });
   }
 
   // --- Contact Form ---
   createContactForm(): FormGroup {
     return this.fb.group({
-      assignedToUser: [null, Validators.required],
+      assignedToUser: [null],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: [null, Validators.email],
+      country:['', Validators.required],
       phone: [null],
       position: [null],
-      language: [null], // { type: 'object', additionalProperties: true } -> Using a simple control for an object
+      language: [null, Validators.required], // { type: 'object', additionalProperties: true } -> Using a simple control for an object
       notes: [null],
-      is_archived: [false, Validators.required],
     });
   }
 
@@ -191,15 +193,12 @@ export class FormBuilderBizdevService {
   // --- Followup Form ---
   createFollowupForm(): FormGroup {
     return this.fb.group({
-      idFollowup: [null, Validators.required], // Typically not user-editable for new entities
+      _idLead: [null, Validators.required], // Typically not user-editable for new entities
       start_date: ['', Validators.required], // format: 'date'
-      outcome: ['', Validators.required],
+      outcome: [''],
       notes: ['', Validators.required],
       status: ['', Validators.required],
-      lead_score: [0, [Validators.required, Validators.min(0)]],
       priority: ['', Validators.required], // enum: ['CRITICAL', 'IMPORTANT', 'HIGH', 'MEDIUM', 'LOW']
-      followup_status: ['', Validators.required], // enum: ['Hot', 'Warm', 'Cold']
-      is_archived: [false, Validators.required],
     });
   }
 

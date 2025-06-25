@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CommonService } from 'src/app/bizdevsyncbackend/common/common.bizdev.service';
+import { User } from 'src/app/bizdevsyncbackend/models';
+import { ProductCategoriesService } from 'src/app/bizdevsyncbackend/services/product-categories.service';
 import { FormBuilderService } from 'src/app/services/indexdb/common/services/form-builder.service';
 import { ProductService } from 'src/app/services/indexdb/product/product-and-categories.service';
 import { Product, ProductCategory } from 'src/app/services/models/model';
@@ -14,52 +19,83 @@ import { Product, ProductCategory } from 'src/app/services/models/model';
 })
 export class BizdevCategoriesComponent implements OnInit {
  @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
   breadCrumbItems: Array<{}>;
   dataSource = new MatTableDataSource<ProductCategory>();
   displayedColumns: string[] = ['name', 'description', 'actions'];
   modalRef?: BsModalRef;
-  categories: ProductCategory[] = [];
-  form: FormGroup;
+productsCategories:ProductCategory[] = []
+
+totalProductsCategories = 0;
+  isEditMode: boolean = false;
+  selectedProduct: any = null;
+isLoading: boolean = false;
+  errorMsg: string = ''; 
+    basicInfoForm: FormGroup<any>;
+  user: User;;
+     limit = 10;
+page = 1;
   
 
   constructor(
-    private modalService: BsModalService,
-    private categoryService: ProductService,
-    private fbService: FormBuilderService
+        private formBuilderService : FormBuilderService,
+         private productCategoriesService: ProductCategoriesService,
+         private modalService: BsModalService,
+         private commonService: CommonService,
+         private router: Router,
   ) {}
-  async ngOnInit() {
+   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Products Categories', active: true }];
-    this.loadCategories();
-    this.form = this.fbService.createProductCategoryForm();
-
-    await this.load();
+    this.getProductCategories();
+    this.basicInfoForm = this.formBuilderService.createProductCategoryForm();
 
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+   
 
-  async load() {
-    const categories = await this.categoryService.getAllCategories();
-    this.dataSource.data = categories;
-    if (this.paginator) this.dataSource.paginator = this.paginator;
-  }
+  
+    disableForm() {
+  this.commonService.disableForm(this.basicInfoForm)
+}
 
-  loadCategories() {
-    this.categoryService.getAllCategories().then(categories => {
-      this.categories = categories;
-    });
+enableForm() {
+  this.commonService.enableForm(this.basicInfoForm)
+}
+
+
+
+get f() {
+
+  return this.basicInfoForm.controls;
+
+}
+
+
+  getProductCategories( page: number = 1, limit: number = 10) {
+  this.isLoading = true;
+  this.errorMsg = '';
+  this.limit = limit;
+  this.page = page;
+    this.productCategoriesService.productCategoriesGetAllGet({ page, limit }).subscribe({
+      next:(response:any)=>{
+        this.productsCategories = response.rows;
+      this.totalProductsCategories = response.count;
+      this.dataSource = new MatTableDataSource(this.productsCategories);
+      this.dataSource.sort = this.sort;
+      this.isLoading = false;
+      console.log(response)
+      },
+
+    })
   }
 
   openEditModal(category?: ProductCategory) {
   
   }
 
-  async delete(id: number) {
-    await this.categoryService.deleteCategories(id);
-    this.load();
+   delete(id: number) {
+   
   }
 
   openImport(imported: any) {

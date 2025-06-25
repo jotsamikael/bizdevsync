@@ -19,6 +19,7 @@ export interface MeetingsCreatePost$Params {
 'title'?: string;
 '_idFollowup'?: number;
 '_idBusiness'?: number;
+'contact_emails'?: string;
 }
 }
 

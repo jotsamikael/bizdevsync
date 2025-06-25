@@ -82,7 +82,10 @@ export class FollowupsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  followupsGetAllGet$Response(params?: FollowupsGetAllGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  followupsGetAllGet$Response(params?: FollowupsGetAllGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Followup>;
+}>> {
     return followupsGetAllGet(this.http, this.rootUrl, params, context);
   }
 
@@ -96,9 +99,18 @@ export class FollowupsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  followupsGetAllGet(params?: FollowupsGetAllGet$Params, context?: HttpContext): Observable<void> {
+  followupsGetAllGet(params?: FollowupsGetAllGet$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<Followup>;
+}> {
     return this.followupsGetAllGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Followup>;
+}>): {
+'count'?: number;
+'rows'?: Array<Followup>;
+} => r.body)
     );
   }
 

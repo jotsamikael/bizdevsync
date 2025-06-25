@@ -19,20 +19,12 @@
                 <p class="mt-4">Product categories you sell for you to manage here. To see more categories listed, click
                     the pagination icons at the buttom of the table</p>
 
-                <form [formGroup]="form">
+                <form [formGroup]="basicInfoForm">
                     <div class="mb-3">
                         <label>Name</label>
                         <input formControlName="name" class="form-control" type="text" />
                     </div>
-                    <div class="mb-3">
-                        <label>Parent Category</label>
-                        <select class="form-select" formControlName="product_category_id">
-                            <option value="">None</option>
-                            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}
-                            </option>
-                        </select>
-                    </div>
-
+                
                     <div class="mb-3">
                         <label>Description</label>
                         <textarea formControlName="description" class="form-control"></textarea>

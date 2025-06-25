@@ -1,0 +1,75 @@
+<div class="card p-3">
+    <form class=" mb-4" [formGroup]="basicInfoForm">
+        <!-- Lead  -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">Lead</label>
+            <div class="col-md-10">
+                <input class="form-control" name="_idLead" formControlName="_idLead" type="text">
+            </div>
+        </div>
+         <!-- Outcome  -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">Outcome</label>
+            <div class="col-md-10">
+                <input  class="form-control" name="outcome" formControlName="outcome" type="text">
+            </div>
+        </div>
+        <!-- status -->
+        <div class="mb-3 row">
+            <label for="example-datetime-local-input" class="col-md-2 col-form-label font-size-11">Status</label>
+            <div class="col-md-10">
+                <select class="form-select" name="status" formControlName="status">
+                    <option value={{this.followup.status}}>
+                        {{this.followup.status}}</option>
+                    <option *ngFor="let status of this.statuses" value={{status}}>
+                        {{status}}</option>
+                </select>
+            </div>
+
+        </div>
+        
+        <!-- priority -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">Priority</label>
+            <div class="col-md-10">
+                <select class="form-select" name="priority" formControlName="priority">
+                    <option value={{this.followup.priority}}>
+                        {{this.followup.priority}}</option>
+                    <option *ngFor="let priority of this.priorities" value={{priority}}>
+                        {{priority}}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- start date -->
+        <div class="mb-3 row">
+            <label for="example-date-input" class="col-md-2 col-form-label">Start Date
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="date" name="start_date" formControlName="start_date"
+                    id="example-date-input">
+            </div>
+        </div>
+
+
+        <!-- note -->
+        <div class="mb-3 row">
+            <label for="example-datetime-local-input" class="col-md-2 col-form-label font-size-11">Notes</label>
+            <div class="col-md-10">
+                <ckeditor formControlName="notes" name="notes" [editor]="Editor" data=""></ckeditor>
+            </div>
+        </div>
+        <!-- buttons -->
+        <div class="mb-3 row">
+            <div class="mb-3 row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-10">
+                    <button mat-raised-button extended (click)="updateFollowup()" [mat-dialog-close]="true"
+                        cdkFocusInitial [disabled]="!basicInfoForm.valid || isLoading">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

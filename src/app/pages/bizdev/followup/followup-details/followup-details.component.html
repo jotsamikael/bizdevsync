@@ -1,0 +1,74 @@
+ <div class="container-fluid">
+    <div class="row">
+        <div class="card">
+            <div class="card-body overflow-hidden">
+                <div class="row align-items-center justify-content-between mb-3">
+                    <div class="col">
+                        <h1 class="card-title m-0">{{this.followup.Lead.name}}</h1>
+                        <p class="card-title-desc">Manage Followup of</p>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-danger" matTooltip="close" (click)="gotoFollowupManagement()">
+                            <i class="bx bx-x"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <tabset [justified]="true" [vertical]="true" class="nav-pills  custom-vertical-tabs">
+
+                            <tab>
+                                <ng-template tabHeading>
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-user"></i> Basic Infos</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <app-basicinfo-fragment></app-basicinfo-fragment>
+                                </div>
+
+                            </tab>
+
+                            <tab>
+                                <ng-template tabHeading>
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-user"></i> Activities</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <app-activity-fragment></app-activity-fragment>
+
+                                </div>
+
+
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading>
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-book"></i> Meetings</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                    <app-meeting-fragment></app-meeting-fragment>
+
+                                </div>
+
+
+                            </tab>
+                         <!--    <tab>
+                                <ng-template tabHeading>
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-book"></i> Notes</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+
+                                </div>
+                            </tab>
+                            <tab>
+                                <ng-template tabHeading>
+                                    <span class="d-none d-sm-block tabheading"><i class="bx bx-book-open"></i>History</span>
+                                </ng-template>
+                                <div class="tab-page-content">
+                                </div>
+                            </tab> -->
+                            
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

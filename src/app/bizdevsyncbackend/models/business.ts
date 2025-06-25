@@ -12,7 +12,6 @@ export interface Business {
   current_supplier?: string | null;
   engagement_score?: number;
   idBusiness?: number;
-  is_archived?: boolean;
   need?: string;
   notes?: string | null;
   potential_time_for_delivery?: string | null;

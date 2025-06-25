@@ -6,7 +6,6 @@ export interface Country {
   calling_code?: string | null;
   createdAt?: string;
   idCountry?: number;
-  is_archived?: boolean;
   is_un_member?: boolean;
   iso2?: string | null;
   iso3?: string | null;

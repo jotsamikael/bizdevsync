@@ -16,7 +16,6 @@ export interface Lead {
   description?: string;
   email?: string | null;
   id?: number;
-  is_archived?: boolean;
   is_private?: boolean;
   last_activity?: string | null;
   last_status_change?: string | null;

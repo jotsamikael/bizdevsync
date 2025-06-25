@@ -15,7 +15,6 @@ import { CaseStateService } from '../case-state.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormBuilderService } from 'src/app/services/indexdb/common/services/form-builder.service';
-import { CreatemeetingmodalComponent } from '../../followup/single-follow-up-details/followup-details/createmeetingmodal/createmeetingmodal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductService } from 'src/app/services/indexdb/product/product-and-categories.service';
 
@@ -269,13 +268,7 @@ export class CaseDetailComponent implements OnInit {
     
     
     openScheduleMeeting() {
-      const dialogRef = this.dialog.open(CreatemeetingmodalComponent, 
-        { data: this.case,width:'400px' },
-      );
-    
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
+      
     }
     
     

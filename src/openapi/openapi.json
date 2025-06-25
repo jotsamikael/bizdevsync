@@ -71,9 +71,6 @@
             "type": "string",
             "format": "date-time"
           },
-          "is_archived": {
-            "type": "boolean"
-          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -204,9 +201,6 @@
           "is_private": {
             "type": "boolean"
           },
-          "is_archived": {
-            "type": "boolean"
-          },
           "lead_value": {
             "type": "integer",
             "nullable": true
@@ -261,6 +255,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "due_date": {
+            "type": "string",
+            "format": "date-time"
+          },
           "end_date": {
             "type": "string",
             "format": "date-time",
@@ -298,16 +296,13 @@
             "format": "date-time",
             "nullable": true
           },
-          "Followup_idFollowup": {
+          "_idFollowup": {
             "type": "integer",
             "nullable": true
           },
-          "Business_idBusiness": {
+          "_idBusiness": {
             "type": "integer",
             "nullable": true
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -317,9 +312,9 @@
           "idMeeting": {
             "type": "integer"
           },
-          "date": {
+          "title": {
             "type": "string",
-            "format": "date-time"
+            "nullable": false
           },
           "status": {
             "type": "string",
@@ -346,16 +341,13 @@
             "format": "date-time",
             "nullable": true
           },
-          "Followup_idFollowup": {
+          "_idFollowup": {
             "type": "integer",
             "nullable": true
           },
-          "Business_idBusiness": {
+          "_idBusiness": {
             "type": "integer",
             "nullable": true
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -387,15 +379,12 @@
             "nullable": true
           },
           "language": {
-            "type": "object",
-            "additionalProperties": true
+            "type": "string",
+            "nullable": false
           },
           "notes": {
             "type": "string",
             "nullable": true
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -433,9 +422,6 @@
           "description": {
             "type": "string",
             "nullable": true
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -447,9 +433,6 @@
           },
           "label": {
             "type": "string"
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -464,9 +447,6 @@
           },
           "description": {
             "type": "string"
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -517,9 +497,6 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -570,9 +547,6 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -616,9 +590,6 @@
               "Warm",
               "Cold"
             ]
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -647,9 +618,6 @@
             "nullable": true
           },
           "is_un_member": {
-            "type": "boolean"
-          },
-          "is_archived": {
             "type": "boolean"
           },
           "createdAt": {
@@ -716,9 +684,6 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -794,9 +759,6 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -837,9 +799,6 @@
           "notes": {
             "type": "string",
             "nullable": true
-          },
-          "is_archived": {
-            "type": "boolean"
           }
         }
       },
@@ -1104,7 +1063,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Paginated list of activities"
+            "description": "List of Activities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Activity"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1146,7 +1123,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Paginated list of activities"
+            "description": "List of Activities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Activity"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -2222,7 +2217,7 @@
                     "type": "string"
                   },
                   "language": {
-                    "type": "object"
+                    "type": "string"
                   },
                   "notes": {
                     "type": "string"
@@ -3181,7 +3176,7 @@
                     "type": "string",
                     "format": "date-time"
                   },
-                  "Lead_idLead": {
+                  "_idLead": {
                     "type": "integer"
                   },
                   "outcome": {
@@ -3234,7 +3229,25 @@
         ],
         "responses": {
           "200": {
-            "description": "List of followups"
+            "description": "List of followups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Followup"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -3638,7 +3651,7 @@
                     "type": "string"
                   },
                   "is_private": {
-                    "type": "string"
+                    "type": "boolean"
                   },
                   "source": {
                     "type": "integer"
@@ -3834,7 +3847,7 @@
                     "type": "string"
                   },
                   "is_private": {
-                    "type": "string"
+                    "type": "boolean"
                   },
                   "source": {
                     "type": "integer"
@@ -3935,6 +3948,9 @@
                   },
                   "_idBusiness": {
                     "type": "number"
+                  },
+                  "contact_emails": {
+                    "type": "string"
                   }
                 }
               }
@@ -3977,7 +3993,25 @@
         ],
         "responses": {
           "200": {
-            "description": "List of meetings"
+            "description": "List of Meetings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Meeting"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4111,7 +4145,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Paginated list of meetings"
+            "description": "List of Meetings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Meeting"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4573,7 +4625,25 @@
         ],
         "responses": {
           "200": {
-            "description": "List of products"
+            "description": "List of Products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Product"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4930,6 +5000,58 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sources/get-all": {
+      "get": {
+        "summary": "Get all sources (paginated)",
+        "tags": [
+          "Sources"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of sources",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Source"
+                      }
+                    }
+                  }
                 }
               }
             }

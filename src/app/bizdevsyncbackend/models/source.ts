@@ -5,6 +5,5 @@
 export interface Source {
   description?: string;
   idSource?: number;
-  is_archived?: boolean;
   label?: string;
 }

@@ -24,7 +24,7 @@ export interface LeadsUpdateIdPut$Params {
 'address'?: string;
 'town'?: string;
 'tags'?: string;
-'is_private'?: string;
+'is_private'?: boolean;
 'source'?: number;
 'lead_value'?: number;
 'last_activity'?: string;

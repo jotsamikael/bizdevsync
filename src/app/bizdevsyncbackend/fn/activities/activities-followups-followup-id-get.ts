@@ -8,6 +8,7 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { Activity } from '../../models/activity';
 
 export interface ActivitiesFollowupsFollowupIdGet$Params {
   followupId: number;
@@ -15,7 +16,10 @@ export interface ActivitiesFollowupsFollowupIdGet$Params {
   limit?: number;
 }
 
-export function activitiesFollowupsFollowupIdGet(http: HttpClient, rootUrl: string, params: ActivitiesFollowupsFollowupIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function activitiesFollowupsFollowupIdGet(http: HttpClient, rootUrl: string, params: ActivitiesFollowupsFollowupIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<Activity>;
+}>> {
   const rb = new RequestBuilder(rootUrl, activitiesFollowupsFollowupIdGet.PATH, 'get');
   if (params) {
     rb.path('followupId', params.followupId, {});
@@ -24,11 +28,14 @@ export function activitiesFollowupsFollowupIdGet(http: HttpClient, rootUrl: stri
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<{
+      'count'?: number;
+      'rows'?: Array<Activity>;
+      }>;
     })
   );
 }

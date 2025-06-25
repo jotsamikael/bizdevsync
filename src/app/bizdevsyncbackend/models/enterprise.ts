@@ -8,7 +8,6 @@ export interface Enterprise {
   email_domain?: string;
   expires_at?: string | null;
   idEnterprise?: number;
-  is_archived?: boolean;
   is_verified?: boolean;
   logo?: string | null;
   name?: string;

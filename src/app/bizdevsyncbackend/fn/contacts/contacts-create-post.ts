@@ -18,8 +18,7 @@ export interface ContactsCreatePost$Params {
 'email'?: string;
 'phone'?: string;
 'position'?: string;
-'language'?: {
-};
+'language'?: string;
 'notes'?: string;
 '_idLead'?: number;
 '_idCountry'?: number;

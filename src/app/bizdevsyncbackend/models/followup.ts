@@ -5,7 +5,6 @@
 export interface Followup {
   followup_status?: 'Hot' | 'Warm' | 'Cold';
   idFollowup?: number;
-  is_archived?: boolean;
   lead_score?: number;
   notes?: string;
   outcome?: string;

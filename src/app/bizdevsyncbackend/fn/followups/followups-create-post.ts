@@ -12,7 +12,7 @@ import { RequestBuilder } from '../../request-builder';
 export interface FollowupsCreatePost$Params {
       body: {
 'start_date'?: string;
-'Lead_idLead'?: number;
+'_idLead'?: number;
 'outcome'?: string;
 'notes'?: string;
 'status'?: 'in_progress' | 'completed' | 'paused' | 'cancelled';

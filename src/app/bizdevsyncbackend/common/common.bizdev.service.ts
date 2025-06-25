@@ -2,6 +2,10 @@
 import { Injectable } from "@angular/core";
 import { LeadService } from "src/app/services/indexdb/lead/lead.service";
 import { Contact, User } from "../models";
+import { UsersService } from "../services";
+import Swal from "sweetalert2";
+import { Observable } from "rxjs";
+import { FormGroup } from "@angular/forms";
 
 
 @Injectable({
@@ -9,9 +13,39 @@ import { Contact, User } from "../models";
 })
 export class CommonService {
 
-  constructor(private leadService: LeadService){
+constructor(private leadService: LeadService, private userService: UsersService){
 
   }
+
+  
+
+  disableForm(basicInfoForm:FormGroup<any>) {
+  basicInfoForm.disable()
+}
+
+enableForm(basicInfoForm:FormGroup<any>) {
+  basicInfoForm.enable()
+}
+
+
+//converts "NEW","QUALIFIED","NOT INTERESTED" from db to ['NEW','QUALIFIED','NOT INTERESTED']
+ stringToArray(text: string): string[] {
+  if (typeof text === 'string' && text.trim() !== '') {
+    return text.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+  }
+  return [];
+}
+
+//converts ['NEW','QUALIFIED','NOT INTERESTED'] for db storage "NEW","QUALIFIED","NOT INTERESTED" 
+
+  arrayToString(tags: any): string {
+     if (Array.isArray(tags)) {
+    return tags.join(', ');
+  }
+  return '';
+  }
+
+  
 
 
 convertDateTimeToDate(rawDate:string):string{
@@ -45,12 +79,12 @@ getTrueOrFalse(value: string): boolean {
     }
   }
 
-  getLeadContacts(lead_id: number): Promise<Contact[]> {
+  /*getLeadContacts(lead_id: number): Promise<Contact[]> {
     return this.leadService.getLeadById(lead_id).then(lead => lead.contacts);
-  }
+  }*/
 
   getCurrentUser(): User {
-    const user = JSON.parse(localStorage.getItem("token") || "{}");
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
     return user
   }
   

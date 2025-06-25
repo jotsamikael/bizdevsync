@@ -18,17 +18,17 @@ export class FormBuilderService {
 
   createProductCategoryForm(): FormGroup {
     return this.fb.group({
-      name: ['', Validators.required],
+      label: ['', Validators.required],
       description: ['']
     });
   }
   
   createProductForm(): FormGroup {
     return this.fb.group({
-      name: ['', Validators.required],
+      label: ['', Validators.required],
       product_category_id: ['', Validators.required],
-      short_description: [''],
-      long_description: ['']
+      price: [''],
+      description: ['']
 
     });
   }

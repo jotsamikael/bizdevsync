@@ -13,7 +13,6 @@ export interface User {
   google_auth_secret?: string | null;
   id?: number;
   is_activated?: boolean;
-  is_archived?: boolean;
   is_verified?: boolean;
   last_activity?: string | null;
   last_ip?: string | null;

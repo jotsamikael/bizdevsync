@@ -227,7 +227,7 @@ export const MENU: MenuItem[] = [
     id: 37,
     label: 'Followups',
     icon: 'bxs-traffic',
-    link: 'follow-ups',
+    link: 'bizdev-followups',
     roles: ['business_developer','solo_business_developer']
 
 },
@@ -259,7 +259,7 @@ export const MENU: MenuItem[] = [
 {
     id: 23,
     icon: 'bxs-store',
-    label: 'Products',
+    label: 'Products Management',
     roles: ['enterprise_admin','solo_business_developer','business_developer'],
     subItems: [
         {

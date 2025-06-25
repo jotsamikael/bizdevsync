@@ -8,7 +8,6 @@ export interface Order {
   gateway_id?: number;
   id?: number;
   invoice_no?: string;
-  is_archived?: boolean;
   meta?: string;
   payment_id?: string;
   plan_id?: number;

@@ -1,135 +1,141 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { User } from 'src/app/core/models/auth.models';
-import { FollowUpService } from 'src/app/services/indexdb/followup/followup.service';
-import { LeadService } from 'src/app/services/indexdb/lead/lead.service';
-import { TokenService } from 'src/app/services/indexdb/token.service';
-import { FollowUp, Lead } from 'src/app/services/models/model';
-import { FollowupDetailsComponent } from './single-follow-up-details/followup-details/followup-details.component';
-import { MatDialog } from '@angular/material/dialog';
-import Swal from 'sweetalert2';
+import { Component, ViewChild } from "@angular/core";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { Router } from "@angular/router";
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { MatDialog } from "@angular/material/dialog";
+import Swal from "sweetalert2";
+import { User } from "src/app/bizdevsyncbackend/models/user";
+import { Followup } from "src/app/bizdevsyncbackend/models/followup";
+import { Lead } from "src/app/bizdevsyncbackend/models/lead";
+import { FollowupsService } from "src/app/bizdevsyncbackend/services";
+import { CommonService } from "src/app/bizdevsyncbackend/common/common.bizdev.service";
+import { FormBuilderBizdevService } from "src/app/bizdevsyncbackend/common/formbuilder.bizdev.service";
+import { FollowupStateService } from "./service/followup-state.service";
 
 @Component({
-  selector: 'app-followup',
-  templateUrl: './followup.component.html',
-  styleUrls: ['./followup.component.scss']
+  selector: "app-followup",
+  templateUrl: "./followup.component.html",
+  styleUrls: ["./followup.component.scss"],
 })
 export class FollowupComponent {
-
   breadCrumbItems: Array<{}>;
 
-  displayedColumns: string[] = ["lead_id","start_date","last_action_date","activities","meetings","actions"];
-  dataSource: MatTableDataSource<FollowUp>;
+  displayedColumns: string[] = [
+    "lead",
+    "score",
+    "followup_status",
+    "start_date",
+    "status",
+  ];
+  dataSource: MatTableDataSource<Followup>;
+  basicInfoForm: FormGroup<any>;
+  totalFollowups = 0;
+  limit = 10;
+  page = 1;
+  isLoading: boolean = false;
+  errorMsg: string = "";
+  selectedStatus: string = "All";
+  hoveredRow: any = null;
 
   user: User;
-  followups: FollowUp[];
-  followUpStat = [
-    {
-      title:"Total followups",
-      value :"34",
-      icon:"bx-user-plus"
-    },
-    {
-      title:"Hot followups",
-      value :"9",
-      icon:"bxs-hot"
-    },
-    {
-      title:"Cold followups",
-      value :"12",
-      icon:"bx-wind"
-    },
-    /*{
-      title:"Recent Leads",
-      value :"13",
-      icon:"bxs-watch"
-    }*/
-  ]
+  followups: Followup[];
+  statuses = [
+    "All",
+    "IN PROGRESS",
+    "PAUSED",
+    "COMPLETED",
+  ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  modalRef?:BsModalRef;
-  processing: boolean = false;
+  modalRef?: BsModalRef;
   leads: Lead[];
 
   constructor(
-    private tokenService: TokenService,
-    private leadService: LeadService,
-    private followUpService: FollowUpService,
+        private formBuilderService : FormBuilderBizdevService,
+        private followupStateService: FollowupStateService,
+    private followUpService: FollowupsService,
     private modalService: BsModalService,
     private router: Router,
-    public dialog: MatDialog
-    
+    public dialog: MatDialog,
+    private commonService: CommonService
   ) {
     this.getCurrentUser();
-    this.getClientsOfLoggedInUser();
-    // Assign the data to the data source for the table to render
-   
+    // Get all followups of user
+    this.getFollowupsOfLoggedInUser();
   }
 
-  
-form = new FormGroup({
-  source: new FormControl('', [Validators.required]),
-  start_date: new FormControl('', [Validators.required]),
-  lead_id: new FormControl('', [Validators.required]),
+    ngOnInit(): void {
+    this.breadCrumbItems = [
+      { label: "Bizdev" },
+      { label: "Followup Portfolio", active: true },
+    ];
+        this.basicInfoForm = this.formBuilderService.createLeadForm()
 
+  }
 
-});
+  disableForm() {
+    this.commonService.disableForm(this.basicInfoForm);
+  }
 
-disableForm() {
-  this.form.controls['lead_id'].disable();
+  enableForm() {
+    this.commonService.enableForm(this.basicInfoForm);
+  }
 
-  this.form.controls['start_date'].disable();
-
-  this.form.controls['source'].disable();
-
-
-}
-
-
-enableForm() {
-  this.form.controls['lead_id'].enable();
-
-  this.form.controls['start_date'].enable();
-
-  this.form.controls['source'].enable();
-}
-
-
-get f() {
-
-  return this.form.controls;
-
-}
+  get f() {
+    return this.basicInfoForm.controls;
+  }
 
   getCurrentUser() {
-    this.user = JSON.parse(localStorage.getItem("token") || "{}");
-    console.log(this.user)
+    this.user = this.commonService.getCurrentUser();
   }
 
-  getClientsOfLoggedInUser() {
+   goToDetails(followup: Followup): void {
+    this.followupStateService.setFollowup(followup);
+    this.router.navigate(['/backend/followup-details']);
+  }
+
+  /* getClientsOfLoggedInUser() {
     this.followUpService.getFollowUpByUser(this.user.id).then((followups) => {
       this.followups = followups;
       this.dataSource = new MatTableDataSource(this.followups);
     console.log(this.followups)
     });
+  }*/
+
+
+
+  getFollowupsOfLoggedInUser(page: number = 1, limit: number = 10): void {
+    this.isLoading = true;
+    this.errorMsg = "";
+    this.limit = limit;
+    this.page = page;
+
+    this.followUpService.followupsGetAllGet({ page, limit }).subscribe({
+      next: (response: any) => {
+        this.followups = response.rows;
+        this.totalFollowups = response.count;
+        this.dataSource = new MatTableDataSource(this.followups);
+        this.dataSource.sort = this.sort;
+        this.isLoading = false;
+        console.log(response)
+      },
+      error: (error) => {
+        Swal.fire("Error: ", error.error.message, "error");
+        console.error("Error fetching leads:", error);
+        this.isLoading = false;
+      },
+    });
   }
 
-  ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Bizdev' }, { label: 'Followup Portfolio', active: true }];
-    this.getAllLeadsForUser()
-
-  }
-
-  ngAfterViewInit() { 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  onPageChange(event: PageEvent): void {
+    const pageIndex = event.pageIndex + 1; // MatPaginator is 0-based
+    const pageSize = event.pageSize;
+    this.getFollowupsOfLoggedInUser(pageIndex, pageSize);
   }
 
   applyFilter(event: Event) {
@@ -141,39 +147,86 @@ get f() {
     }
   }
 
-  goToFollowUpDetails(followupItem:FollowUp){
-    console.log(followupItem)
-    localStorage.setItem('followup',JSON.stringify(followupItem))
-    this.router.navigate(['backend/follow-up-details']);
-
+  openCreateNewModal(addNew: any) {
+    this.modalRef = this.modalService.show(addNew, { class: "modal-lg" });
+    this.modalRef.onHidden?.subscribe(() => {
+      this.getFollowupsOfLoggedInUser(); //reload tasks
+    });
   }
 
-  openCreateNewModal(addNew: any) {
-    this.modalRef = this.modalService.show(addNew,{class: 'modal-nd'})
-    }
+  createLead() {
+    this.followUpService
+      .followupsCreatePost({
+        body: {
+          _idLead:this.basicInfoForm.value.notes,
+          start_date: this.basicInfoForm.value.start_date,
+          notes:this.basicInfoForm.value.notes,
+          status:this.basicInfoForm.value.status,
+          priority:this.basicInfoForm.value.priority,
+                
+        },
+      })
+      .subscribe({
+        next: () => {
+          this.modalRef.hide;
+          this.isLoading = false;
+          Swal.fire("Created!", "Task created successfully!", "success");
+        },
+        error: (error) => {
+          console.error("Error creating task:", error);
+          this.errorMsg = "Failed to create task.";
+          this.isLoading = false;
+          Swal.fire("Error!", `Error: ${error.error.message}`, "error");
+        },
+      });
+  }
 
-   confirmDelete(row: FollowUp) {
-          Swal.fire({
-            title: 'Are you sure?',
-            text: 'You won\'t be able to revert this!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#566fe6',
-            cancelButtonColor: '#f46a6a',
-            confirmButtonText: 'Yes, delete it!'
-          }).then(result => {
-            if (result.value) {
-              Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-            }
-          });
-        }
+  selectStatus(status: string): void {
+    this.selectedStatus = status;
+    this.filterByStatus();
+  }
 
+  filterByStatus(): void {
+    console.log("Selected status:", this.selectedStatus);
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      if (filter === "All") return true;
+      return data.status?.toLowerCase() === filter.toLowerCase();
+    };
 
-        getAllLeadsForUser(){
-          this.leadService.getAllLeadsForUser( this.user.id).then(leads=>{
-            this.leads = leads
-            console.log(leads)
-          })
-        }
+    this.dataSource.filter = this.selectedStatus; // Triggers filtering
+  }
 
+  confirmDelete(idLead: number) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#566fe6",
+      cancelButtonColor: "#f46a6a",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.value) {
+        //call delete endpoint
+        this.followUpService.followupsDeleteIdDelete({ id: idLead }).subscribe({
+          next: () => {
+            Swal.fire("Deleted!", "Data has been deleted.", "success");
+            this.getFollowupsOfLoggedInUser();
+          },
+          error: (error) => {
+            console.error("Error deleting lead:", error);
+            Swal.fire("Error!", "An error occured.", "error");
+            this.isLoading = false;
+          },
+        });
+      }
+    });
+  }
+
+ 
+  goToFollowUpDetails(followupItem: Followup) {
+    console.log(followupItem);
+    localStorage.setItem("followup", JSON.stringify(followupItem));
+    this.router.navigate(["backend/follow-up-details"]);
+  }
 }

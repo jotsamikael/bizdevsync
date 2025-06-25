@@ -5,6 +5,5 @@
 export interface ProductCategory {
   description?: string | null;
   idProductCategory?: number;
-  is_archived?: boolean;
   label?: string;
 }

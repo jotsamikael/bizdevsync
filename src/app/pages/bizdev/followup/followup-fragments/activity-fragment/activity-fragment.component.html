@@ -1,0 +1,239 @@
+<div class="card p-3">
+  <div class="row ">
+    <div class="col-md-9 my-4">
+      <button class="btn btn-primary  waves-effect waves-light mx-2" (click)="openModal(form)">+ Create
+        Activity</button>
+      <button class="btn btn-soft-primary  waves-effect waves-light" (click)="exporter.exportTable('csv')"><i
+          class="bx bx-download"></i> Export
+        Activities</button>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field matTooltip="Enter a prospect name">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Pacific bank" #input>
+      </mat-form-field>
+    </div>
+  </div>
+  <ng-template tabHeading>
+    <span class="d-none d-sm-block tabheading"><i class="bx bx-user"></i>
+      Activities</span>
+  </ng-template>
+  <div class="tab-page-content">
+    <div class="card">
+      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows matTableExporter
+        #exporter="matTableExporter">
+        <!-- title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+          <td mat-cell *matCellDef="let row"> <b>{{row.title}}</b> 
+          </td>
+
+        </ng-container>
+
+        <!-- status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> status </th>
+          <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+        </ng-container>
+
+        <!-- due_date Column -->
+        <ng-container matColumnDef="due_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> due_date </th>
+          <td mat-cell *matCellDef="let row"> {{row.due_date | date}} </td>
+        </ng-container>
+
+        <!-- priority Column -->
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> priority </th>
+          <td mat-cell *matCellDef="let row"> {{row.priority}} </td>
+        </ng-container>
+
+        <!-- tags Column -->
+        <ng-container matColumnDef="tags">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> tags </th>
+          <td mat-cell *matCellDef="let row"> {{row.tags}} </td>
+        </ng-container>
+
+        <!-- actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> actions </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-button [matMenuTriggerFor]="menu" #menuTrigger><i
+                class="bx bx-dots-vertical-rounded"></i></button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openModal(form, row)"><i class="bx bx-pen"></i> Edit</button>
+              <button mat-menu-item (click)="confirmDelete()"><i class="bx bx-trash"></i>delete</button>
+            </mat-menu>
+
+          </td>
+        </ng-container>
+
+        <tr mat-row *matRowDef="let row; columns: displayedColumns">
+        </tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+
+        <!-- Row shown when data is being fetched. -->
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter
+            "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator [length]="total" [pageSize]="limit" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+        (page)="onPageChange($event)">
+      </mat-paginator>
+
+    </div>
+  </div>
+</div>
+
+<!--  Add new modal start -->
+<ng-template #form let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myLargeModalLabel"> {{ isEditMode ? 'Edit Activity' : 'Add Activity' }}
+    </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modalRef?.hide()"></button>
+      </div>
+  <div class="modal-body">
+     <form class="mb-4" [formGroup]="basicInfoForm">
+      <div class="row">
+        <div class="col-md-6">
+          <!-- title Name -->
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label font-size-11">Title</label>
+            <div class="col-md-9">
+              <input class="form-control" name="title" formControlName="title" type="text">
+              <small *ngIf="f.title.touched && f.title.invalid" class="error">
+                <div *ngIf="f.title.errors?.required">title is required.</div>
+              </small>
+            </div>
+          </div>
+
+          <!-- priority -->
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label font-size-11">Priority</label>
+            <div class="col-md-9">
+              <select class="form-select" name="priority" formControlName="priority">
+                
+                <option *ngFor="let priority of this.priorities" value={{priority}}>
+                  {{priority}}</option>
+              </select>
+            </div>
+          </div>
+
+           <!-- status -->
+          <div class="mb-3 row" *ngIf="this.isEditMode">
+            <label class="col-md-3 col-form-label font-size-11">Status</label>
+            <div class="col-md-9">
+              <select class="form-select" name="status" formControlName="status">
+                <option value={{this.followup.status}}>
+                  {{this.followup.status}}</option>
+                <option *ngFor="let status of this.statuses" value={{status}}>
+                  {{status}}</option>
+              </select>
+            </div>
+          </div>
+
+             <!-- Last action -->
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label font-size-11">Last action</label>
+            <div class="col-md-9">
+              <input class="form-control" name="last_action" formControlName="last_action" type="text">
+              <small *ngIf="f.last_action.touched && f.last_action.invalid" class="error">
+                <div *ngIf="f.last_action.errors?.required">last action  is required.</div>
+              </small>
+            </div>
+          </div>
+
+              <!-- next_action -->
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label font-size-11">Next action</label>
+            <div class="col-md-9">
+              <input class="form-control" name="next_action" formControlName="next_action" type="text">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+           <!-- start_date -->
+          <div class="mb-3 row">
+            <label class="col-md-4 col-form-label font-size-11">start date</label>
+            <div class="col-md-8">
+              <input class="form-control" name="start_date" formControlName="start_date" type="date">
+            </div>
+          </div>
+         <!-- due_date -->
+          <div class="mb-3 row">
+            <label class="col-md-4 col-form-label font-size-11">Due date</label>
+            <div class="col-md-8">
+              <input class="form-control" name="due_date" formControlName="due_date" type="date">
+            </div>
+          </div>
+         
+        
+          <!-- last_action_date -->
+          <div class="mb-3 row">
+            <label class="col-md-4 col-form-label font-size-11">last action date</label>
+            <div class="col-md-8">
+              <input class="form-control" name="last_action_date" formControlName="last_action_date" type="date">
+            </div>
+          </div>
+         
+          <!-- next_action_date -->
+          <div class="mb-3 row">
+            <label class="col-md-4 col-form-label font-size-11">next action date</label>
+            <div class="col-md-8">
+              <input class="form-control" name="next_action_date" formControlName="next_action_date" type="date">
+            </div>
+          </div>
+        
+        </div>
+      </div>
+
+      <!-- detail (full-width) -->
+      <div class="row mt-3">
+          <!-- tags -->
+          <div class="mb-3 row">
+            <div class="col-md-2">
+              <label for="example-datetime-local-input" class="col-form-label font-size-11">Tags</label>
+            </div>
+            
+                <mat-form-field class="example-form-field">
+                  <mat-label>Tags</mat-label>
+                  <mat-chip-grid #chipGrid aria-label="Enter keywords" formControlName="tags">
+                    <mat-chip-row *ngFor="let keyword of tagsList" (removed)="removeKeyword(keyword)">
+                      {{keyword}}
+                      <button matChipRemove aria-label="'remove ' + keyword">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </mat-chip-row>
+                  </mat-chip-grid>
+                  <input placeholder="New ta..." [matChipInputFor]="chipGrid" (matChipInputTokenEnd)="add($event)" />
+                </mat-form-field>
+            
+          </div>
+        <div class="col-md-2">
+          <label class="col-form-label font-size-11">Details</label>
+        </div>
+        <ckeditor formControlName="detail" name="detail" [editor]="Editor" data=""></ckeditor>
+
+      </div>
+
+      <!-- Submit Button -->
+      <div class="row mt-3">
+        <div class="col-md-10">
+          <button mat-raised-button color="primary" (click)="submit()" [disabled]="basicInfoForm.invalid || isLoading">
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<!-- Add new modal Contact End -->

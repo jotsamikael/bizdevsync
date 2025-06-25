@@ -5,7 +5,6 @@
 export interface Competitor {
   headquater_location?: string | null;
   idCompetitor?: number;
-  is_archived?: boolean;
   last_updated?: string | null;
   name?: string;
   notes?: string | null;

@@ -8,7 +8,6 @@ export interface Plan {
   days?: number;
   iconname?: string;
   id?: number;
-  is_archived?: boolean;
   is_featured?: number;
   is_recommended?: number;
   is_trial?: number;

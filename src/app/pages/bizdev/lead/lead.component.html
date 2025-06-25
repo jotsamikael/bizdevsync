@@ -18,12 +18,19 @@
 
     <div class="row justify-content-end">
         <div class="col-md-9 my-4">
-            <mat-chip-listbox aria-label="Lead status">
-                <mat-chip-option color="primary" selected>All</mat-chip-option>
-                <mat-chip-option color="primary">Contacted</mat-chip-option>
-                <mat-chip-option color="primary">Converted</mat-chip-option>
-                <mat-chip-option color="primary">Qualified</mat-chip-option>
-            </mat-chip-listbox>
+      <mat-chip-listbox> 
+  <mat-chip *ngFor="let status of statuses"
+            [selected]="selectedStatus === status"
+            (click)="selectStatus(status)"
+            [ngClass]="{
+              'chip-selected': selectedStatus === status,
+              'chip-unselected': selectedStatus !== status
+            }">
+    {{ status }}
+  </mat-chip>
+</mat-chip-listbox>
+
+
         </div>
         <div class="col-md-3">
             <mat-form-field matTooltip="Enter a prospect name">
@@ -48,10 +55,12 @@
                     <td mat-cell *matCellDef="let row"> <b>{{row.name}}</b> <br>
                         <div class="row" *ngIf="hoveredRow === row">
                             <div class="col-12 py-2">
-                                <span class="action-details-btn" (click)="goToDetails(row)"><i class="bx bx-book-open"></i>
+                                <span class="action-details-btn" (click)="goToDetails(row)"><i
+                                        class="bx bx-book-open"></i>
                                     Details
                                 </span>
-                                <span class="action-delete-btn" (click)="confirmDelete()"><i class="bx bx-trash"></i>delete</span>
+                                <span class="action-delete-btn" (click)="confirmDelete(row.id)"><i
+                                        class="bx bx-trash"></i>delete</span>
                             </div>
 
                         </div>
@@ -64,6 +73,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> email </th>
                     <td mat-cell *matCellDef="let row"> {{row.email}} </td>
                 </ng-container>
+
 
                 <!-- country Column -->
                 <ng-container matColumnDef="Country_idCountry">
@@ -93,7 +103,7 @@
                 <!-- status Column -->
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                    <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.status | uppercase}} </td>
                 </ng-container>
 
                 <!-- source Column -->
@@ -121,7 +131,7 @@
                 </tr>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-            
+
                 <!-- Row shown when data is being fetched. -->
                 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
@@ -165,80 +175,186 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"      
             (click)="modalRef?.hide()"></button>
           </div>
-      <form [formGroup]="form" (ngSubmit)="createLead()">
-
-          <div class="modal-body">
-                  <div class="mb-1">
-                        <label class="form-label">Name*</label>
-                        <input class="form-control" name="name" formControlName="name" type="text"
-                    placeholder="Enter name">
-                        <small *ngIf="f.name.touched && f.name.invalid" class="error">
-
-                              <div *ngIf="f.name.errors.required">Name is required.</div>
-                              <div *ngIf="f.name.errors.maxlength">Name should be less than 64 characters.</div>
-                              <div *ngIf="f.name.errors.minlength">Name should be atleast 1 character.</div>
-                            </small>
-                   </div>
-
-              <div class="mb-1">
-                  <label class="form-label">actor_type *</label>
-                <select class="form-select" name="actor_type" formControlName="actor_type">
-                    <option value="">Select</option>
-                    <option *ngFor="let sector of this.getAllBusinessSector()" value={{sector}}>{{sector}}</option>
-
-
-                </select>
-                <small *ngIf="f.actor_type.touched && f.actor_type.invalid" class="error">
-                              <div *ngIf="f.actor_type.errors.required">actor_type is required.</div>
-                </small>
-                 
-                   
-            </div>
-
-            <div class="row mb-1">
-                <div class="col-md-6">
-                    <div class="mb-2">
-                          <label class="form-label">country</label>
-                        <select class="form-select" name="country" formControlName="country">
-                            <option value="">Select</option>
-                            <option *ngFor="let country of this.getAllCountries()" value={{country}}>{{country}}
-                            </option>
-
-
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-2">
-                          <label class="form-label">region</label>
-                            <input class="form-control" name="region" formControlName="region" type="text" readonly dis
-                            value={{this.getRegionByCountry()}}>
-                        <small class="text-info">region is auto filled based on country</small>
-                    </div>
-                       
-                </div>
-            </div>
+    <div class="modal-body">
+          <form class=" mb-4" [formGroup]="basicInfoForm">
             <div class="row">
-                <div class="mb-1">
-                    <label for="example-password-input" class="col-form-label">is_private
-                    </label><br>
-                    <mat-radio-group name="is_private" formControlName="is_private" aria-label="Select an option">
-                        <mat-radio-button value='Yes'>Yes</mat-radio-button>
-                        <mat-radio-button value='No'>No</mat-radio-button>
-                    </mat-radio-group>
+                <div class="col-md-6">
+                    <!-- name -->
+                    <div class="mb-3 row">
+                        <label for="example-name" class="col-md-2 col-form-label font-size-11">Name</label>
+                        <div class="col-md-10">
+                            <input class="form-control" name="name" formControlName="name" type="text">
+                            <small *ngIf="f.name.touched && f.name.invalid" class="error">
+                                  <div *ngIf="f.name.errors.required">name is required.</div>
+                                <div *ngIf="f.name.errors.maxLength">Max length is 100.</div>
+
+                            </small>
+                        </div>
+                    </div>
+                    <!-- email -->
+                    <div class="mb-3 row">
+                        <label for="example-name" class="col-md-2 col-form-label font-size-11">Email</label>
+                        <div class="col-md-10">
+                            <input class="form-control" name="email" formControlName="email" type="email">
+                            <small *ngIf="f.email.touched && f.email.invalid" class="error">
+                                  <div *ngIf="f.email.errors.required">email is required.</div>
+                                <div *ngIf="f.email.errors.email">email is invalid.</div>
+
+                            </small>
+                        </div>
+                    </div>
+                    <!-- telephone -->
+                    <div class="mb-3 row">
+                        <label for="example-tel-input" class="col-md-2 col-form-label font-size-11">Telephone</label>
+                        <div class="col-md-10">
+                            <input class="form-control" name="telephone" formControlName="telephone" type="text">
+                        </div>
+                    </div>
+                    <!-- website -->
+                    <div class="mb-3 row">
+                        <label for="example-name" class="col-md-2 col-form-label font-size-11">website</label>
+                        <div class="col-md-10">
+                            <input class="form-control" name="website" formControlName="website" type="text">
+                        </div>
+                    </div>
+
+                    <!-- address -->
+                    <div class="mb-3 row">
+                        <label for="example-name" class="col-md-2 col-form-label font-size-11">Address</label>
+                        <div class="col-md-10">
+                            <input class="form-control" name="address" formControlName="address" type="text">
+                        </div>
+                    </div>
+                    <!-- town -->
+                    <div class="mb-3 row">
+                        <label for="example-name" class="col-md-2 col-form-label font-size-11">Town</label>
+                        <div class="col-md-10">
+                            <input class="form-control" name="town" formControlName="town" type="text">
+                        </div>
+                    </div>
+                    <!-- activitySector -->
+                    <div class="mb-3 row">
+                        <label for="example-name" class="col-md-2 col-form-label font-size-11">Activity Sector</label>
+                        <div class="col-md-10">
+                            <input class="form-control" name="activitySector" formControlName="activitySector"
+                                type="text">
+                            <small *ngIf="f.activitySector.touched && f.activitySector.invalid" class="error">
+                                  <div *ngIf="f.activitySector.errors.required">activitySector is required.</div>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- lead value -->
+                    <div class="mb-3 row">
+                        <label for="example-name" class="col-md-2 col-form-label font-size-11">Lead
+                            value</label>
+                        <div class="col-md-10">
+                            <input class="form-control" name="lead_value" formControlName="lead_value" type="text">
+                        </div>
+                    </div>
+
+                    <!-- date_converted -->
+                    <div class="mb-3 row">
+                        <label for="example-datetime-local-input"
+                            class="col-md-2 col-form-label font-size-11">Source</label>
+                        <div class="col-md-10">
+                            <select class="form-select" name="source" formControlName="source">
+                                <option *ngFor="let source of this.sourceList" value={{source.idSource}}>
+                                    {{source.label}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- is_private -->
+
+                    <div class="row">
+                        <label for="example-datetime-local-input" class="col-md-2 col-form-label font-size-11">Is
+                            private</label>
+                        <div class="col-md-10">
+                            <mat-radio-group name="is_private" formControlName="is_private"
+                                aria-label="Select an option">
+                                <mat-radio-button value='Yes'>Yes</mat-radio-button>
+                                <mat-radio-button value='No'>No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+
+                    </div>
+                    <!-- country -->
+                    <div class="mb-3 row">
+                        <label for="example-datetime-local-input"
+                            class="col-md-2 col-form-label font-size-11">Status</label>
+                        <div class="col-md-10">
+                            <select class="form-select" name="status" formControlName="status">
+                                <option *ngFor="let status of this.statusList" value={{status}}>
+                                    {{status}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <!-- country -->
+                    <div class="mb-3 row">
+                        <label for="example-datetime-local-input"
+                            class="col-md-2 col-form-label font-size-11">Country</label>
+                        <div class="col-md-10">
+                            <select class="form-select" name="country" formControlName="country">
+                                <option *ngFor="let country of this.countryList" value={{country.idCountry}}>
+                                    {{country.short_name}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <!-- tags -->
+                    <div class="mb-3 row">
+                        <div class="col-md-2">
+                            <label for="example-datetime-local-input" class="col-form-label font-size-11">Tags</label>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <mat-form-field class="example-form-field">
+                                    <mat-label>Tags</mat-label>
+                                    <mat-chip-grid #chipGrid aria-label="Enter keywords" formControlName="tags">
+                                        <mat-chip-row *ngFor="let keyword of tags" (removed)="removeKeyword(keyword)">
+                                            {{keyword}}
+                                            <button matChipRemove aria-label="'remove ' + keyword">
+                                                <mat-icon>cancel</mat-icon>
+                                            </button>
+                                        </mat-chip-row>
+                                    </mat-chip-grid>
+                                    <input placeholder="New ta..." [matChipInputFor]="chipGrid"
+                                        (matChipInputTokenEnd)="add($event)" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- description -->
+                    <div class="mb-3 row">
+                        <label for="example-datetime-local-input"
+                            class="col-md-2 col-form-label font-size-11">Description</label>
+
+                        <ckeditor formControlName="description" name="description" [editor]="Editor" data="">
+                        </ckeditor>
+
+                    </div>
+
+                </div>
+                <!-- buttons -->
+                <div class="mb-3 row">
+                    <div class="col-md-10">
+                        <button mat-raised-button (click)="createLead()"
+                            [disabled]="!basicInfoForm.valid || isLoading">Save</button>
+                    </div>
                 </div>
             </div>
-             
-        </div>
-          <div class="modal-footer">
-                <mat-spinner [diameter]="25" *ngIf="this.processing"></mat-spinner>
 
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                (click)="modalRef?.hide()">Close</button>
-                <button type="submit" class="btn btn-soft-primary  waves-effect waves-light mx-2" mat-raised-button
-                [disabled]="!form.valid  || (processing)"       class="btn btn-primary">Submit</button>
-              </div>
-    </form>
+
+
+        </form>
+    </div>
 </ng-template><!-- /.modal -->
 
 

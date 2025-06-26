@@ -193,7 +193,7 @@ export class FormBuilderBizdevService {
   // --- Followup Form ---
   createFollowupForm(): FormGroup {
     return this.fb.group({
-      _idLead: [null, Validators.required], // Typically not user-editable for new entities
+      _idLead: [null, Validators.required], 
       start_date: ['', Validators.required], // format: 'date'
       outcome: [''],
       notes: ['', Validators.required],
@@ -235,23 +235,21 @@ export class FormBuilderBizdevService {
   // --- Business Form ---
   createBusinessForm(): FormGroup {
     return this.fb.group({
-      idBusiness: [null, Validators.required], // Typically not user-editable for new entities
+      _idLead: [null, Validators.required], // Typically not user-editable for new entities
       need: ['', Validators.required],
-      stage: [null], // enum: ['OPPORTUNITY', ...]
+      stage: [''], //["initial_contact", "qualification", "proposal_sent", "negotiation", "contract_signed" Represents the progression steps or pipeline stages the business opportunity is currently in (or has passed through)
       approach: [null],
-      engagement_score: [0, [Validators.required, Validators.min(0)]],
-      client_constraints: [null],
-      business_type: [null],
-      case_level: [null],
-      total_turnover: [null],
-      potential_time_for_delivery: [null],
-      case_started_date: [null],
-      current_supplier: [null],
-      previous_vc: [null],
-      turnover_signable: [null],
+      client_constraints: [null], //Lists any limitations, requirements, or restrictions set by the client. Examples:"Only available for meetings on Fridays","Requires eco-certified products"
+      business_type: [null],//Classifies the business. Examples:"new_prospect", "existing_client", "former_client"
+      case_level: [null],//Indicates the maturity or priority level of the business opportunity. Examples:"lead", "qualified", "hot", "negotiation", "closed_won", "closed_lost"
+      total_turnover: [null],//The estimated or actual annual turnover of the business (typically in local currency Use case: Helps assess potential deal size or prioritize high-value clients.
+      potential_time_for_delivery: [null],//The estimated timeframe within which a product or service should be delivered if the deal is won.Examples: "Q4 2025", "within 2 weeks after signature"
+      case_started_date: [null],//The date when the business case was initiated or entered into the system. The date when the business case was initiated or entered into the system.
+      current_supplier: [null],//Name of the current supplier or service provider the client is working with (if applicable).Use case: Useful for competitive analysis or positioning
+      previous_vc: [null],//Description: Name of the previous vendor contact or key person previously managing the account or business case.Note: "VC" here likely stands for "Vendor Contact" or "Vendor Consultant."
+      turnover_signable: [null], //The portion of turnover that could realistically be signed or captured by your company.Use case: Helps focus on the actual business potential instead of just total company size.
       notes: [null],
       closed_date: [null],
-      is_archived: [false, Validators.required],
     });
   }
 

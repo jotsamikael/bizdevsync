@@ -1,0 +1,136 @@
+<div class="card p-3">
+    <form class=" mb-4" [formGroup]="basicInfoForm">
+        <!-- stage -->
+        <div class="mb-3 row">
+            <label for="example-datetime-local-input" class="col-md-2 col-form-label font-size-11">Stage</label>
+            <div class="col-md-10">
+                <select class="form-select" name="stage" formControlName="stage">
+                    <option value={{this.business.stage}}>
+                        {{this.business.stage}}</option>
+                    <option *ngFor="let stage of this.stages" value={{stage}}>
+                        {{stage}}</option>
+                </select>
+            </div>
+
+        </div>
+        <!-- Approach  -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">Approach</label>
+            <div class="col-md-10">
+                <select class="form-select" name="approach" formControlName="approach">
+                    <option value={{this.business.approach}}>
+                        {{this.business.approach}}</option>
+                    <option *ngFor="let approach of this.approachs" value={{approach}}>
+                        {{approach}}</option>
+                </select>
+            </div>
+        </div>
+        <!-- client_constraints  -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">client_constraints</label>
+            <div class="col-md-10">
+                <textarea class="form-control" name="client_constraints" formControlName="client_constraints"
+                    type="text"></textarea>
+            </div>
+        </div>
+
+
+        <!-- business_type -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">business_type</label>
+            <div class="col-md-10">
+                <select class="form-select" name="business_type" formControlName="business_type">
+                    <option value={{this.business.business_type}}>
+                        {{this.business.business_type}}</option>
+                    <option *ngFor="let business_type of this.business_types" value={{business_type}}>
+                        {{business_type}}</option>
+                </select>
+            </div>
+        </div>
+        <!-- case_level -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">case_level</label>
+            <div class="col-md-10">
+                <select class="form-select" name="case_level" formControlName="case_level">
+                    <option value={{this.business.case_level}}>
+                        {{this.business.case_level}}</option>
+                    <option *ngFor="let case_level of this.case_levels" value={{case_level}}>
+                        {{case_level}}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- total_turnover  -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">total_turnover</label>
+            <div class="col-md-10">
+                <input class="form-control" name="total_turnover" formControlName="total_turnover" type="number" />
+            </div>
+        </div>
+
+        <!-- potential_time_for_delivery -->
+        <div class="mb-3 row">
+            <label for="example-date-input" class="col-md-2 col-form-label font-size-11">potential_date_for_delivery
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="potential_time_for_delivery"
+                    formControlName="potential_time_for_delivery" id="example-date-input">
+            </div>
+        </div>
+
+        <!-- current_supplier  -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">current_supplier</label>
+            <div class="col-md-10">
+                <input class="form-control" name="current_supplier" formControlName="current_supplier" type="text" />
+            </div>
+        </div>
+
+        <!-- previous_vc  -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">previous_vc</label>
+            <div class="col-md-10">
+                <input class="form-control" name="previous_vc" formControlName="previous_vc" type="text" />
+            </div>
+        </div>
+
+        <!-- turnover_signable  -->
+        <div class="mb-3 row">
+            <label for="example-name" class="col-md-2 col-form-label font-size-11">turnover_signable</label>
+            <div class="col-md-10">
+                <input class="form-control" name="turnover_signable" formControlName="turnover_signable" type="text" />
+            </div>
+        </div>
+
+        <!-- case_started_date -->
+        <div class="mb-3 row">
+            <label for="example-date-input" class="col-md-2 col-form-label">Started Date
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="date" name="case_started_date" formControlName="case_started_date"
+                    id="example-date-input">
+            </div>
+        </div>
+
+
+        <!-- note -->
+        <div class="mb-3 row">
+            <label for="example-datetime-local-input" class="col-md-2 col-form-label font-size-11">Notes</label>
+            <div class="col-md-10">
+                <ckeditor formControlName="notes" name="notes" [editor]="Editor" data=""></ckeditor>
+            </div>
+        </div>
+        <!-- buttons -->
+        <div class="mb-3 row">
+            <div class="mb-3 row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-10">
+                    <button mat-raised-button extended (click)="updateBusiness()" [mat-dialog-close]="true"
+                        cdkFocusInitial [disabled]="!basicInfoForm.valid || isLoading">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

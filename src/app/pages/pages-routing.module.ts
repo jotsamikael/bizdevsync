@@ -42,7 +42,7 @@ const routes: Routes = [
  { path: 'followup-details', component: FollowupDetailsComponent },
 
  { path: 'bizdev-cases', component: CaseManagementComponent},
- { path: 'bizdev-cases-details', component: CaseDetailComponent},
+ { path: 'cases-details', component: CaseDetailComponent},
 
 
  //solo-biz-dev, enterprise admin

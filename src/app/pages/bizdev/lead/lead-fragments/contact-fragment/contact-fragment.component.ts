@@ -164,6 +164,7 @@ applyFilterContact(event: Event) {
 
 
   openContactModal(template: any, contact: any = null) {
+  const lead:any = this.lead
   let langArray = [];
   this.isEditMode = !!contact;
   this.selectedContact = contact;
@@ -185,7 +186,7 @@ applyFilterContact(event: Event) {
     this.basicInfoForm.reset({
       assignedToUser: null,
       language: [],
-      country: this.lead?.country // preset country if applicable
+      country: this.lead?.Country.short_name // preset country if applicable
     });
   }
   this.languageList = langArray; // ✅ this is needed for mat-chip-row *ngFor

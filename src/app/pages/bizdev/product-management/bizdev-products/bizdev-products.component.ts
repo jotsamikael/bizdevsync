@@ -4,10 +4,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilderService } from 'src/app/services/indexdb/common/services/form-builder.service';
-import { ProductService } from 'src/app/services/indexdb/product/product-and-categories.service';
 import { Product, ProductCategory } from 'src/app/services/models/model';
 import Swal from 'sweetalert2';
-import { ProductStateService } from './product-state.service';
 import { Router } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ProductCategoriesService, ProductsService } from 'src/app/bizdevsyncbackend/services';
@@ -56,7 +54,6 @@ isLoading: boolean = false;
        private commonService: CommonService,
        private router: Router,
        private dialog: MatDialog,
-       private productStateService: ProductStateService,
   ) {}
 
   ngOnInit(): void {
@@ -70,11 +67,6 @@ isLoading: boolean = false;
     this.getCategories()
   }
 
-
-  goToDetails(product: Product): void {
-      this.productStateService.setProduct(product);
-      this.router.navigate(['/backend/product-details']);
-    }
 
   
     disableForm() {

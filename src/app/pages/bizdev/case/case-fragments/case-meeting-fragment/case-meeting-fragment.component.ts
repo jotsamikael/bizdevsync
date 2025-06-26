@@ -1,47 +1,33 @@
-import { LiveAnnouncer } from "@angular/cdk/a11y";
-import {
-  Component,
-  ElementRef,
-  inject,
-  TemplateRef,
-  ViewChild,
-} from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
-import { MatChipInputEvent } from "@angular/material/chips";
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { Router } from "@angular/router";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { CommonService } from "src/app/bizdevsyncbackend/common/common.bizdev.service";
-import { FormBuilderBizdevService } from "src/app/bizdevsyncbackend/common/formbuilder.bizdev.service";
-import {
-  Followup,
-  User,
-  Activity,
-  Meeting,
-  Contact,
-} from "src/app/bizdevsyncbackend/models";
-import {
-  ActivitiesService,
-  ContactsService,
-  MeetingsService,
-} from "src/app/bizdevsyncbackend/services";
-import Swal from "sweetalert2";
-import { FollowupStateService } from "../../service/followup-state.service";
-import { Observable, startWith, map } from "rxjs";
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Component, ElementRef, inject, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Observable, startWith, map } from 'rxjs';
+import { CommonService } from 'src/app/bizdevsyncbackend/common/common.bizdev.service';
+import { FormBuilderBizdevService } from 'src/app/bizdevsyncbackend/common/formbuilder.bizdev.service';
+import { Business, Contact, Meeting, User } from 'src/app/bizdevsyncbackend/models';
+import { MeetingsService, ContactsService } from 'src/app/bizdevsyncbackend/services';
+import Swal from 'sweetalert2';
+import { CaseStateService } from '../../case-state.service';
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+
 
 @Component({
-  selector: "app-meeting-fragment",
-  templateUrl: "./meeting-fragment.component.html",
-  styleUrls: ["./meeting-fragment.component.scss"],
+  selector: 'app-case-meeting-fragment',
+  templateUrl: './case-meeting-fragment.component.html',
+  styleUrls: ['./case-meeting-fragment.component.scss']
 })
-export class MeetingFragmentComponent {
- selectedEmails: string[] = [];
+export class CaseMeetingFragmentComponent {
+
+selectedEmails: string[] = [];
 allEmails: string[] = [];
 
   emailCtrl = new FormControl("");
@@ -53,7 +39,7 @@ allEmails: string[] = [];
 
   constructor(
     private formbuilderBizdevService: FormBuilderBizdevService,
-    private followupStateService: FollowupStateService,
+    private businessStateService: CaseStateService,
     private commonService: CommonService,
     private meetingsService: MeetingsService,
     private contactService: ContactsService,
@@ -68,7 +54,7 @@ allEmails: string[] = [];
   basicInfoForm: FormGroup;
   public Editor = ClassicEditor;
   announcer = inject(LiveAnnouncer);
-  followup: Followup;
+  business: Business;
   contacts: Contact[];
   modalRef?: BsModalRef;
   currentUser: User;
@@ -129,12 +115,12 @@ contactsList:string[] = [];
   }
 
   getFollowupFromState() {
-    this.followupStateService.currentFollowup$.subscribe((followup) => {
-      if (!followup) {
+    this.businessStateService.currentCase$.subscribe((business) => {
+      if (!business) {
         // fallback: redirect or show error
-        this.router.navigate(["/backend/bizdev-followups"]);
+        this.router.navigate(["/backend/bizdev-cases"]);
       }
-      this.followup = followup;
+      this.business = business;
     });
   }
 
@@ -148,8 +134,8 @@ contactsList:string[] = [];
   }
 
   getContactByLead() {
-    const followup: any = this.followup;
-    const leadId = followup.Lead.id;
+    const business: any = this.business;
+    const leadId = business.Lead.id;
     this.contactService
       .contactsGetContactsByLeadLeadIdGet({ leadId: leadId })
       .subscribe({
@@ -174,10 +160,10 @@ contactsList:string[] = [];
     this.errorMsg = "";
     this.limit = limit;
     this.page = page;
-    const followupId = this.followup.idFollowup;
+    const businessId = this.business.idBusiness;
 
     this.meetingsService
-      .meetingsGetByFollowupFollowupIdGet({ followupId, page, limit })
+      .meetingsGetByBusinessBusinessIdGet({ businessId, page, limit })
       .subscribe({
         next: (response: any) => {
           this.meetings = response.rows;
@@ -294,11 +280,11 @@ contactsList:string[] = [];
         next_action_date:this.commonService.convertDateTimeToDate(meeting.next_action_date),
         next_action:meeting.next_action,
         contact_emails: contactsArray,
-        _idFollowup: this.followup.idFollowup
+        _idBusiness: this.business.idBusiness
       });
     } else {
       this.basicInfoForm.reset({
-        _idFollowup: this.followup.idFollowup,
+        _idBusiness: this.business.idBusiness,
         contact_emails: [],
       });
     }
@@ -327,7 +313,7 @@ contactsList:string[] = [];
     const formValues = this.basicInfoForm.value;
 
     const meeting = {
-      _idFollowup: this.followup.idFollowup,
+      _idBusiness: this.business.idBusiness,
       title: formValues.title,
       summary: formValues.summary || '',
       due_date: formValues.due_date,
@@ -385,3 +371,4 @@ contactsList:string[] = [];
   }
 
 }
+

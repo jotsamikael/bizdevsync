@@ -102,11 +102,14 @@ import { FollowupDetailsComponent } from './bizdev/followup/followup-details/fol
 import { MeetingFragmentComponent } from './bizdev/followup/followup-fragments/meeting-fragment/meeting-fragment.component';
 import { ActivityFragmentComponent } from './bizdev/followup/followup-fragments/activity-fragment/activity-fragment.component';
 import { BasicinfoFragmentComponent } from './bizdev/followup/followup-fragments/basicinfo-fragment/basicinfo-fragment.component';
+import { CaseActivityFragmentComponent } from './bizdev/case/case-fragments/case-activity-fragment/case-activity-fragment.component';
+import { CaseMeetingFragmentComponent } from './bizdev/case/case-fragments/case-meeting-fragment/case-meeting-fragment.component';
+import { CaseBasicinfoFragmentComponent } from './bizdev/case/case-fragments/case-basicinfo-fragment/case-basicinfo-fragment.component';
 
 
 
 @NgModule({
-  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, CaseManagementComponent, CaseDetailComponent, ContactFragmentComponent, ProfileFragmentComponent, NoteFragmentComponent, HistoryFragmentComponent, FollowupDetailsComponent, MeetingFragmentComponent, ActivityFragmentComponent, BasicinfoFragmentComponent],
+  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, CaseManagementComponent, CaseDetailComponent, ContactFragmentComponent, ProfileFragmentComponent, NoteFragmentComponent, HistoryFragmentComponent, FollowupDetailsComponent, MeetingFragmentComponent, ActivityFragmentComponent, BasicinfoFragmentComponent, CaseActivityFragmentComponent, CaseMeetingFragmentComponent, CaseBasicinfoFragmentComponent],
   imports: [
     CKEditorModule,
     MatFormFieldModule,

@@ -126,7 +126,7 @@ export class FollowupComponent {
       },
       error: (error) => {
         Swal.fire("Error: ", error.error.message, "error");
-        console.error("Error fetching leads:", error);
+        console.error("Error fetching followups:", error);
         this.isLoading = false;
       },
     });

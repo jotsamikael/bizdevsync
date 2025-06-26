@@ -10,21 +10,22 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CommonService } from 'src/app/bizdevsyncbackend/common/common.bizdev.service';
 import { FormBuilderBizdevService } from 'src/app/bizdevsyncbackend/common/formbuilder.bizdev.service';
-import { Lead, User, Contact, Activity, Followup } from 'src/app/bizdevsyncbackend/models';
-import { CountriesService, ContactsService, ActivitiesService } from 'src/app/bizdevsyncbackend/services';
+import { Followup, User, Activity, Business } from 'src/app/bizdevsyncbackend/models';
+import { ActivitiesService } from 'src/app/bizdevsyncbackend/services';
 import Swal from 'sweetalert2';
-import { LeadStateService } from '../../../lead/services/lead-state.service';
-import { FollowupStateService } from '../../service/followup-state.service';
+import { FollowupStateService } from '../../../followup/service/followup-state.service';
+import { CaseStateService } from '../../case-state.service';
 
 @Component({
-  selector: "app-activity-fragment",
-  templateUrl: "./activity-fragment.component.html",
-  styleUrls: ["./activity-fragment.component.scss"],
+  selector: 'app-case-activity-fragment',
+  templateUrl: './case-activity-fragment.component.html',
+  styleUrls: ['./case-activity-fragment.component.scss']
 })
-export class ActivityFragmentComponent {
-  constructor(
+export class CaseActivityFragmentComponent {
+
+ constructor(
     private formbuilderBizdevService: FormBuilderBizdevService,
-    private followupStateService: FollowupStateService,
+    private businessStateService: CaseStateService,
     private modalService: BsModalService,
     private commonService: CommonService,
     private activitiesService: ActivitiesService,
@@ -34,7 +35,7 @@ export class ActivityFragmentComponent {
   basicInfoForm: FormGroup;
   public Editor = ClassicEditor;
   announcer = inject(LiveAnnouncer);
-  followup: Followup;
+  business: Business;
   modalRef?: BsModalRef;
   currentUser: User;
   processing: boolean = false;
@@ -77,21 +78,21 @@ export class ActivityFragmentComponent {
   isLoading: boolean = false;
 
   ngOnInit(): void {
-    this.getFollowupFromState();
+    this.getBusinessFromState();
     this.basicInfoForm = this.formbuilderBizdevService.createActivityForm();
     this.setFormbasicInfoForm();
 
     //Get contacts
-    this.getActivitiesOfFollowup();
+    this.getActivitiesOfBusiness();
   }
 
-  getFollowupFromState() {
-    this.followupStateService.currentFollowup$.subscribe((followup) => {
-      if (!followup) {
+  getBusinessFromState() {
+    this.businessStateService.currentCase$.subscribe((business) => {
+      if (!business) {
         // fallback: redirect or show error
-        this.router.navigate(["/backend/bizdev-followups"]);
+        this.router.navigate(["/backend/bizdev-cases"]);
       }
-      this.followup = followup;
+      this.business = business;
     });
   }
 
@@ -108,15 +109,15 @@ export class ActivityFragmentComponent {
     }
   }
 
-  getActivitiesOfFollowup(page: number = 1, limit: number = 10): void {
+  getActivitiesOfBusiness(page: number = 1, limit: number = 10): void {
     this.isLoading = true;
     this.errorMsg = "";
     this.limit = limit;
     this.page = page;
-    const followupId = this.followup.idFollowup;
+    const businessId = this.business.idBusiness;
 
     this.activitiesService
-      .activitiesFollowupsFollowupIdGet({ followupId, page, limit })
+      .activitiesBusinessesBusinessIdGet({ businessId, page, limit })
       .subscribe({
         next: (response: any) => {
           this.activities = response.rows;
@@ -134,7 +135,7 @@ export class ActivityFragmentComponent {
   onPageChange(event: PageEvent): void {
     const pageIndex = event.pageIndex + 1; // MatPaginator is 0-based
     const pageSize = event.pageSize;
-    this.getActivitiesOfFollowup(pageIndex, pageSize);
+    this.getActivitiesOfBusiness(pageIndex, pageSize);
   }
 
   disableFormbasicInfoForm() {
@@ -180,11 +181,11 @@ export class ActivityFragmentComponent {
         last_action:activity.last_action,
         next_action:activity.next_action,
         tags: tagsArray,
-        _idFollowup: this.followup.idFollowup
+        _idFollowup: this.business.idBusiness
       });
     } else {
       this.basicInfoForm.reset({
-        _idFollowup: this.followup.idFollowup,
+        _idFollowup: this.business.idBusiness,
         tags: [],
       });
     }
@@ -193,7 +194,7 @@ export class ActivityFragmentComponent {
     this.modalRef = this.modalService.show(template, { class: "modal-lg" });
 
     this.modalRef.onHidden?.subscribe(() => {
-      this.getActivitiesOfFollowup(); // reload after modal close
+      this.getActivitiesOfBusiness(); // reload after modal close
       this.isEditMode = false;
       this.selectedActivity = null;
     });
@@ -201,7 +202,7 @@ export class ActivityFragmentComponent {
 
 
    removeKeyword(keyword: string): void {
-         const index = this.tagsList.indexOf(keyword);
+      const index = this.tagsList.indexOf(keyword);
       if (index >= 0) {
         this.tagsList.splice(index, 1);
 
@@ -229,9 +230,9 @@ export class ActivityFragmentComponent {
 
   submit() {
     const formValues = this.basicInfoForm.value;
-
+    
     const activity = {
-      _idFollowup: this.followup.idFollowup,
+      _idBusiness: this.business.idBusiness,
       title: formValues.title,
       detail: formValues.detail,
       start_date: formValues.start_date,
@@ -259,6 +260,8 @@ export class ActivityFragmentComponent {
             this.modalRef?.hide();
             this.processing = false;
             Swal.fire("Updated!", "Activity updated successfully!", "success");
+            this.getActivitiesOfBusiness()
+
           },
           error: (error) => {
             this.processing = false;
@@ -277,6 +280,7 @@ export class ActivityFragmentComponent {
             this.modalRef?.hide();
             this.processing = false;
             Swal.fire("Created!", "Activity created successfully!", "success");
+            this.getActivitiesOfBusiness()
           },
           error: (error) => {
             this.processing = false;
@@ -290,3 +294,4 @@ export class ActivityFragmentComponent {
     }
   }
 }
+

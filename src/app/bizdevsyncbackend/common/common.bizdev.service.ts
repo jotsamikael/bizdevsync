@@ -17,7 +17,10 @@ constructor(private leadService: LeadService, private userService: UsersService)
 
   }
 
-  
+    resetForm(basicInfoForm: FormGroup<any>) {
+  basicInfoForm.reset()
+  }
+
 
   disableForm(basicInfoForm:FormGroup<any>) {
   basicInfoForm.disable()

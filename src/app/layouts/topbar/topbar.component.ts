@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from 'src/app/bizdevsyncbackend/models';
+import { CommonService } from 'src/app/bizdevsyncbackend/common/common.bizdev.service';
 
 @Component({
   selector: 'app-topbar',
@@ -26,9 +27,11 @@ export class TopbarComponent implements OnInit {
   countryName:any;
   valueset:any;
   loggedInUser:User;
+  profilepic:any;
 
   constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
               private authFackservice: AuthfakeauthenticationService,
+              private commonService: CommonService,
               public languageService: LanguageService,
               public translate: TranslateService,
               public _cookiesService: CookieService) {
@@ -49,6 +52,7 @@ export class TopbarComponent implements OnInit {
 
   ngOnInit() {
     this.loggedInUser  = JSON.parse(localStorage.getItem("user") || "{}");
+    this.profilepic = this.commonService.getAbsoluteAvatarUrl( this.loggedInUser.avatar)
     this.openMobileMenu = false;
     this.element = document.documentElement;
 

@@ -8,13 +8,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { User } from '../../models/user';
 
 export interface UserSaasStaffPost$Params {
   page?: number;
   limit?: number;
 }
 
-export function userSaasStaffPost(http: HttpClient, rootUrl: string, params?: UserSaasStaffPost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function userSaasStaffPost(http: HttpClient, rootUrl: string, params?: UserSaasStaffPost$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<User>;
+}>> {
   const rb = new RequestBuilder(rootUrl, userSaasStaffPost.PATH, 'post');
   if (params) {
     rb.query('page', params.page, {});
@@ -22,11 +26,14 @@ export function userSaasStaffPost(http: HttpClient, rootUrl: string, params?: Us
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<{
+      'count'?: number;
+      'rows'?: Array<User>;
+      }>;
     })
   );
 }

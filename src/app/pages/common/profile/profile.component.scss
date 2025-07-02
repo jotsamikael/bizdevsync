@@ -1,0 +1,25 @@
+/* Container for the profile image and badge */
+.profile-image-wrapper {
+    position: relative; /* This is crucial. It creates a positioning context for absolute children. */
+    display: inline-block; /* Or block, depending on your layout, but inline-block is often good for image wrappers */
+    /* Add any padding or margin if needed around the profile image itself */
+}
+
+
+
+/* The verified badge image */
+.verified-badge {
+    position: absolute; /* Take the badge out of normal flow */
+    bottom: 0px;    /* Place it at the bottom of the .profile-image-wrapper */
+    left: 0px;      /* Place it at the left of the .profile-image-wrapper */
+    width: 25px;    /* You already have this in HTML, but good to define here too */
+    height: 25px;   /* Maintain aspect ratio */
+    z-index: 10;    /* Ensure it appears above the avatar */
+    /* Adjust these values to fine-tune placement */
+    transform: translate(-10%, 10%); /* Optional: Slightly nudge to overlap or be fully outside */
+    /* A small negative percentage for 'left' or 'bottom' might make it slightly outside */
+    /* For example:
+       bottom: -5px;
+       left: -5px;
+    */
+}

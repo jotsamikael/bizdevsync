@@ -5075,13 +5075,17 @@
                   "first_name",
                   "last_name",
                   "email",
-                  "password"
+                  "password",
+                  "role"
                 ],
                 "properties": {
                   "first_name": {
                     "type": "string"
                   },
                   "last_name": {
+                    "type": "string"
+                  },
+                  "linkedIn": {
                     "type": "string"
                   },
                   "email": {
@@ -5091,14 +5095,10 @@
                     "type": "string",
                     "format": "password"
                   },
-                  "avatar": {
-                    "type": "string",
-                    "format": "binary"
-                  },
                   "role": {
                     "type": "string",
                     "enum": [
-                      "solo_biz_dev",
+                      "solo_business_developer",
                       "enterprise_admin"
                     ]
                   }
@@ -5222,7 +5222,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Paginated list of solo biz devs"
+            "description": "List of followups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -5259,7 +5277,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Paginated list of users"
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -5282,7 +5318,14 @@
         ],
         "responses": {
           "200": {
-            "description": "User details"
+            "description": "Business created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
           }
         }
       }
@@ -5311,7 +5354,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Paginated list of SaaS staff"
+            "description": "Paginated list of SaaS staff",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -5438,8 +5499,20 @@
                   "email": {
                     "type": "string"
                   },
-                  "status": {
-                    "type": "boolean"
+                  "telephone": {
+                    "type": "string"
+                  },
+                  "default_language": {
+                    "type": "string"
+                  },
+                  "linkedIn": {
+                    "type": "string"
+                  },
+                  "email_signature": {
+                    "type": "string"
+                  },
+                  "google_auth_secret": {
+                    "type": "string"
                   },
                   "avatar": {
                     "type": "string",

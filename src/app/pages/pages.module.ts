@@ -77,8 +77,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { CardManagementComponent } from './card-management/card-management.component';
-import { RegisterPromoterComponent } from './register/register-promoter/register-promoter.component';
-import { RegisterCandidateComponent } from './register/register-candidate/register-candidate.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { EnterpriseManagementComponent } from './enterprise-management/enterprise-management.component';
 import { ActivityComponent } from './bizdev/activity/activity.component';
@@ -105,11 +103,12 @@ import { BasicinfoFragmentComponent } from './bizdev/followup/followup-fragments
 import { CaseActivityFragmentComponent } from './bizdev/case/case-fragments/case-activity-fragment/case-activity-fragment.component';
 import { CaseMeetingFragmentComponent } from './bizdev/case/case-fragments/case-meeting-fragment/case-meeting-fragment.component';
 import { CaseBasicinfoFragmentComponent } from './bizdev/case/case-fragments/case-basicinfo-fragment/case-basicinfo-fragment.component';
+import { ProfileComponent } from './common/profile/profile.component';
 
 
 
 @NgModule({
-  declarations: [LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, RegisterPromoterComponent, RegisterCandidateComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, CaseManagementComponent, CaseDetailComponent, ContactFragmentComponent, ProfileFragmentComponent, NoteFragmentComponent, HistoryFragmentComponent, FollowupDetailsComponent, MeetingFragmentComponent, ActivityFragmentComponent, BasicinfoFragmentComponent, CaseActivityFragmentComponent, CaseMeetingFragmentComponent, CaseBasicinfoFragmentComponent],
+  declarations: [ProfileComponent, LeadComponent,CalendarComponent, ChatComponent, FilemanagerComponent,CardManagementComponent, UserManagementComponent, EnterpriseManagementComponent, ActivityComponent, FollowupComponent, HelpSupportInquiryComponent, LeadDetailsComponent, BizdevProductsComponent, BizdevCategoriesComponent, CaseManagementComponent, CaseDetailComponent, ContactFragmentComponent, ProfileFragmentComponent, NoteFragmentComponent, HistoryFragmentComponent, FollowupDetailsComponent, MeetingFragmentComponent, ActivityFragmentComponent, BasicinfoFragmentComponent, CaseActivityFragmentComponent, CaseMeetingFragmentComponent, CaseBasicinfoFragmentComponent],
   imports: [
     CKEditorModule,
     MatFormFieldModule,

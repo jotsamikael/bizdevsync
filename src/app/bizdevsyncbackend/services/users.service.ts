@@ -11,6 +11,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { User } from '../models/user';
 import { userEnterpriseEnterpriseIdPost } from '../fn/users/user-enterprise-enterprise-id-post';
 import { UserEnterpriseEnterpriseIdPost$Params } from '../fn/users/user-enterprise-enterprise-id-post';
 import { userGetSoloBizdevsPost } from '../fn/users/user-get-solo-bizdevs-post';
@@ -39,7 +40,10 @@ export class UsersService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userGetSoloBizdevsPost$Response(params?: UserGetSoloBizdevsPost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  userGetSoloBizdevsPost$Response(params?: UserGetSoloBizdevsPost$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<User>;
+}>> {
     return userGetSoloBizdevsPost(this.http, this.rootUrl, params, context);
   }
 
@@ -53,9 +57,18 @@ export class UsersService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userGetSoloBizdevsPost(params?: UserGetSoloBizdevsPost$Params, context?: HttpContext): Observable<void> {
+  userGetSoloBizdevsPost(params?: UserGetSoloBizdevsPost$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<User>;
+}> {
     return this.userGetSoloBizdevsPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<User>;
+}>): {
+'count'?: number;
+'rows'?: Array<User>;
+} => r.body)
     );
   }
 
@@ -72,7 +85,10 @@ export class UsersService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userEnterpriseEnterpriseIdPost$Response(params: UserEnterpriseEnterpriseIdPost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  userEnterpriseEnterpriseIdPost$Response(params: UserEnterpriseEnterpriseIdPost$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<User>;
+}>> {
     return userEnterpriseEnterpriseIdPost(this.http, this.rootUrl, params, context);
   }
 
@@ -86,9 +102,18 @@ export class UsersService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userEnterpriseEnterpriseIdPost(params: UserEnterpriseEnterpriseIdPost$Params, context?: HttpContext): Observable<void> {
+  userEnterpriseEnterpriseIdPost(params: UserEnterpriseEnterpriseIdPost$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<User>;
+}> {
     return this.userEnterpriseEnterpriseIdPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<User>;
+}>): {
+'count'?: number;
+'rows'?: Array<User>;
+} => r.body)
     );
   }
 
@@ -105,7 +130,7 @@ export class UsersService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userGetUserByEmailGet$Response(params: UserGetUserByEmailGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  userGetUserByEmailGet$Response(params: UserGetUserByEmailGet$Params, context?: HttpContext): Observable<StrictHttpResponse<User>> {
     return userGetUserByEmailGet(this.http, this.rootUrl, params, context);
   }
 
@@ -119,9 +144,9 @@ export class UsersService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userGetUserByEmailGet(params: UserGetUserByEmailGet$Params, context?: HttpContext): Observable<void> {
+  userGetUserByEmailGet(params: UserGetUserByEmailGet$Params, context?: HttpContext): Observable<User> {
     return this.userGetUserByEmailGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<User>): User => r.body)
     );
   }
 
@@ -138,7 +163,10 @@ export class UsersService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userSaasStaffPost$Response(params?: UserSaasStaffPost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  userSaasStaffPost$Response(params?: UserSaasStaffPost$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<User>;
+}>> {
     return userSaasStaffPost(this.http, this.rootUrl, params, context);
   }
 
@@ -152,9 +180,18 @@ export class UsersService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userSaasStaffPost(params?: UserSaasStaffPost$Params, context?: HttpContext): Observable<void> {
+  userSaasStaffPost(params?: UserSaasStaffPost$Params, context?: HttpContext): Observable<{
+'count'?: number;
+'rows'?: Array<User>;
+}> {
     return this.userSaasStaffPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<User>;
+}>): {
+'count'?: number;
+'rows'?: Array<User>;
+} => r.body)
     );
   }
 

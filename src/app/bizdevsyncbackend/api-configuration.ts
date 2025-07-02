@@ -11,7 +11,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = 'http://localhost:8885/api';
+ //rootUrl: string = 'http://localhost:8885/api';
+  //static assetsUrl: string = 'http://localhost:8885';
+  rootUrl: string = 'https://bizdevsync-backend.onrender.com/api';
+ static assetsUrl: string = 'https://bizdevsync-backend.onrender.com';
 }
 
 /**

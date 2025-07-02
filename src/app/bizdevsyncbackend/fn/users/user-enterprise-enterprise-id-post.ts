@@ -8,6 +8,7 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { User } from '../../models/user';
 
 export interface UserEnterpriseEnterpriseIdPost$Params {
   enterprise_id: number;
@@ -15,7 +16,10 @@ export interface UserEnterpriseEnterpriseIdPost$Params {
   limit?: number;
 }
 
-export function userEnterpriseEnterpriseIdPost(http: HttpClient, rootUrl: string, params: UserEnterpriseEnterpriseIdPost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function userEnterpriseEnterpriseIdPost(http: HttpClient, rootUrl: string, params: UserEnterpriseEnterpriseIdPost$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+'count'?: number;
+'rows'?: Array<User>;
+}>> {
   const rb = new RequestBuilder(rootUrl, userEnterpriseEnterpriseIdPost.PATH, 'post');
   if (params) {
     rb.path('enterprise_id', params.enterprise_id, {});
@@ -24,11 +28,14 @@ export function userEnterpriseEnterpriseIdPost(http: HttpClient, rootUrl: string
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<{
+      'count'?: number;
+      'rows'?: Array<User>;
+      }>;
     })
   );
 }

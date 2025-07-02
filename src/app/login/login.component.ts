@@ -88,11 +88,9 @@ export class LoginComponent {
 }
   
 
-  goToRegisterCandidate() {
-    this.router.navigate(["/register-candidate"]);
+  goToRegister() {
+    this.router.navigate(["/register"]);
   }
 
-  goToRegisterPromoter() {
-    this.router.navigate(["/register-promoter"]);
-  }
+ 
 }

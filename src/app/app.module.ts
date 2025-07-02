@@ -31,6 +31,10 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivateAccountComponent } from './activate-account/activate-account.component';
 import { CredentialsInterceptor } from './bizdevsyncbackend/interceptor/http-interceptor.interceptor';
+import { RegisterComponent } from './register/register.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 if (environment.defaultauth === 'firebase') {
@@ -50,9 +54,13 @@ export function createTranslateLoader(http: HttpClient): any {
     CyptolandingComponent,
     LoginComponent,
     ActivateAccountComponent,
+    RegisterComponent,
    
   ],
   imports: [
+    MatCheckboxModule,
+    MatTabsModule,
+MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,

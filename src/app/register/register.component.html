@@ -1,0 +1,507 @@
+<nav class="navbar navbar-expand-lg navigation fixed-top sticky mb-5 bg-primary" id="navbar">
+    <div class="container">
+        <a class="navbar-logo" routerLink="/">
+            <img src="assets/images/logo-dark.png" alt="" height="19" class="logo logo-dark">
+            <img src="assets/images/logo-light.png" alt="" height="19" class="logo logo-light">
+        </a>
+
+        <button type="button" class="btn btn-sm px-3 font-size-16 d-lg-none header-item" data-toggle="collapse"
+            data-target="#topnav-menu-content" (click)="toggleMenu()">
+            <i class="fa fa-fw fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="topnav-menu-content">
+            <ul class="navbar-nav ms-auto" id="topnav-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" [ngxScrollTo]="'home'">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" [ngxScrollTo]="'about'">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" [ngxScrollTo]="'features'"
+                        [ngxScrollToOffset]="5">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" [ngxScrollTo]="'roadmap'"
+                        [ngxScrollToOffset]="5">Roadmap</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" [ngxScrollTo]="'team'"
+                        [ngxScrollToOffset]="5">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" [ngxScrollTo]="'news'"
+                        [ngxScrollToOffset]="5">News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" [ngxScrollTo]="'faqs'">FAQs</a>
+                </li>
+
+            </ul>
+
+            <div class="my-2 ms-lg-2">
+                <a (click)="goToLogin()" class="btn btn-outline-success w-xs">Sign in</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- nav bar ends -->
+<div class="container-fluid mt-5">
+    <div class="container pt-4">
+        <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <i class="bx bx-male"></i>
+                    Solo Business Developper
+                </ng-template>
+                <!-- Register Solo -->
+                <div class="row align-items-center mt-5">
+                    <div class="col-md-5 order-2 order-md-1">
+                        <img src="../../assets/images/register/solobizdev.jpg" class="img-fluid rounded-5" alt=""
+                            srcset="">
+                    </div>
+                    <div class="col-md-7 order-1 order-md-2">
+                        <div type="danger" class="alert alert-danger" *ngIf="this.errorMsg.length">
+
+                            <p *ngFor="let msg of this.errorMsg">{{msg}}</p>
+                        </div>
+
+                        <form [formGroup]="basicInfoFormSolo" class="p-3 border border-1 rounded-5">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="col-form-label">Firstname</label>
+
+                                        <input name="first_name" formControlName="first_name" class="form-control"
+                                            type="text" placeholder="">
+                                        <small *ngIf="g.first_name.touched && g.first_name.invalid">
+
+                                            <small *ngIf="g.first_name.errors.required">firstname is
+                                                required.</small>
+                                            <small *ngIf="g.first_name.errors.maxlength">firstname should be less
+                                                than
+                                                64
+                                                characters.</small>
+                                            <small *ngIf="g.first_name.errors.minlength">firstname can't be empty.
+                                            </small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="col-form-label">Lastname</label>
+
+                                        <input name="last_name" formControlName="last_name" class="form-control"
+                                            type="text" placeholder="">
+                                        <small *ngIf="g.last_name.touched && g.last_name.invalid">
+
+                                            <small *ngIf="g.last_name.errors.required">lastname is required.</small>
+                                            <small *ngIf="g.last_name.errors.maxlength">lastname should be less than
+                                                64
+                                                characters.</small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="col-form-label">Email</label>
+
+                                        <input formControlName="email" name="email" class="form-control" type="email">
+                                        <small *ngIf="g.email.touched && g.email.invalid">
+
+                                            <small *ngIf="g.email.errors.required">email is required.</small>
+                                            <small *ngIf="g.email.errors.email">Invalid email.</small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="mb-3">
+                                        <label for="example-phone-input" class="col-form-label">Tel.</label>
+
+                                        <input formControlName="telephone" name="telephone" class="form-control"
+                                            type="text">
+                                        <small *ngIf="g.telephone.touched && g.telephone.invalid">
+
+                                            <small *ngIf="g.telephone.errors.required">telephone is required.
+                                            </small>
+                                            <small *ngIf="g.telephone.errors.maxlength">telephone should be less
+                                                than 64
+                                                characters.</small>
+                                            <small *ngIf="g.telephone.errors.minlength">telephone can't be 1
+                                                character
+                                            </small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-password-input" class="col-form-label">Default language
+                                        </label><br>
+                                        <mat-radio-group color="primary" name="default_language"
+                                            formControlName="default_language" aria-label="Select an option">
+                                            <mat-radio-button value="EN">English</mat-radio-button>
+                                            <mat-radio-button value="FR">French</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="col-form-label">LinkedIn link
+                                        </label>
+                                        <input name="linkedIn" formControlName="linkedIn" class="form-control"
+                                            type="text" placeholder="">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-password-input" class="col-form-label">Password</label>
+
+                                        <input formControlName="password" name="password" class="form-control"
+                                            type="password">
+                                        <small *ngIf="g.password.touched && g.password.invalid">
+
+                                            <small *ngIf="g.password.errors.required">password is required.</small>
+                                            <small *ngIf="g.password.errors.maxlength">password should be less than
+                                                64
+                                                characters.
+                                            </small>
+                                            <small *ngIf="g.password.errors.minlength">password should be atleast 6 
+                                                character</small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-password-input" class="col-form-label">confirm
+                                            Password</label>
+                                        <input formControlName="confirmPassword" name="confirmPassword"
+                                            class="form-control" type="password">
+                                        <small *ngIf="g.confirmPassword.touched && g.confirmPassword.invalid">
+
+                                            <small *ngIf="g.confirmPassword.errors.required">password is
+                                                required.</small>
+                                            <small *ngIf="g.confirmPassword.touched && g.confirmPassword.errors?.passwordMismatch">Confirm password should
+                                                match password
+                                            </small>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3">
+
+                                    <mat-checkbox color="primary" formControlName="termsAccepted">
+                                        By creating an account, you agree to our Terms and have read and acknowledge the
+                                        Global Privacy Statement.
+                                    </mat-checkbox>
+
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="row mx-1 mt-3">
+                                <button mat-raised-button
+                                    [disabled]="!basicInfoFormSolo.valid || (isLoading) || !basicInfoFormSolo.value.termsAccepted"
+                                    (click)="submit(true)" type="button" class="btn btn-primary  mb-3 pt-2 pb-2"><span
+                                        class="fw-semibold font-size-18">Register</span></button>
+                            </div>
+
+
+                            <p class="text-center">You already have an account <span class="text-primary"
+                                    (click)="goToLogin()" style="cursor: pointer;">Login</span></p>
+                        </form>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <i class="bx bx-team"></i>
+                    Enterprise Business Developper
+                </ng-template>
+                <!-- Enterprise -->
+                <div class="row align-items-center mt-5">
+                    <div class="col-md-5 justify-content-center order-2 order-md-1">
+                        <img src="../../assets/images/register/enterprisebizdev.jpg" class="img-fluid rounded-5" alt=""
+                            srcset="">
+                    </div>
+                    <div class="col-md-7 order-1 order-md-2">
+                        <div type="danger" class="alert alert-danger" *ngIf="this.errorMsg.length">
+
+                            <p *ngFor="let msg of this.errorMsg">{{msg}}</p>
+                        </div>
+             <!--            <div type="danger" class="alert alert-danger" *ngIf="this.errorMsg">
+
+                            <p>{{this.errorMsgBusiness}}</p>
+                        </div> -->
+                        <form [formGroup]="basicInfoFormEnterpriseAdmin" class="p-3 border border-1 rounded-5">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="col-form-label">Firstname</label>
+
+                                        <input name="first_name" formControlName="first_name" class="form-control"
+                                            type="text" placeholder="">
+                                        <small *ngIf="f.first_name.touched && f.first_name.invalid">
+
+                                            <small *ngIf="f.first_name.errors.required">firstname is
+                                                required.</small>
+                                            <small *ngIf="f.first_name.errors.maxlength">firstname should be less
+                                                than
+                                                64
+                                                characters.</small>
+                                            <small *ngIf="f.first_name.errors.minlength">firstname can't be empty.
+                                            </small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="col-form-label">Lastname</label>
+
+                                        <input name="last_name" formControlName="last_name" class="form-control"
+                                            type="text" placeholder="">
+                                        <small *ngIf="f.last_name.touched && f.last_name.invalid">
+
+                                            <small *ngIf="f.last_name.errors.required">lastname is required.</small>
+                                            <small *ngIf="f.last_name.errors.maxlength">lastname should be less than
+                                                64
+                                                characters.</small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="col-form-label">Email</label>
+
+                                        <input formControlName="email" name="email" class="form-control" type="email">
+                                        <small *ngIf="f.email.touched && f.email.invalid">
+
+                                            <small *ngIf="f.email.errors.required">email is required.</small>
+                                            <small *ngIf="f.email.errors.email">Invalid email.</small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="mb-3">
+                                        <label for="example-phone-input" class="col-form-label">Tel.</label>
+
+                                        <input formControlName="telephone" name="telephone" class="form-control"
+                                            type="text">
+                                        <small *ngIf="f.telephone.touched && f.telephone.invalid">
+
+                                            <small *ngIf="f.telephone.errors.required">telephone is required.
+                                            </small>
+                                            <small *ngIf="f.telephone.errors.maxlength">telephone should be less
+                                                than 64
+                                                characters.</small>
+                                            <small *ngIf="f.telephone.errors.minlength">telephone can't be 1
+                                                character
+                                            </small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-password-input" class="col-form-label">Default language
+                                        </label><br>
+                                        <mat-radio-group color="primary" name="default_language"
+                                            formControlName="default_language" aria-label="Select an option">
+                                            <mat-radio-button value="EN">English</mat-radio-button>
+                                            <mat-radio-button value="FR">French</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-password-input" class="col-form-label">Password</label>
+
+                                        <input formControlName="password" name="password" class="form-control"
+                                            type="password">
+                                        <small *ngIf="f.password.touched && f.password.invalid">
+
+                                            <small *ngIf="f.password.errors.required">password is required.</small>
+                                            <small *ngIf="f.password.errors.maxlength">password should be less than
+                                                64
+                                                characters.
+                                            </small>
+                                            <small *ngIf="f.password.errors.minlength">password can't be 1
+                                                character</small>
+                                        </small>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="example-password-input" class="col-form-label">confirm
+                                            Password</label>
+                                        <input formControlName="confirmPassword" name="confirmPassword"
+                                            class="form-control" type="password">
+                                        <small *ngIf="f.confirmPassword.touched && f.confirmPassword.invalid">
+
+                                            <small *ngIf="f.confirmPassword.errors.required">password is
+                                                required.</small>
+                                            <small *ngIf="f.confirmPassword.touched && f.confirmPassword.errors?.passwordMismatch">Confirm password should
+                                                match password
+                                            </small>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3">
+
+                                    <mat-checkbox class="example-margin" formControlName="termsAccepted">
+                                        By creating an account, you agree to our Terms and have read and acknowledge the
+                                        Global Privacy Statement.
+                                    </mat-checkbox>
+
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="row mx-1 mt-3">
+                                <button mat-raised-button
+                                    [disabled]="!basicInfoFormEnterpriseAdmin.valid || (isLoading) || this.basicInfoFormEnterpriseAdmin.value.termsAccepted"
+                                    (click)="submit(false)" type="button" class="btn btn-primary  mb-3 pt-2 pb-2"><span
+                                        class="fw-semibold font-size-18">Register</span></button>
+                            </div>
+
+
+                            <p class="text-center">You already have an account <span class="text-primary"
+                                    (click)="goToLogin()" style="cursor: pointer;">Login</span></p>
+                        </form>
+
+                    </div>
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+
+    </div>
+</div>
+
+<!-- Footer start -->
+<footer class="landing-footer">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="mb-4 mb-lg-0">
+                    <h5 class="mb-3 footer-list-title">Company</h5>
+                    <ul class="list-unstyled footer-list-menu">
+                        <li><a href="javascript: void(0);">About Us</a></li>
+                        <li><a href="javascript: void(0);">Features</a></li>
+                        <li><a href="javascript: void(0);">Team</a></li>
+                        <li><a href="javascript: void(0);">News</a></li>
+                        <li><a href="javascript: void(0);">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="mb-4 mb-lg-0">
+                    <h5 class="mb-3 footer-list-title">Resources</h5>
+                    <ul class="list-unstyled footer-list-menu">
+                        <li><a href="javascript: void(0);">Whitepaper</a></li>
+                        <li><a href="javascript: void(0);">Token sales</a></li>
+                        <li><a href="javascript: void(0);">Privacy Policy</a></li>
+                        <li><a href="javascript: void(0);">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="mb-4 mb-lg-0">
+                    <h5 class="mb-3 footer-list-title">Links</h5>
+                    <ul class="list-unstyled footer-list-menu">
+                        <li><a href="javascript: void(0);">Tokens</a></li>
+                        <li><a href="javascript: void(0);">Roadmap</a></li>
+                        <li><a href="javascript: void(0);">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <div class="mb-4 mb-lg-0">
+                    <h5 class="mb-3 footer-list-title">Latest News</h5>
+                    <div class="blog-post">
+                        <a href="javascript: void(0);" class="post">
+                            <div class="badge badge-soft-success font-size-11 mb-3">Cryptocurrency</div>
+                            <h5 class="post-title">Donec pede justo aliquet nec</h5>
+                            <p class="mb-0"><i class="bx bx-calendar me-1"></i> 04 Mar, 2020</p>
+                        </a>
+                        <a href="javascript: void(0);" class="post">
+                            <div class="badge badge-soft-success font-size-11 mb-3">Cryptocurrency</div>
+                            <h5 class="post-title">In turpis, Pellentesque</h5>
+                            <p class="mb-0"><i class="bx bx-calendar me-1"></i> 12 Mar, 2020</p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <hr class="footer-border my-5">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-4">
+                    <img src="assets/images/logo-light.png" alt="" height="20">
+                </div>
+
+                <p class="mb-2">{{year}} © Biz dev sync. Design & Develop by Themesbrand</p>
+                <p>It will be as simple as occidental in fact, it will be to an english person, it will seem like
+                    simplified English, as a skeptical</p>
+            </div>
+
+        </div>
+    </div>
+    <!-- end container -->
+</footer>
+<!-- Footer end -->

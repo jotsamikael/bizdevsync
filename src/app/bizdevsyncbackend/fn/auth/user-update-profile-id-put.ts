@@ -19,7 +19,11 @@ export interface UserUpdateProfileIdPut$Params {
 'first_name'?: string;
 'last_name'?: string;
 'email'?: string;
-'status'?: boolean;
+'telephone'?: string;
+'default_language'?: string;
+'linkedIn'?: string;
+'email_signature'?: string;
+'google_auth_secret'?: string;
 'avatar'?: Blob;
 }
 }

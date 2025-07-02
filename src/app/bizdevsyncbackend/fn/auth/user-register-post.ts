@@ -14,10 +14,10 @@ export interface UserRegisterPost$Params {
       body: {
 'first_name': string;
 'last_name': string;
+'linkedIn'?: string;
 'email': string;
 'password': string;
-'avatar'?: Blob;
-'role'?: 'solo_biz_dev' | 'enterprise_admin';
+'role': 'solo_business_developer' | 'enterprise_admin';
 }
 }
 

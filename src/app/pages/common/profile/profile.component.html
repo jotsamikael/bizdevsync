@@ -1,1 +1,364 @@
-<p>profile works!</p>
+<div class="container-fluid">
+
+    <app-page-title title="Profile" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card overflow-hidden">
+                <div class="bg-primary-subtle">
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="text-primary p-3">
+                                <h5 class="text-primary">Welcome Back {{this.user.last_name}}!</h5>
+                            </div>
+                        </div>
+                        <div class="col-5 align-self-end">
+                            <img src="../../../../assets/images/profile-img.png" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="avatar-md profile-user-wid mb-2">
+                                <div class="profile-image-wrapper">
+                                    <img src="{{this.bgpreviewEvaluate}}" alt=""
+                                        class="img-thumbnail rounded-circle profile-avatar">
+                                    <img *ngIf="this.user.is_verified" src="../../../../assets/images/verified.png"
+                                        alt="verified" width="25px" srcset="" class="verified-badge">
+                                         <img *ngIf="!this.user.is_verified" src="../../../../assets/images/not_verified.png"
+                                        alt="verified" width="25px" srcset="" class="verified-badge" tooltip="Verify your account">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="pt-4">
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 class="font-size-15">125</h5>
+                                        <p class="text-muted mb-0">Days</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <h5 class="font-size-15">$1245</h5>
+                                        <p class="text-muted mb-0">Revenue</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end card -->
+
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Update Password</h4>
+
+                    <p class="text-muted mb-4">Hi {{this.user.first_name}}. You can update your password below</p>
+                    <div class="table-responsive">
+                        <form [formGroup]="updatePasswordForm">
+                            <!-- old_password  -->
+                            <div class="mb-3 row">
+                                <label for="example-name"
+                                    class="col-md-3 col-form-label font-size-11">old_password</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" name="old_password" formControlName="old_password"
+                                        type="password" />
+
+                                </div>
+                            </div>
+
+                            <!-- new password  -->
+                            <div class="mb-3 row">
+                                <label for="example-name"
+                                    class="col-md-3 col-form-label font-size-11">new_password</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" name="new_password" formControlName="new_password"
+                                        type="password" />
+                                </div>
+                            </div>
+
+                            <!-- confirm_password  -->
+                            <div class="mb-3 row">
+                                <label for="example-name"
+                                    class="col-md-3 col-form-label font-size-11">confirm_password</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" name="confirm_password"
+                                        formControlName="confirm_password" type="password" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- end card -->
+
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-5">Experience</h4>
+                    <div class="">
+                        <ul class="verti-timeline list-unstyled">
+                            <li class="event-list active">
+                                <div class="event-timeline-dot">
+                                    <i class="bx bx-right-arrow-circle bx-fade-right"></i>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <i class="bx bx-server h4 text-primary"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div>
+                                            <h5 class="font-size-15"><a href="javascript: void(0);"
+                                                    class="text-dark">Back end Developer</a></h5>
+                                            <span class="text-primary">2016 - 19</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="event-list">
+                                <div class="event-timeline-dot">
+                                    <i class="bx bx-right-arrow-circle"></i>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <i class="bx bx-code h4 text-primary"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div>
+                                            <h5 class="font-size-15"><a href="javascript: void(0);"
+                                                    class="text-dark">Front end Developer</a></h5>
+                                            <span class="text-primary">2013 - 16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="event-list">
+                                <div class="event-timeline-dot">
+                                    <i class="bx bx-right-arrow-circle"></i>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <i class="bx bx-edit h4 text-primary"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div>
+                                            <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">UI
+                                                    /UX Designer</a></h5>
+                                            <span class="text-primary">2011 - 13</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <!-- end card -->
+        </div>
+
+        <div class="col-xl-8">
+
+            <div class="row">
+
+
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Profile Details</h4>
+                    <form class=" mb-4" [formGroup]="basicInfoForm">
+                        <!-- profile -->
+                        <div class="row justify-content-center">
+                            <div class="form-group text-center">
+                                <label class="file-style" [ngStyle]="{
+                                                    'background-image': 'url(' + bgpreviewEvaluate + ')',
+                                                    'background-repeat': 'no-repeat',
+                                                    'background-size': '100px',
+                                                    'background-position': 'center'
+                                                  }" for="profileImage">
+                                    <img src="../../../assets/images/upload.png" width="50" class="my-2" />
+                                    <p class="fs-sm text-danger mt-2">Téléverser une photo</p>
+                                </label>
+
+                                <!-- Hidden file input -->
+                                <input type="file" id="profileImage" (change)="onFileChangeProfile($event)"
+                                    accept=".jpg" name="imgFilepath" class="inputfile" style="display: none;" />
+
+                                <p *ngIf="profilePicExceedsMaxSize" class="alert-text fs-sm">La taille
+                                    de l'image doit etre inferieure a {{MAX_IMAGE_SIZE/(1024*1024)}} MB
+                                </p>
+
+                            </div>
+
+                        </div>
+                        <!-- first_name  -->
+                        <div class="mb-3 row">
+                            <label for="example-name" class="col-md-2 col-form-label font-size-11">first_name</label>
+                            <div class="col-md-10">
+                                <input class="form-control" name="first_name" formControlName="first_name"
+                                    type="text" />
+
+                            </div>
+                        </div>
+
+                        <!-- last_name  -->
+                        <div class="mb-3 row">
+                            <label for="example-name" class="col-md-2 col-form-label font-size-11">last_name</label>
+                            <div class="col-md-10">
+                                <input class="form-control" name="last_name" formControlName="last_name" type="text" />
+                            </div>
+                        </div>
+
+                        <!-- potential_time_for_delivery -->
+                        <div class="mb-3 row">
+                            <label for="example-date-input" class="col-md-2 col-form-label font-size-11">email
+                            </label>
+                            <div class="col-md-10">
+                                <input class="form-control" name="email" formControlName="email" type="email" />
+
+                            </div>
+                        </div>
+
+                        <!-- telephone  -->
+                        <div class="mb-3 row">
+                            <label for="example-name" class="col-md-2 col-form-label font-size-11">telephone</label>
+                            <div class="col-md-10">
+                                <input class="form-control" name="telephone" formControlName="telephone" type="text" />
+                            </div>
+                        </div>
+
+                        <!-- linkedIn  -->
+                        <div class="mb-3 row">
+                            <label for="example-name" class="col-md-2 col-form-label font-size-11">linkedIn</label>
+                            <div class="col-md-10">
+                                <input class="form-control" name="linkedIn" formControlName="linkedIn" type="text" />
+                            </div>
+                        </div>
+
+                        <!-- default_language  -->
+                        <div class="mb-3">
+                            <label for="example-password-input" class="col-form-label">Default language
+                            </label>
+                            <div class="col-md-10">
+
+                                <mat-radio-group color="primary" name="default_language"
+                                    formControlName="default_language" aria-label="Select an option">
+                                    <mat-radio-button value="EN">English</mat-radio-button>
+                                    <mat-radio-button value="FR">French</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <!-- google_auth_secret  -->
+                        <div class="mb-3 row">
+                            <label for="example-name"
+                                class="col-md-2 col-form-label font-size-11">google_auth_secret</label>
+                            <div class="col-md-10">
+                                <input class="form-control" name="google_auth_secret"
+                                    formControlName="google_auth_secret" type="password" />
+                            </div>
+                        </div>
+
+                        <!-- email_signature  -->
+                        <div class="mb-3 row">
+                            <label for="example-name"
+                                class="col-md-2 col-form-label font-size-11">email_signature</label>
+                            <div class="col-md-10">
+                                <ckeditor formControlName="email_signature" name="email_signature" [editor]="Editor"
+                                    data=""></ckeditor>
+                            </div>
+                        </div>
+
+
+
+                        <!-- buttons -->
+                        <div class="mb-3 row text-end">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary" mat-raised-button (click)="updateProfile()"
+                                    [disabled]="!basicInfoForm.valid || isLoading">Save</button>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Activity History</h4>
+                    <div class="table-responsive">
+                        <table class="table table-nowrap table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Projects</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">Deadline</th>
+                                    <th scope="col">Budget</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Skote admin UI</td>
+                                    <td>2 Sep, 2019</td>
+                                    <td>20 Oct, 2019</td>
+                                    <td>$506</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Skote admin Logo</td>
+                                    <td>1 Sep, 2019</td>
+                                    <td>2 Sep, 2019</td>
+                                    <td>$94</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Redesign - Landing page</td>
+                                    <td>21 Sep, 2019</td>
+                                    <td>29 Sep, 2019</td>
+                                    <td>$156</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>App Landing UI</td>
+                                    <td>29 Sep, 2019</td>
+                                    <td>04 Oct, 2019</td>
+                                    <td>$122</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Blog Template</td>
+                                    <td>05 Oct, 2019</td>
+                                    <td>16 Oct, 2019</td>
+                                    <td>$164</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Redesign - Multipurpose Landing</td>
+                                    <td>17 Oct, 2019</td>
+                                    <td>05 Nov, 2019</td>
+                                    <td>$192</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Logo Branding</td>
+                                    <td>04 Nov, 2019</td>
+                                    <td>05 Nov, 2019</td>
+                                    <td>$94</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>

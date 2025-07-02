@@ -6,6 +6,7 @@ import { UsersService } from "../services";
 import Swal from "sweetalert2";
 import { Observable } from "rxjs";
 import { FormGroup } from "@angular/forms";
+import { ApiConfiguration } from "../api-configuration";
 
 
 @Injectable({
@@ -15,6 +16,16 @@ export class CommonService {
 
 constructor(private leadService: LeadService, private userService: UsersService){
 
+  }
+
+    // Helper method to construct the absolute URL
+  getAbsoluteAvatarUrl(relativePath: string): string {
+    // Check if the relative path already includes the base URL (e.g., if it's already a full URL from a previous save/refresh)
+    if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+      return relativePath;
+    }
+    // Otherwise, prepend the assetsUrl from your environment
+    return `${ApiConfiguration.assetsUrl}${relativePath}`;
   }
 
     resetForm(basicInfoForm: FormGroup<any>) {

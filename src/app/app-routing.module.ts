@@ -7,24 +7,15 @@ import { CyptolandingComponent } from './cyptolanding/cyptolanding.component';
 import { Page404Component } from './extrapages/page404/page404.component';
 import { LoginComponent } from './login/login.component';
 import { ActivateAccountComponent } from './activate-account/activate-account.component';
-import { RegisterCandidateComponent } from './pages/register/register-candidate/register-candidate.component';
-import { RegisterPromoterComponent } from './pages/register/register-promoter/register-promoter.component';
-import { ProfileComponent } from './pages/contacts/profile/profile.component';
-import { UserManagementComponent } from './pages/user-management/user-management.component';
-import { EnterpriseDashboardComponent } from './pages/enterprise-dashboard/enterprise-dashboard.component';
-import { BusinessDevDashboardComponent } from './pages/bizdev/business-dev-dashboard/business-dev-dashboard.component';
-import { EnterpriseManagementComponent } from './pages/enterprise-management/enterprise-management.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', component: CyptolandingComponent },
   { path: 'landing', component: CyptolandingComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register-candidate', component: RegisterCandidateComponent },
-  { path: 'register-promoter', component: RegisterPromoterComponent },
+  { path: 'register', component: RegisterComponent},
 
   { path: 'activate-account', component: ActivateAccountComponent },
-
- 
 
 
 

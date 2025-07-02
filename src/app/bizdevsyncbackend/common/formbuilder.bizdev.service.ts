@@ -13,29 +13,38 @@ export class FormBuilderBizdevService {
   // --- User Form ---
   createUserForm(): FormGroup {
     return this.fb.group({
-      id: [null, Validators.required], // Typically not user-editable for new entities
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      avatar: ['', Validators.required],
-      is_activated: [false, Validators.required],
-      is_verified: [false, Validators.required],
-      role: ['', Validators.required],
-      will_expire: ['', Validators.required], // Assuming date-time string
-      is_archived: [false, Validators.required],
-      createdAt: [{ value: '', disabled: true }, Validators.required], // Typically auto-generated
-      updatedAt: [{ value: '', disabled: true }, Validators.required], // Typically auto-generated
-      Enterprise_idEnterprise: [null],
-      plan_id: [null, Validators.required],
       telephone: [null],
-      last_ip: [null],
-      last_login: [null],
-      last_activity: [null],
-      google_auth_secret: [null],
-      email_signature: [null],
-      default_language: [null],
+      default_language: ['EN'],
       linkedIn: [null],
-    });
+      password: ['', [Validators.required,Validators.minLength(6), Validators.maxLength(64)]],
+      confirmPassword: ['', Validators.required],
+      termsAccepted:[false, Validators.required]}, { validators: this.passwordMatchValidator });
+  }
+   // --- User Form ---
+  updateUserForm(): FormGroup {
+    return this.fb.group({
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      telephone: [null],
+      default_language: ['EN'],
+      linkedIn: [null],
+      email_signature:[null],
+      google_auth_secret:[null],})
+  }
+
+     // --- User Form ---
+  updatePasswordForm(): FormGroup {
+    return this.fb.group({
+     old_password: ['', [Validators.required,Validators.minLength(6), Validators.maxLength(64)]],
+     new_password: ['', [Validators.required,Validators.minLength(6), Validators.maxLength(64)]],
+     confirm_password: ['', [Validators.required]],
+
+    },
+       { validators: this.passwordMatchValidator });
   }
 
   // --- Lead Form ---
@@ -292,4 +301,25 @@ export class FormBuilderBizdevService {
     });
   }
 
+
+  passwordMatchValidator(form: FormGroup) {
+  const password = form.get('password')?.value;
+  const confirmPassword = form.get('confirmPassword')?.value;
+
+  if (password !== confirmPassword) {
+    form.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+  } else {
+    const errors = form.get('confirmPassword')?.errors;
+    if (errors) {
+      delete errors.passwordMismatch;
+      if (Object.keys(errors).length === 0) {
+        form.get('confirmPassword')?.setErrors(null);
+      } else {
+        form.get('confirmPassword')?.setErrors(errors);
+      }
+    }
+  }
+
+  return null;
+}
 }
